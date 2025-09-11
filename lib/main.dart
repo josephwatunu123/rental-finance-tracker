@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/theme/app_theme.dart';
 
-import 'features/home/home_page.dart';
+import 'features/home/presentation/home_page.dart';
 import 'features/settings/settings.dart';
 
 void main() {
