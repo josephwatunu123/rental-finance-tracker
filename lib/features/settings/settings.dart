@@ -20,6 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
       'Delete Account'
     ];
     final size = MediaQuery.of(context).size;
+    double settingsCardHeight = size.height * 0.1;
     return Scaffold(
       appBar: AppBar(
         title:  Text('Settings',style:theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold) ,),
@@ -28,16 +29,37 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children:List.generate(
-              settings.length, (index){
-            return settingsCard(
+          children:[
+            settingsCard(
                 theme: theme,
-                title: settings[index],
-                icon: Icons.build,
-                subtitle: 'overview of test',
-                height: size.height * 0.1
-            );
-          })
+                title: 'Edit Profile',
+                icon: CupertinoIcons.profile_circled,
+                subtitle: 'Edit your profile.',
+                height: settingsCardHeight
+            ),
+            settingsCard(
+                theme: theme,
+                title: 'About Us',
+                icon: CupertinoIcons.person_2_fill,
+                subtitle: 'Get to know more about Profit Stay.',
+                height: settingsCardHeight
+            ),
+            settingsCard(
+                theme: theme,
+                title: 'Contact Support',
+                icon: CupertinoIcons.text_bubble_fill,
+                subtitle: 'Raise an issue you have.',
+                height: settingsCardHeight
+            ),
+            settingsCard(
+                theme: theme,
+                title: 'Log out',
+                icon: Icons.logout,
+                iconColor: Colors.red,
+                subtitle: 'Logout of your account.',
+                height: settingsCardHeight
+            ),
+          ]
         ),
       ),
 
