@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:rental_finance_tracker/features/home/presentation/widgets/recent_bookings.dart';
 import 'package:rental_finance_tracker/theme/app_colors.dart';
 
@@ -74,11 +75,24 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-          },
-          child: const Icon(Icons.add),
-        ),
+        floatingActionButton: SpeedDial(
+          icon: Icons.add,
+          activeIcon: Icons.close,
+          overlayOpacity: 0.8,
+          overlayColor: Colors.black,
+          children: [
+            SpeedDialChild(
+              backgroundColor: theme.primaryColor,
+              child: Icon(Icons.create,color: Colors.white,),
+              onTap: (){}
+            ),
+            SpeedDialChild(
+                backgroundColor: theme.primaryColor.withAlpha(200),
+                child: Icon(Icons.payments,color: Colors.white,),
+                onTap: (){}
+            ),
+          ],
+        )
     );
   }
   
