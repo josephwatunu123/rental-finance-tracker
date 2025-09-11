@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rental_finance_tracker/features/home/presentation/widgets/recent_bookings.dart';
 import 'package:rental_finance_tracker/theme/app_colors.dart';
 
@@ -84,7 +85,7 @@ class _HomePageState extends State<HomePage> {
             SpeedDialChild(
               backgroundColor: theme.primaryColor,
               child: Icon(Icons.create,color: Colors.white,),
-              onTap: (){}
+              onTap: ()=>context.goNamed('newBookings')
             ),
             SpeedDialChild(
                 backgroundColor: theme.primaryColor.withAlpha(200),

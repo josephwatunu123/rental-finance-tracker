@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rental_finance_tracker/router.dart';
 import 'package:rental_finance_tracker/theme/app_theme.dart';
 
 import 'features/home/presentation/home_page.dart';
@@ -8,17 +9,19 @@ import 'features/settings/settings.dart';
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context,WidgetRef ref) {
+    final route = ref.watch(routerProvider);
+
+    return MaterialApp.router(
       title: 'Profit Stay',
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
       themeMode: ThemeMode.system,
-      home: const MainScaffold(),
+      routerConfig: route,
     );
   }
 }
