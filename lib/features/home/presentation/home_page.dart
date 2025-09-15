@@ -4,6 +4,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_finance_tracker/features/home/presentation/widgets/recent_bookings.dart';
 import 'package:rental_finance_tracker/global/graphs/line_graph.dart';
+import 'package:rental_finance_tracker/global/graphs/pie_chart.dart';
 import 'package:rental_finance_tracker/theme/app_colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -59,6 +60,17 @@ class _HomePageState extends State<HomePage> {
                     child: Text('Income Trend',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),),
                   ),
                   LineGraph(),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text('Booking Sources',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),),
+                  ),
+                  CustomPieChart(),
                 ],
               ),
               Container(
