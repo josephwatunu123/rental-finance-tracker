@@ -108,12 +108,12 @@ class _HomePageState extends State<HomePage> {
           children: [
             SpeedDialChild(
               backgroundColor: theme.primaryColor,
-              child: Icon(Icons.create,color: Colors.white,),
+              child: Icon(Icons.king_bed,color: Colors.white,),
               onTap: ()=>context.goNamed('newBookings')
             ),
             SpeedDialChild(
                 backgroundColor: theme.primaryColor.withAlpha(200),
-                child: Icon(Icons.payments,color: Colors.white,),
+                child: Icon(Icons.request_page,color: Colors.white,),
                 onTap: (){}
             ),
           ],
