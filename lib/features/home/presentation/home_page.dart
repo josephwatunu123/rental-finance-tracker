@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_finance_tracker/features/home/presentation/widgets/recent_bookings.dart';
+import 'package:rental_finance_tracker/features/home/presentation/widgets/stats_card.dart';
 import 'package:rental_finance_tracker/global/graphs/line_graph.dart';
 import 'package:rental_finance_tracker/global/graphs/pie_chart.dart';
-import 'package:rental_finance_tracker/theme/app_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,73 +35,88 @@ class _HomePageState extends State<HomePage> {
         actionsPadding: EdgeInsets.only(right: 15),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              userGreetings(theme: theme),
-              SizedBox(
-                height: size.height * 0.25,
-                width: double.infinity,
-                child: Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: List.generate(4, (index){
-                    return statsContainer(
-                        height: size.height * 0.1,
-                        width: size.width * 0.45,
-                        theme: theme
-                    );
-                  }),
-                )
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text('Income Trend',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),),
+        child: Column(
+          spacing: 5,
+          children: [
+            userGreetings(theme: theme),
+            Container(
+              padding: EdgeInsets.all(12),
+              height: size.height * 0.25,
+              width: double.infinity,
+              child: Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children:[
+                  StatsCard(
+                      mainIcon: FontAwesomeIcons.moneyBill1Wave,
+                      title: 'Monthly Revenue',
+                      total: 60000
                   ),
-                  LineGraph(),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text('Booking Sources',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),),
+                  StatsCard(
+                      mainIcon: FontAwesomeIcons.bed,
+                      title: 'Bookings',
+                      total: 11
                   ),
-                  CustomPieChart(),
+                  StatsCard(
+                      mainIcon: FontAwesomeIcons.calendarCheck,
+                      title: 'Days Booked',
+                      total: 24
+                  ),
+                  StatsCard(
+                      mainIcon: FontAwesomeIcons.chartLine,
+                      title: 'Profit',
+                      total: 36000
+                  ),
                 ],
-              ),
-              Container(
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  spacing: 10,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      spacing: 10,
-                      children: [
-                        Icon(Icons.calendar_today_rounded,color: theme.primaryColor,),
-                        Text('Recent Bookings',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),),
-                      ],
-                    ),
-                    RecentBookings(),
-                    RecentBookings(),
-                    RecentBookings(),
-                    RecentBookings(),
-                    RecentBookings()
-                  ],
-                  
+              )
+            ),
+            const SizedBox(height: 10),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0,top: 12),
+                  child: Text('Income Trend',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),),
                 ),
+                LineGraph(),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text('Booking Sources',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),),
+                ),
+                CustomPieChart(),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    spacing: 10,
+                    children: [
+                      Icon(Icons.calendar_today_rounded,color: theme.primaryColor,),
+                      Text('Recent Bookings',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),),
+                    ],
+                  ),
+                  RecentBookings(),
+                  RecentBookings(),
+                  RecentBookings(),
+                  RecentBookings(),
+                  RecentBookings()
+                ],
+
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
         floatingActionButton: SpeedDial(
@@ -143,43 +159,6 @@ class _HomePageState extends State<HomePage> {
               "10th September 2025",
             style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           )
-        ],
-      ),
-    );
-  }
-
-  Widget statsContainer({
-    required double height,
-    required double width,
-    required ThemeData theme
-}){
-    return Container(
-      padding: EdgeInsets.all(10),
-      alignment: Alignment.centerLeft,
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          width: 0.5,
-          color: Colors.grey
-        )
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Monthly Revenue',style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Kes. 60,000',style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
-              Icon(Icons.payments_rounded,
-                color: Colors.blueAccent
-                ,)
-            ],
-          ),
-          Text('+12%',style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold,color: Colors.green))
         ],
       ),
     );
