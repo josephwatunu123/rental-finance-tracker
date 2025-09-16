@@ -26,7 +26,10 @@ class _HomePageState extends State<HomePage> {
         actions: [
           Icon(CupertinoIcons.bell_fill),
           const SizedBox(width: 15),
-          Icon(CupertinoIcons.person_alt_circle_fill),
+          IconButton(
+            onPressed: ()=>context.pushNamed('settings'),
+            icon:Icon(CupertinoIcons.person_alt_circle_fill,)
+            ,),
         ],
         actionsPadding: EdgeInsets.only(right: 15),
       ),
@@ -109,12 +112,12 @@ class _HomePageState extends State<HomePage> {
             SpeedDialChild(
               backgroundColor: theme.primaryColor,
               child: Icon(Icons.king_bed,color: Colors.white,),
-              onTap: ()=>context.goNamed('newBookings')
+              onTap: ()=>context.pushNamed('newBookings')
             ),
             SpeedDialChild(
                 backgroundColor: theme.primaryColor.withAlpha(200),
                 child: Icon(Icons.request_page,color: Colors.white,),
-                onTap: (){}
+                onTap: ()=>context.pushNamed('newExpense')
             ),
           ],
         )

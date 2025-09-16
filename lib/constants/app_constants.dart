@@ -26,3 +26,10 @@ const List<String> bookingStatus = [
 const List<String> apartments = [
   'City Oasis',
 ];
+const List<String> expenseTypes = [
+  'cleaning',
+  'repair',
+  'purchase',
+  'rent',
+  'damage'
+];

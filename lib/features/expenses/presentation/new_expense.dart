@@ -6,14 +6,14 @@ import 'package:rental_finance_tracker/global/widgets/custom_drop_down.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class NewBooking extends StatefulWidget {
-  const NewBooking({super.key});
+class NewExpense extends StatefulWidget {
+  const NewExpense({super.key});
 
   @override
-  State<NewBooking> createState() => _NewBookingState();
+  State<NewExpense> createState() => _NewExpenseState();
 }
 
-class _NewBookingState extends State<NewBooking> {
+class _NewExpenseState extends State<NewExpense> {
   DateTimeRange dateTimeRange = DateTimeRange(
       start: DateTime(2025,08,01),
       end: DateTime(2025,09,01));
@@ -30,38 +30,15 @@ class _NewBookingState extends State<NewBooking> {
             children: [
               const SizedBox(height: 30,),
               TitleBar(
-                  title: "New Booking",
-                  icon: Icons.add_business_sharp,
-                subtitle: 'add new client.',
+                title: "New Expense",
+                icon: Icons.credit_card_outlined,
+                subtitle: 'Add new expense.',
               ),
-              CustomInputField(
-                label: 'Name',
-
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                spacing: 20,
-                children: [
-                  Flexible(
-                      child: CustomButton(
-                        title: 'From: ${start.day}/${start.month}/${start.year}',
-                          onTap: pickDateRange,
-                      ),
-
-                  ),
-                  Flexible(
-                    child: CustomButton(
-                      title: 'To: ${end.day}/${end.month}/${end.year}',
-                      onTap: pickDateRange,
-                    ),
-
-                  ),
-                ],
-              ),
-              CustomInputField(
-                label: 'Amount',
-                inputType: TextInputType.number,
-
+              CustomDropDown(
+                  hint: 'Expense Type',
+                  isFullWidth: true,
+                  items: expenseTypes,
+                  onChanged: (val){}
               ),
               CustomDropDown(
                   hint: 'Payment Method',
@@ -70,20 +47,13 @@ class _NewBookingState extends State<NewBooking> {
                   onChanged: (val){}
               ),
               CustomInputField(
-                label: 'Payment Reference',
+                label: 'Amount',
+                inputType: TextInputType.number,
 
               ),
-              CustomDropDown(
-                  hint: 'Booking Source',
-                  isFullWidth: true,
-                  items: bookingSources,
-                  onChanged: (val){}
-              ),
-              CustomDropDown(
-                  hint: 'Booking Status',
-                  isFullWidth: true,
-                  items: bookingStatus,
-                  onChanged: (val){}
+              CustomInputField(
+                label: 'Payment Reference',
+
               ),
               CustomInputField(
                 label: 'Additional Notes',
@@ -93,7 +63,7 @@ class _NewBookingState extends State<NewBooking> {
                 label: 'Reminder',
 
               ),
-              CustomButton(title: 'Create Booking', onTap: (){},)
+              CustomButton(title: 'Create Expense', onTap: (){},)
             ],
           ),
         ),
