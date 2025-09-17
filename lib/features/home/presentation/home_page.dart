@@ -7,6 +7,8 @@ import 'package:rental_finance_tracker/features/home/presentation/widgets/recent
 import 'package:rental_finance_tracker/features/home/presentation/widgets/stats_card.dart';
 import 'package:rental_finance_tracker/global/graphs/line_graph.dart';
 import 'package:rental_finance_tracker/global/graphs/pie_chart.dart';
+import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
+import 'package:rental_finance_tracker/theme/app_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,24 +23,36 @@ class _HomePageState extends State<HomePage> {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title:  Text('Dashboard',style:theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold,color: Colors.white) ,),
-        centerTitle: false,
-        actions: [
-          Icon(CupertinoIcons.bell_fill),
-          const SizedBox(width: 15),
-          IconButton(
-            onPressed: ()=>context.pushNamed('settings'),
-            icon:Icon(CupertinoIcons.person_alt_circle_fill,)
-            ,),
-        ],
-        actionsPadding: EdgeInsets.only(right: 15),
-      ),
+      // appBar: AppBar(
+      //   title:  Text('Dashboard',style:theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold,color: Colors.white) ,),
+      //   centerTitle: false,
+      //   actions: [
+      //     Icon(CupertinoIcons.bell_fill),
+      //     const SizedBox(width: 15),
+      //     IconButton(
+      //       onPressed: ()=>context.pushNamed('settings'),
+      //       icon:Icon(CupertinoIcons.person_alt_circle_fill,)
+      //       ,),
+      //   ],
+      //   actionsPadding: EdgeInsets.only(right: 15),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           spacing: 5,
           children: [
-            userGreetings(theme: theme),
+            // userGreetings(theme: theme),
+            TitleBar(
+                title: 'Good Afternoon, Jayder',
+                subtitle: 'SEPTEMBER STATISTICS',
+                icon: FontAwesomeIcons.userAstronaut,
+                customHeight: size.height *0.17,
+                isAppBar: true,
+                newBorderRadius: 20,
+              gradientColors: [
+                lighten(theme.primaryColor, 0.2),
+                darken(theme.primaryColor, 0.2),
+              ],
+            ),
             Container(
               padding: EdgeInsets.all(12),
               height: size.height * 0.25,

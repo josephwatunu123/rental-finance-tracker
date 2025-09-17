@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
 import 'package:rental_finance_tracker/constants/text_fields.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_drop_down.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
+import 'package:rental_finance_tracker/theme/app_colors.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class NewExpense extends StatefulWidget {
@@ -21,51 +23,56 @@ class _NewExpenseState extends State<NewExpense> {
   Widget build(BuildContext context) {
     final start = dateTimeRange.start;
     final end = dateTimeRange.end;
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            spacing: 20,
-            children: [
-              const SizedBox(height: 30,),
-              TitleBar(
-                title: "New Expense",
-                icon: Icons.credit_card_outlined,
-                subtitle: 'Add new expense.',
-              ),
-              CustomDropDown(
-                  hint: 'Expense Type',
-                  isFullWidth: true,
-                  items: expenseTypes,
-                  onChanged: (val){}
-              ),
-              CustomDropDown(
-                  hint: 'Payment Method',
-                  isFullWidth: true,
-                  items: paymentMethods,
-                  onChanged: (val){}
-              ),
-              CustomInputField(
-                label: 'Amount',
-                inputType: TextInputType.number,
+        child: Column(
+          spacing: 10,
+          children: [
+            TitleBar(
+              title: 'New Expense',
+              subtitle: 'Add a new expense.',
+              icon: FontAwesomeIcons.hotel,
+              customHeight: size.height *0.17,
+              isAppBar: true,
+              newBorderRadius: 20,
+              gradientColors: [
+                lighten(theme.primaryColor, 0.2),
+                darken(theme.primaryColor, 0.2),
+              ],
+            ),
+            CustomDropDown(
+                hint: 'Expense Type',
+                isFullWidth: true,
+                items: expenseTypes,
+                onChanged: (val){}
+            ),
+            CustomDropDown(
+                hint: 'Payment Method',
+                isFullWidth: true,
+                items: paymentMethods,
+                onChanged: (val){}
+            ),
+            CustomInputField(
+              label: 'Amount',
+              inputType: TextInputType.number,
 
-              ),
-              CustomInputField(
-                label: 'Payment Reference',
+            ),
+            CustomInputField(
+              label: 'Payment Reference',
 
-              ),
-              CustomInputField(
-                label: 'Additional Notes',
+            ),
+            CustomInputField(
+              label: 'Additional Notes',
 
-              ),
-              CustomInputField(
-                label: 'Reminder',
+            ),
+            CustomInputField(
+              label: 'Reminder',
 
-              ),
-              CustomButton(title: 'Create Expense', onTap: (){},)
-            ],
-          ),
+            ),
+            CustomButton(title: 'Create Expense', onTap: (){},)
+          ],
         ),
       ),
     );

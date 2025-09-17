@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
 import 'package:rental_finance_tracker/constants/text_fields.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
@@ -21,81 +22,86 @@ class _NewBookingState extends State<NewBooking> {
   Widget build(BuildContext context) {
     final start = dateTimeRange.start;
     final end = dateTimeRange.end;
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            spacing: 20,
-            children: [
-              const SizedBox(height: 30,),
-              TitleBar(
-                  title: "New Booking",
-                  icon: Icons.add_business_sharp,
-                subtitle: 'add new client.',
-              ),
-              CustomInputField(
-                label: 'Name',
+        child: Column(
+          spacing: 20,
+          children: [
+            TitleBar(
+              title: 'New Booking',
+              subtitle: 'Add a new booking.',
+              icon: FontAwesomeIcons.hotel,
+              customHeight: size.height *0.17,
+              isAppBar: true,
+              newBorderRadius: 20,
+              gradientColors: [
+                theme.primaryColor.withAlpha(300),
+                theme.primaryColor.withAlpha(800),
+              ],
+            ),
+            CustomInputField(
+              label: 'Name',
 
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                spacing: 20,
-                children: [
-                  Flexible(
-                      child: CustomButton(
-                        title: 'From: ${start.day}/${start.month}/${start.year}',
-                          onTap: pickDateRange,
-                      ),
-
-                  ),
-                  Flexible(
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              spacing: 20,
+              children: [
+                Flexible(
                     child: CustomButton(
-                      title: 'To: ${end.day}/${end.month}/${end.year}',
-                      onTap: pickDateRange,
+                      title: 'From: ${start.day}/${start.month}/${start.year}',
+                        onTap: pickDateRange,
                     ),
 
+                ),
+                Flexible(
+                  child: CustomButton(
+                    title: 'To: ${end.day}/${end.month}/${end.year}',
+                    onTap: pickDateRange,
                   ),
-                ],
-              ),
-              CustomInputField(
-                label: 'Amount',
-                inputType: TextInputType.number,
 
-              ),
-              CustomDropDown(
-                  hint: 'Payment Method',
-                  isFullWidth: true,
-                  items: paymentMethods,
-                  onChanged: (val){}
-              ),
-              CustomInputField(
-                label: 'Payment Reference',
+                ),
+              ],
+            ),
+            CustomInputField(
+              label: 'Amount',
+              inputType: TextInputType.number,
 
-              ),
-              CustomDropDown(
-                  hint: 'Booking Source',
-                  isFullWidth: true,
-                  items: bookingSources,
-                  onChanged: (val){}
-              ),
-              CustomDropDown(
-                  hint: 'Booking Status',
-                  isFullWidth: true,
-                  items: bookingStatus,
-                  onChanged: (val){}
-              ),
-              CustomInputField(
-                label: 'Additional Notes',
+            ),
+            CustomDropDown(
+                hint: 'Payment Method',
+                isFullWidth: true,
+                items: paymentMethods,
+                onChanged: (val){}
+            ),
+            CustomInputField(
+              label: 'Payment Reference',
 
-              ),
-              CustomInputField(
-                label: 'Reminder',
+            ),
+            CustomDropDown(
+                hint: 'Booking Source',
+                isFullWidth: true,
+                items: bookingSources,
+                onChanged: (val){}
+            ),
+            CustomDropDown(
+                hint: 'Booking Status',
+                isFullWidth: true,
+                items: bookingStatus,
+                onChanged: (val){}
+            ),
+            CustomInputField(
+              label: 'Additional Notes',
 
-              ),
-              CustomButton(title: 'Create Booking', onTap: (){},)
-            ],
-          ),
+            ),
+            CustomInputField(
+              label: 'Reminder',
+
+            ),
+            CustomButton(title: 'Create Booking', onTap: (){},)
+          ],
         ),
       ),
     );

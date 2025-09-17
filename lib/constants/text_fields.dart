@@ -49,7 +49,7 @@ class CustomInputField extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(12),
       child: TextFormField(
         readOnly: readOnly,
         autofillHints: autoFillHints,

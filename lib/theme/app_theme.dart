@@ -26,7 +26,7 @@ class AppThemes {
       foregroundColor: Colors.white,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: Colors.indigo,
+      backgroundColor: Colors.blue,
       foregroundColor: Colors.white,
     ),
   );

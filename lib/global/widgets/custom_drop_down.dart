@@ -32,29 +32,32 @@ class _CustomDropDownState extends State<CustomDropDown> {
         : (widget.width != null && widget.width! > 0)
         ? size.width * widget.width!
         : size.width * 0.5;
-    return SizedBox(
-      width:  calculatedWidth ,
-      height: size.height * 0.1,
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(width: 2, color:theme.primaryColor )
-          )
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: SizedBox(
+        width:  calculatedWidth ,
+        height: size.height * 0.1,
+        child: DropdownButtonFormField<String>(
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(width: 2, color:theme.primaryColor )
+            )
+          ),
+            hint: Text(widget.hint),
+            items: widget.items?.map((item)=>
+                DropdownMenuItem<String>(
+                  value: item,
+                    child: Text(item)
+                )
+            ).toList(),
+          onChanged: (item) {
+            setState(() {
+              selectedItem = item;
+            });
+            widget.onChanged(item);
+          },
         ),
-          hint: Text(widget.hint),
-          items: widget.items?.map((item)=>
-              DropdownMenuItem<String>(
-                value: item,
-                  child: Text(item)
-              )
-          ).toList(),
-        onChanged: (item) {
-          setState(() {
-            selectedItem = item;
-          });
-          widget.onChanged(item);
-        },
       ),
     );
   }

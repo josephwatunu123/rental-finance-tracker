@@ -40,7 +40,7 @@ class StatsCard extends StatelessWidget {
             children: [
               Text('Kes. ${total ?? 0}',style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
               FaIcon(mainIcon,
-                color: Colors.blueAccent
+                color: theme.primaryColor
                 ,)
             ],
           ),
