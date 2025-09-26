@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "856325348967",
+    "project_id": "rental-finance-tracker-60176",
+    "storage_bucket": "rental-finance-tracker-60176.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856325348967:android:64b74c2c1539fc1b60fec2",
+        "android_client_info": {
+          "package_name": "com.example.rental_finance_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-aBsrIVknpVJ_18oDm8lqRDVwXnsm0Yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
