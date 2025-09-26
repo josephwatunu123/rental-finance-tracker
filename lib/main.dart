@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/router.dart';
@@ -8,8 +7,6 @@ import 'features/home/presentation/home_page.dart';
 import 'features/settings/settings.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
   runApp(const ProviderScope(child: MyApp()));
 }
 class MyApp extends ConsumerWidget {
