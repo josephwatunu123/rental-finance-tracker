@@ -68,10 +68,10 @@ class CustomInputField extends StatelessWidget {
           }
         },
         style:
-        ((style ??
-            theme.textTheme.titleMedium!.copyWith(
-              fontWeight: FontWeight.w400,
-            ))),
+            ((style ??
+                theme.textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.w400,
+                ))),
         decoration: InputDecoration(
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),

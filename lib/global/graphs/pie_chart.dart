@@ -28,29 +28,29 @@ class CustomPieChart extends StatelessWidget {
                   PieChartSectionData(
                     color: pieChartColor1,
                     value: 40,
-                      radius: 100
+                    radius: 100,
                   ),
                   PieChartSectionData(
                     color: pieChartColor2,
                     value: 20,
-                    radius: 100
+                    radius: 100,
                   ),
                   PieChartSectionData(
                     color: pieChartColor3,
                     value: 100,
-                    radius: 100
+                    radius: 100,
                   ),
                   PieChartSectionData(
                     color: pieChartColor4,
                     value: 70,
-                    radius: 100
+                    radius: 100,
                   ),
-                ]
-              )
+                ],
+              ),
             ),
           ),
           SizedBox(
-            height: size.height *0.08,
+            height: size.height * 0.08,
             width: double.infinity,
             child: Row(
               spacing: 15,
@@ -60,36 +60,28 @@ class CustomPieChart extends StatelessWidget {
                   text: 'bookings.com',
                   isSquare: true,
                 ),
-                SizedBox(
-                  height: 4,
-                ),
+                SizedBox(height: 4),
                 indicator(
                   color: pieChartColor2,
                   text: 'airbnb',
                   isSquare: true,
                 ),
-                SizedBox(
-                  height: 4,
-                ),
+                SizedBox(height: 4),
                 indicator(
                   color: pieChartColor3,
                   text: 'referral',
                   isSquare: true,
                 ),
-                SizedBox(
-                  height: 4,
-                ),
+                SizedBox(height: 4),
                 indicator(
                   color: pieChartColor4,
                   text: 'direct',
                   isSquare: true,
                 ),
-                SizedBox(
-                  height: 18,
-                ),
+                SizedBox(height: 18),
               ],
-                      ),
-          )
+            ),
+          ),
         ],
       ),
     );
@@ -100,16 +92,9 @@ Widget indicator({
   required Color color,
   required String text,
   required bool isSquare,
-}){
+}) {
   return Column(
-  spacing: 5,
-    children: [
-      Container(
-        height: 20,
-        width: 20,
-        color: color,
-      ),
-      Text(text),
-    ],
+    spacing: 5,
+    children: [Container(height: 20, width: 20, color: color), Text(text)],
   );
 }

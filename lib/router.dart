@@ -7,7 +7,6 @@ import 'package:rental_finance_tracker/features/expenses/presentation/new_expens
 import 'features/home/presentation/home_page.dart';
 import 'features/settings/settings.dart';
 
-
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/home',

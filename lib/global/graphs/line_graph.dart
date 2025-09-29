@@ -23,26 +23,18 @@ class LineGraph extends StatelessWidget {
           titlesData: LinesTitles.getTileData(),
           gridData: FlGridData(
             show: true,
-            getDrawingHorizontalLine: (value){
-              return FlLine(
-                color: Colors.blue,
-                strokeWidth: 0.5
-              );
-            }
+            getDrawingHorizontalLine: (value) {
+              return FlLine(color: Colors.blue, strokeWidth: 0.5);
+            },
           ),
           lineBarsData: [
             LineChartBarData(
-              spots: [
-                FlSpot(0,3),
-                FlSpot(2.6,2),
-                FlSpot(4.9,5),
-              ],
+              spots: [FlSpot(0, 3), FlSpot(2.6, 2), FlSpot(4.9, 5)],
               isCurved: true,
-              barWidth: 3
-            )
-          ]
-
-        )
+              barWidth: 3,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -20,10 +20,7 @@ class _RecentBookingsState extends State<RecentBookings> {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadiusMain),
-        border: Border.all(
-          width: 0.08,
-          color: CupertinoColors.black
-        )
+        border: Border.all(width: 0.08, color: CupertinoColors.black),
       ),
       child: Row(
         children: [
@@ -34,39 +31,45 @@ class _RecentBookingsState extends State<RecentBookings> {
                 Row(
                   spacing: 10,
                   children: [
-                    Icon(CupertinoIcons.person, color: Colors.black,size: 15,),
-                    Text('Joseph Kamau',style: TextStyle(fontWeight: FontWeight.w600),),
+                    Icon(CupertinoIcons.person, color: Colors.black, size: 15),
+                    Text(
+                      'Joseph Kamau',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
                     Container(
                       padding: EdgeInsets.all(5),
                       alignment: Alignment.center,
                       height: size.height * 0.032,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(borderRadiusMain),
-                        border: Border.all(
-                          width: 0.08,
-                          color: Colors.black
+                        border: Border.all(width: 0.08, color: Colors.black),
+                      ),
+                      child: Text(
+                        'referral',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      child: Text('referral',style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),),
-                    )
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   spacing: 10,
                   children: [
-                    Icon(Icons.pin_drop_outlined,color: Colors.black,size: 15,),
-                    Text('City Oasis')
+                    Icon(
+                      Icons.pin_drop_outlined,
+                      color: Colors.black,
+                      size: 15,
+                    ),
+                    Text('City Oasis'),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('8 Sept - 12 Sept')
-                  ],
-                )
+                  children: [Text('8 Sept - 12 Sept')],
+                ),
               ],
-
             ),
           ),
           Column(
@@ -80,11 +83,13 @@ class _RecentBookingsState extends State<RecentBookings> {
                   borderRadius: BorderRadius.circular(borderRadiusMain),
                   color: Colors.green[500],
                 ),
-                child: Text('Confirmed',style: TextStyle(fontWeight: FontWeight.w500),),
-              )
+                child: Text(
+                  'Confirmed',
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+              ),
             ],
-
-                    )
+          ),
         ],
       ),
     );

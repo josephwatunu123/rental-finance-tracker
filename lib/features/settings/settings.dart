@@ -12,57 +12,61 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const List<String> settings =[
+    const List<String> settings = [
       'Profile',
       'About us',
       'Support',
       'Logout',
-      'Delete Account'
+      'Delete Account',
     ];
     final size = MediaQuery.of(context).size;
     double settingsCardHeight = size.height * 0.1;
     return Scaffold(
       appBar: AppBar(
-        title:  Text('Settings',style:theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold) ,),
+        title: Text(
+          'Settings',
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children:[
+          children: [
             settingsCard(
-                theme: theme,
-                title: 'Edit Profile',
-                icon: CupertinoIcons.profile_circled,
-                subtitle: 'Edit your profile.',
-                height: settingsCardHeight
+              theme: theme,
+              title: 'Edit Profile',
+              icon: CupertinoIcons.profile_circled,
+              subtitle: 'Edit your profile.',
+              height: settingsCardHeight,
             ),
             settingsCard(
-                theme: theme,
-                title: 'About Us',
-                icon: CupertinoIcons.person_2_fill,
-                subtitle: 'Get to know more about Profit Stay.',
-                height: settingsCardHeight
+              theme: theme,
+              title: 'About Us',
+              icon: CupertinoIcons.person_2_fill,
+              subtitle: 'Get to know more about Profit Stay.',
+              height: settingsCardHeight,
             ),
             settingsCard(
-                theme: theme,
-                title: 'Contact Support',
-                icon: CupertinoIcons.text_bubble_fill,
-                subtitle: 'Raise an issue you have.',
-                height: settingsCardHeight
+              theme: theme,
+              title: 'Contact Support',
+              icon: CupertinoIcons.text_bubble_fill,
+              subtitle: 'Raise an issue you have.',
+              height: settingsCardHeight,
             ),
             settingsCard(
-                theme: theme,
-                title: 'Log out',
-                icon: Icons.logout,
-                iconColor: Colors.red,
-                subtitle: 'Logout of your account.',
-                height: settingsCardHeight
+              theme: theme,
+              title: 'Log out',
+              icon: Icons.logout,
+              iconColor: Colors.red,
+              subtitle: 'Logout of your account.',
+              height: settingsCardHeight,
             ),
-          ]
+          ],
         ),
       ),
-
     );
   }
 
@@ -82,12 +86,13 @@ class _SettingsPageState extends State<SettingsPage> {
         leading: Icon(icon, color: iconColor ?? Colors.blueAccent),
         title: Text(
           title,
-          style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         subtitle: Text(subtitle),
         contentPadding: EdgeInsets.zero, // keeps it tight
       ),
     );
   }
-
 }

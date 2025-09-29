@@ -16,8 +16,9 @@ class NewBooking extends StatefulWidget {
 
 class _NewBookingState extends State<NewBooking> {
   DateTimeRange dateTimeRange = DateTimeRange(
-      start: DateTime(2025,08,01),
-      end: DateTime(2025,09,01));
+    start: DateTime(2025, 08, 01),
+    end: DateTime(2025, 09, 01),
+  );
   @override
   Widget build(BuildContext context) {
     final start = dateTimeRange.start;
@@ -33,7 +34,7 @@ class _NewBookingState extends State<NewBooking> {
               title: 'New Booking',
               subtitle: 'Add a new booking.',
               icon: FontAwesomeIcons.hotel,
-              customHeight: size.height *0.17,
+              customHeight: size.height * 0.17,
               isAppBar: true,
               newBorderRadius: 20,
               gradientColors: [
@@ -41,72 +42,53 @@ class _NewBookingState extends State<NewBooking> {
                 theme.primaryColor.withAlpha(800),
               ],
             ),
-            CustomInputField(
-              label: 'Name',
-
-            ),
+            CustomInputField(label: 'Name'),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               spacing: 20,
               children: [
                 Flexible(
-                    child: CustomButton(
-                      title: 'From: ${start.day}/${start.month}/${start.year}',
-                        onTap: pickDateRange,
-                    ),
-
+                  child: CustomButton(
+                    title: 'From: ${start.day}/${start.month}/${start.year}',
+                    onTap: pickDateRange,
+                  ),
                 ),
                 Flexible(
                   child: CustomButton(
                     title: 'To: ${end.day}/${end.month}/${end.year}',
                     onTap: pickDateRange,
                   ),
-
                 ),
               ],
             ),
-            CustomInputField(
-              label: 'Amount',
-              inputType: TextInputType.number,
-
+            CustomInputField(label: 'Amount', inputType: TextInputType.number),
+            CustomDropDown(
+              hint: 'Payment Method',
+              isFullWidth: true,
+              items: paymentMethods,
+              onChanged: (val) {},
+            ),
+            CustomInputField(label: 'Payment Reference'),
+            CustomDropDown(
+              hint: 'Booking Source',
+              isFullWidth: true,
+              items: bookingSources,
+              onChanged: (val) {},
             ),
             CustomDropDown(
-                hint: 'Payment Method',
-                isFullWidth: true,
-                items: paymentMethods,
-                onChanged: (val){}
+              hint: 'Booking Status',
+              isFullWidth: true,
+              items: bookingStatus,
+              onChanged: (val) {},
             ),
-            CustomInputField(
-              label: 'Payment Reference',
-
-            ),
-            CustomDropDown(
-                hint: 'Booking Source',
-                isFullWidth: true,
-                items: bookingSources,
-                onChanged: (val){}
-            ),
-            CustomDropDown(
-                hint: 'Booking Status',
-                isFullWidth: true,
-                items: bookingStatus,
-                onChanged: (val){}
-            ),
-            CustomInputField(
-              label: 'Additional Notes',
-
-            ),
-            CustomInputField(
-              label: 'Reminder',
-
-            ),
-            CustomButton(title: 'Create Booking', onTap: (){},)
+            CustomInputField(label: 'Additional Notes'),
+            CustomInputField(label: 'Reminder'),
+            CustomButton(title: 'Create Booking', onTap: () {}),
           ],
         ),
       ),
     );
   }
-
 
   Future<void> pickDateRange() async {
     await showDialog(
@@ -140,7 +122,7 @@ class _NewBookingState extends State<NewBooking> {
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: const Text("Done"),
-            )
+            ),
           ],
         );
       },

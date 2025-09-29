@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 
 class LinesTitles {
-  static const List<String> months =[
+  static const List<String> months = [
     'J',
     'F',
     'M',
@@ -14,36 +14,27 @@ class LinesTitles {
     'S',
     'O',
     'N',
-    'D'
+    'D',
   ];
 
-  static getTileData ()=> FlTitlesData(
-    show:  true,
+  static getTileData() => FlTitlesData(
+    show: true,
     bottomTitles: AxisTitles(
       sideTitles: SideTitles(
         showTitles: true,
-        getTitlesWidget: (value, meta){
+        getTitlesWidget: (value, meta) {
           int index = value.toInt();
-          if(index >=0 && index< months.length){
+          if (index >= 0 && index < months.length) {
             return Text(months[index]);
           }
           return Text('');
-
-        }
-      )
+        },
+      ),
     ),
-      topTitles: AxisTitles(
-        sideTitles: SideTitles(showTitles: false),
-      ),
-      rightTitles: AxisTitles(
-        sideTitles: SideTitles(showTitles: false),
-      ),
+    topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+    rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
     leftTitles: AxisTitles(
-      sideTitles: SideTitles(
-        showTitles: true,
-        reservedSize: 10,
-      ),
+      sideTitles: SideTitles(showTitles: true, reservedSize: 10),
     ),
-
   );
 }

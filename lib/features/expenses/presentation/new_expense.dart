@@ -17,8 +17,9 @@ class NewExpense extends StatefulWidget {
 
 class _NewExpenseState extends State<NewExpense> {
   DateTimeRange dateTimeRange = DateTimeRange(
-      start: DateTime(2025,08,01),
-      end: DateTime(2025,09,01));
+    start: DateTime(2025, 08, 01),
+    end: DateTime(2025, 09, 01),
+  );
   @override
   Widget build(BuildContext context) {
     final start = dateTimeRange.start;
@@ -34,7 +35,7 @@ class _NewExpenseState extends State<NewExpense> {
               title: 'New Expense',
               subtitle: 'Add a new expense.',
               icon: FontAwesomeIcons.hotel,
-              customHeight: size.height *0.17,
+              customHeight: size.height * 0.17,
               isAppBar: true,
               newBorderRadius: 20,
               gradientColors: [
@@ -43,41 +44,27 @@ class _NewExpenseState extends State<NewExpense> {
               ],
             ),
             CustomDropDown(
-                hint: 'Expense Type',
-                isFullWidth: true,
-                items: expenseTypes,
-                onChanged: (val){}
+              hint: 'Expense Type',
+              isFullWidth: true,
+              items: expenseTypes,
+              onChanged: (val) {},
             ),
             CustomDropDown(
-                hint: 'Payment Method',
-                isFullWidth: true,
-                items: paymentMethods,
-                onChanged: (val){}
+              hint: 'Payment Method',
+              isFullWidth: true,
+              items: paymentMethods,
+              onChanged: (val) {},
             ),
-            CustomInputField(
-              label: 'Amount',
-              inputType: TextInputType.number,
-
-            ),
-            CustomInputField(
-              label: 'Payment Reference',
-
-            ),
-            CustomInputField(
-              label: 'Additional Notes',
-
-            ),
-            CustomInputField(
-              label: 'Reminder',
-
-            ),
-            CustomButton(title: 'Create Expense', onTap: (){},)
+            CustomInputField(label: 'Amount', inputType: TextInputType.number),
+            CustomInputField(label: 'Payment Reference'),
+            CustomInputField(label: 'Additional Notes'),
+            CustomInputField(label: 'Reminder'),
+            CustomButton(title: 'Create Expense', onTap: () {}),
           ],
         ),
       ),
     );
   }
-
 
   Future<void> pickDateRange() async {
     await showDialog(
@@ -111,7 +98,7 @@ class _NewExpenseState extends State<NewExpense> {
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: const Text("Done"),
-            )
+            ),
           ],
         );
       },

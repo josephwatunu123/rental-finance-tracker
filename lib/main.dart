@@ -12,11 +12,12 @@ void main() {
   Firebase.initializeApp();
   runApp(const ProviderScope(child: MyApp()));
 }
+
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final route = ref.watch(routerProvider);
 
     return MaterialApp.router(
@@ -39,10 +40,7 @@ class MainScaffold extends ConsumerStatefulWidget {
 class _MainScaffoldState extends ConsumerState<MainScaffold> {
   int _currentIndex = 0;
 
-  final _pages = const [
-    HomePage(),
-    SettingsPage(),
-  ];
+  final _pages = const [HomePage(), SettingsPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +60,8 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
         backgroundColor: Color(0xff2B6EF3),
 
         destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_filled),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
+          NavigationDestination(icon: Icon(Icons.home_filled), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );

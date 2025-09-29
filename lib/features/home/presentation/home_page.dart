@@ -42,12 +42,12 @@ class _HomePageState extends State<HomePage> {
           children: [
             // userGreetings(theme: theme),
             TitleBar(
-                title: 'Good Afternoon, Jayder',
-                subtitle: 'SEPTEMBER STATISTICS',
-                icon: FontAwesomeIcons.userAstronaut,
-                customHeight: size.height *0.17,
-                isAppBar: true,
-                newBorderRadius: 20,
+              title: 'Good Afternoon, Jayder',
+              subtitle: 'SEPTEMBER STATISTICS',
+              icon: FontAwesomeIcons.userAstronaut,
+              customHeight: size.height * 0.17,
+              isAppBar: true,
+              newBorderRadius: 20,
               gradientColors: [
                 lighten(theme.primaryColor, 0.2),
                 darken(theme.primaryColor, 0.2),
@@ -60,29 +60,29 @@ class _HomePageState extends State<HomePage> {
               child: Wrap(
                 spacing: 10,
                 runSpacing: 10,
-                children:[
+                children: [
                   StatsCard(
-                      mainIcon: FontAwesomeIcons.moneyBill1Wave,
-                      title: 'Monthly Revenue',
-                      total: 60000
+                    mainIcon: FontAwesomeIcons.moneyBill1Wave,
+                    title: 'Monthly Revenue',
+                    total: 60000,
                   ),
                   StatsCard(
-                      mainIcon: FontAwesomeIcons.bed,
-                      title: 'Bookings',
-                      total: 11
+                    mainIcon: FontAwesomeIcons.bed,
+                    title: 'Bookings',
+                    total: 11,
                   ),
                   StatsCard(
-                      mainIcon: FontAwesomeIcons.calendarCheck,
-                      title: 'Days Booked',
-                      total: 24
+                    mainIcon: FontAwesomeIcons.calendarCheck,
+                    title: 'Days Booked',
+                    total: 24,
                   ),
                   StatsCard(
-                      mainIcon: FontAwesomeIcons.chartLine,
-                      title: 'Profit',
-                      total: 36000
+                    mainIcon: FontAwesomeIcons.chartLine,
+                    title: 'Profit',
+                    total: 36000,
                   ),
                 ],
-              )
+              ),
             ),
             const SizedBox(height: 10),
             Column(
@@ -90,8 +90,13 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 12.0,top: 12),
-                  child: Text('Income Trend',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),),
+                  padding: const EdgeInsets.only(left: 12.0, top: 12),
+                  child: Text(
+                    'Income Trend',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
                 LineGraph(),
               ],
@@ -102,7 +107,12 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Text('Booking Sources',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),),
+                  child: Text(
+                    'Booking Sources',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
                 CustomPieChart(),
               ],
@@ -117,48 +127,51 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     spacing: 10,
                     children: [
-                      Icon(Icons.calendar_today_rounded,color: theme.primaryColor,),
-                      Text('Recent Bookings',style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),),
+                      Icon(
+                        Icons.calendar_today_rounded,
+                        color: theme.primaryColor,
+                      ),
+                      Text(
+                        'Recent Bookings',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                   RecentBookings(),
                   RecentBookings(),
                   RecentBookings(),
                   RecentBookings(),
-                  RecentBookings()
+                  RecentBookings(),
                 ],
-
               ),
             ),
           ],
         ),
       ),
-        floatingActionButton: SpeedDial(
-          icon: Icons.add,
-          activeIcon: Icons.close,
-          overlayOpacity: 0.8,
-          overlayColor: Colors.black,
-          children: [
-            SpeedDialChild(
-              backgroundColor: theme.primaryColor,
-              child: Icon(Icons.king_bed,color: Colors.white,),
-              onTap: ()=>context.pushNamed('newBookings')
-            ),
-            SpeedDialChild(
-                backgroundColor: theme.primaryColor.withAlpha(200),
-                child: Icon(Icons.request_page,color: Colors.white,),
-                onTap: ()=>context.pushNamed('newExpense')
-            ),
-          ],
-        )
+      floatingActionButton: SpeedDial(
+        icon: Icons.add,
+        activeIcon: Icons.close,
+        overlayOpacity: 0.8,
+        overlayColor: Colors.black,
+        children: [
+          SpeedDialChild(
+            backgroundColor: theme.primaryColor,
+            child: Icon(Icons.king_bed, color: Colors.white),
+            onTap: () => context.pushNamed('newBookings'),
+          ),
+          SpeedDialChild(
+            backgroundColor: theme.primaryColor.withAlpha(200),
+            child: Icon(Icons.request_page, color: Colors.white),
+            onTap: () => context.pushNamed('newExpense'),
+          ),
+        ],
+      ),
     );
   }
-  
-  Widget userGreetings(
-  {
-    required ThemeData theme,
-}
-      ){
+
+  Widget userGreetings({required ThemeData theme}) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.all(8),
@@ -168,11 +181,14 @@ class _HomePageState extends State<HomePage> {
         children: [
           Text(
             "Good Evening, Jayder. Today's Overview",
-            style: theme.textTheme.bodySmall,),
+            style: theme.textTheme.bodySmall,
+          ),
           Text(
-              "10th September 2025",
-            style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-          )
+            "10th September 2025",
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );

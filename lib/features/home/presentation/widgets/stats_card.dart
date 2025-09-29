@@ -11,7 +11,7 @@ class StatsCard extends StatelessWidget {
     required this.mainIcon,
     required this.title,
     required this.total,
-    this.statistic
+    this.statistic,
   });
 
   @override
@@ -24,27 +24,38 @@ class StatsCard extends StatelessWidget {
       height: size.height * 0.12,
       width: size.width * 0.45,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-              width: 0.5,
-              color: Colors.grey
-          )
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(width: 0.5, color: Colors.grey),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w400)),
+          Text(
+            title,
+            style: theme.textTheme.bodySmall?.copyWith(
+              fontWeight: FontWeight.w400,
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Kes. ${total ?? 0}',style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
-              FaIcon(mainIcon,
-                color: theme.primaryColor
-                ,)
+              Text(
+                'Kes. ${total ?? 0}',
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              FaIcon(mainIcon, color: theme.primaryColor),
             ],
           ),
-          Text('+${statistic ?? 0}%',style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold,color: Colors.green))
+          Text(
+            '+${statistic ?? 0}%',
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Colors.green,
+            ),
+          ),
         ],
       ),
     );
