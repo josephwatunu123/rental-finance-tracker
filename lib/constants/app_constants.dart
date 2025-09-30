@@ -1,4 +1,11 @@
 
+
+//Date and Time
+final today = DateTime.now();
+final yesterday = today.subtract(const Duration(days: 1));
+final thisYear = DateTime(today.year, 1, 1);
+final thisMonth = DateTime(today.year, today.month, 1);
+
 //Visual constants
 const double borderRadiusMain = 12;
 const double borderRadiusSmall =8;

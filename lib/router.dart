@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rental_finance_tracker/features/booking/presentation/new_booking.dart';
 import 'package:rental_finance_tracker/features/expenses/presentation/new_expense.dart';
 
-import 'features/home/presentation/home_page.dart';
+import 'features/home/home_page_view.dart';
 import 'features/settings/settings.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {

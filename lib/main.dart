@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/router.dart';
 import 'package:rental_finance_tracker/theme/app_theme.dart';
 
-import 'features/home/presentation/home_page.dart';
+import 'features/home/home_page_view.dart';
 import 'features/settings/settings.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(const ProviderScope(child: MyApp()));
 }
 

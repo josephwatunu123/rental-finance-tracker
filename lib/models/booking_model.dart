@@ -1,22 +1,57 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-part 'booking_model.g.dart';
-part 'booking_model.freezed.dart';
+class BookingModel {
+  final int? id;
+  final String? name;
+  final DateTime? from;
+  final DateTime? to;
+  final String? paymentMethod;
+  final int? amountPaid;
+  final String? bookingSource;
+  final String? status;
+  final String? notes;
+  final String? reminder;
 
-@freezed
-abstract class BookingModel with _$BookingModel {
-  const factory BookingModel({
-  int? id,
-  String? name,
-  String? from,
-  String? to,
-  String? payment_method,
-  String? booking_source,
-  String? status,
-  String? notes,
-  String? reminder,
- }) = _BookingModel;
+  BookingModel({
+    this.id,
+    this.name,
+    this.from,
+    this.to,
+    this.paymentMethod,
+    this.amountPaid,
+    this.bookingSource,
+    this.status,
+    this.notes,
+    this.reminder,
+  });
 
- factory BookingModel.fromJson(Map<String, dynamic> json) =>
-     _$BookingModelFromJson(json);
+  factory BookingModel.fromJson(Map<String, dynamic> json) {
+    return BookingModel(
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      from: json['from'] != null ? (json['from'] as Timestamp).toDate() : null,
+      to: json['to'] != null ? (json['to'] as Timestamp).toDate() : null,
+      paymentMethod: json['payment_method'] as String?,
+      amountPaid: json['amount_paid'] != null ? (json['amount_paid'] as num?)?.toInt() : null,
+      bookingSource: json['booking_source'] as String?,
+      status: json['status'] as String?,
+      notes: json['notes'] as String?,
+      reminder: json['reminder'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'from': from != null ? Timestamp.fromDate(from!) : null,
+      'to': to != null ? Timestamp.fromDate(to!) : null,
+      'payment_method': paymentMethod,
+      'amount_paid': amountPaid,
+      'booking_source': bookingSource,
+      'status': status,
+      'notes': notes,
+      'reminder': reminder,
+    };
+  }
 }
