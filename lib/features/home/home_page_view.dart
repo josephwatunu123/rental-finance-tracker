@@ -60,11 +60,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                           total: viewModel.getCurrentMonthTotalRevenue(bookings),
                         ),
                         StatsCard(
+                          addCurrency: false,
                           mainIcon: FontAwesomeIcons.bed,
                           title: 'Bookings',
                           total: viewModel.monthTotalBookings,
                         ),
                         StatsCard(
+                          addCurrency: false,
                           mainIcon: FontAwesomeIcons.calendarCheck,
                           title: 'Days Booked',
                           total: 24,

@@ -6,12 +6,14 @@ class StatsCard extends StatelessWidget {
   final String title;
   final int? total;
   final int? statistic;
+  final bool addCurrency;
   const StatsCard({
     super.key,
     required this.mainIcon,
     required this.title,
     required this.total,
     this.statistic,
+    this.addCurrency=true,
   });
 
   @override
@@ -40,8 +42,13 @@ class StatsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              addCurrency ? Text(
                 'Kes. ${total ?? 0}',
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ) : Text(
+                '${total ?? 0}',
                 style: theme.textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
