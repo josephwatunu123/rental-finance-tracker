@@ -1,7 +1,10 @@
 class AppConstants{
 
 //Date and Time
-  static DateTime get today => DateTime.now();
+  static DateTime get today {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day);
+  }
   static DateTime get tomorrow => today.add(const Duration(days: 1));
   static DateTime get yesterday => today.subtract(const Duration(days: 1));
   static final DateTime thisYear = DateTime(today.year, 1, 1);
@@ -9,6 +12,13 @@ class AppConstants{
   static final firstDayOfCurrentMonth = DateTime(today.year, today.month, 1);
   static final lastDayOfPreviousMonth = firstDayOfCurrentMonth.subtract(Duration(days: 1));
   static final firstDayOfPreviousMonth = DateTime(lastDayOfPreviousMonth.year, lastDayOfPreviousMonth.month, 1);
+  static DateTime get lastDayOfCurrentMonth {
+    final now = DateTime.now();
+    final beginningNextMonth = (now.month < 12)
+        ? DateTime(now.year, now.month + 1, 1)
+        : DateTime(now.year + 1, 1, 1);
+    return beginningNextMonth.subtract(const Duration(milliseconds: 1));
+  }
 
 //Visual constants
   static const double borderRadiusMain = 12;

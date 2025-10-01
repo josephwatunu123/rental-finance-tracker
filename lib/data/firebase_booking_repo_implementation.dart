@@ -20,10 +20,11 @@ class FirebaseBookingImplementation implements BookingRepository{
     try{
       final snapshot = await firestore
           .collection('bookings')
-          .where('from', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate))
-          .where('to', isLessThanOrEqualTo: Timestamp.fromDate(endDate)).get();
+          .where('from', isLessThanOrEqualTo: Timestamp.fromDate(endDate))
+          .where('to', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate)).get();
       log('response firebase::: '
           'Found ${snapshot.docs.length} bookings. '
+            'queryParams: {${startDate},${endDate} }'
           'From cache: ${snapshot.metadata.isFromCache}. '
           'Document IDs: ${snapshot.docs.map((doc) => doc.id).toList()}. '
           'Data: ${snapshot.docs.map((doc) => doc.data()).toList()}');

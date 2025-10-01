@@ -15,16 +15,16 @@ class HomePageViewModel extends StateNotifier<HomeViewModelState>{
   }
 
   final startDate = AppConstants.today;
-  final endDate = AppConstants.thisMonth;
+  final endDate = AppConstants.lastDayOfCurrentMonth;
 
   Future<void> loadBookings() async{
     state = state.copyWith(isLoading: true,);
     try{
       final bookings = await repository.getBookings(
-          startDate: AppConstants.firstDayOfPreviousMonth,
-          endDate: AppConstants.lastDayOfPreviousMonth);
+          startDate: startDate,
+          endDate: endDate);
       state =state.copyWith(bookings: bookings);
-      state = state.copyWith(monthToDateTotal:getTotalBookingsThisMonth(bookings));
+      state = state.copyWith(monthToDateTotal:bookings?.length);
       state = state.copyWith(monthToDateRevenue: getCurrentMonthTotalRevenue(bookings));
       state = state.copyWith(isLoading: false);
     }catch (e, st){
