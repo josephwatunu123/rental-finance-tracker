@@ -3,32 +3,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
 import 'package:rental_finance_tracker/data/booking_repository.dart';
 import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation.dart';
+import 'package:rental_finance_tracker/features/home/home_view_state.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
 
-class HomePageViewModel extends StateNotifier<AsyncValue<List<BookingModel>>>{
+class HomePageViewModel extends StateNotifier<HomeViewModelState>{
   final BookingRepository repository;
 
-   int? monthToDateTotal;
-   int? monthTotalBookings;
-  final DateTime startDate = today;
-  final DateTime endDate = thisMonth;
 
-  HomePageViewModel(this.repository): super(const AsyncValue.loading()){
+  HomePageViewModel({required this.repository}): super(HomeViewModelState()){
     loadBookings();
   }
 
+  final startDate = AppConstants.today;
+  final endDate = AppConstants.thisMonth;
 
   Future<void> loadBookings() async{
-    debugPrint("trying to load bookings");
+    state = state.copyWith(isLoading: true,);
     try{
-      final bookings = await repository.getBookings();
-      monthToDateTotal = getCurrentMonthTotalRevenue(bookings);
-      monthTotalBookings = getTotalBookingsThisMonth(bookings);
-      debugPrint("test1::: $monthToDateTotal,test2:::$monthTotalBookings");
-      state = AsyncValue.data(bookings);
+      final bookings = await repository.getBookings(
+          startDate: AppConstants.firstDayOfPreviousMonth,
+          endDate: AppConstants.lastDayOfPreviousMonth);
+      state =state.copyWith(bookings: bookings);
+      state = state.copyWith(monthToDateTotal:getTotalBookingsThisMonth(bookings));
+      state = state.copyWith(monthToDateRevenue: getCurrentMonthTotalRevenue(bookings));
+      state = state.copyWith(isLoading: false);
     }catch (e, st){
       debugPrint("error::: $e,stack:::$st");
-      state = AsyncValue.error(e, st);
+      state =state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
@@ -37,6 +38,8 @@ class HomePageViewModel extends StateNotifier<AsyncValue<List<BookingModel>>>{
       final currentMonthsRevenue = bookings.where((b)=>
         b.from!.isAfter(startDate)&& b.to!.isBefore(endDate)
       ).toList();
+
+      debugPrint("this is bookings from revenue calc: ${bookings.first}");
 
       return currentMonthsRevenue.fold(0, (sum, bookings)=> sum + (bookings.amountPaid ?? 0));
     }
@@ -52,8 +55,7 @@ class HomePageViewModel extends StateNotifier<AsyncValue<List<BookingModel>>>{
   }
 }
 
-final homePageViewModelProvider =
-StateNotifierProvider<HomePageViewModel, AsyncValue<List<BookingModel>>>((ref) {
-  final repo = ref.watch(bookingRepositoryProvider);
-  return HomePageViewModel(repo);
+final homePageViewModelProvider = StateNotifierProvider<HomePageViewModel, HomeViewModelState>((ref){
+  final repository = ref.watch(bookingRepositoryProvider);
+  return HomePageViewModel(repository: repository);
 });

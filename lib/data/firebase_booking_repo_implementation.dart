@@ -11,14 +11,37 @@ class FirebaseBookingImplementation implements BookingRepository{
 
   FirebaseBookingImplementation(this.firestore);
 
+//TODO: Consider implementing snack bars to show us what is the error
+  @override
+  Future<List<BookingModel>?> getBookings({
+    required DateTime startDate,
+    required DateTime endDate
+}) async{
+    try{
+      final snapshot = await firestore
+          .collection('bookings')
+          .where('from', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate))
+          .where('to', isLessThanOrEqualTo: Timestamp.fromDate(endDate)).get();
+      log('response firebase::: '
+          'Found ${snapshot.docs.length} bookings. '
+          'From cache: ${snapshot.metadata.isFromCache}. '
+          'Document IDs: ${snapshot.docs.map((doc) => doc.id).toList()}. '
+          'Data: ${snapshot.docs.map((doc) => doc.data()).toList()}');
+      return snapshot.docs.map((booking){
+        return BookingModel.fromJson(booking.data());
+      }).toList();
+    }catch( e, st){
+      log("error fetching bookings::: $e, $st");
+      return null;
+    }
+  }
+
+  //TODO: Implement it using try catch
+
 
   @override
-  Future<List<BookingModel>> getBookings() async{
-    final snapshot = await firestore.collection('bookings').get();
-    log("response firebase::: $snapshot");
-    return snapshot.docs.map((booking){
-      return BookingModel.fromJson(booking.data());
-    }).toList();
+  Future<void> addBooking(BookingModel booking) async{
+    await firestore.collection('bookings').add(booking.toJson());
   }
 
 

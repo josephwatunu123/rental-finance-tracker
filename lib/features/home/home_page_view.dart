@@ -25,129 +25,127 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
-    final homePageState = ref.watch(homePageViewModelProvider);
+    final state = ref.watch(homePageViewModelProvider);
     final viewModel = ref.watch(homePageViewModelProvider.notifier);
     return Scaffold(
       body: Center(
-        child: homePageState.when(
-            data: (bookings)=>SingleChildScrollView(
-              child: Column(
-                spacing: 5,
+        child: state.isLoading ? const CircularProgressIndicator()
+            : state.error !=null ? Text('${state.error}')
+              :  SingleChildScrollView(
+      child: Column(
+      spacing: 5,
+      children: [
+        TitleBar(
+          title: 'Good Afternoon, Jayder',
+          subtitle: 'SEPTEMBER STATISTICS',
+          icon: FontAwesomeIcons.userAstronaut,
+          customHeight: size.height * 0.17,
+          isAppBar: true,
+          newBorderRadius: 20,
+          gradientColors: [
+            lighten(theme.primaryColor, 0.2),
+            darken(theme.primaryColor, 0.2),
+          ],
+        ),
+        Container(
+          padding: EdgeInsets.all(12),
+          height: size.height * 0.25,
+          width: double.infinity,
+          child: Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              StatsCard(
+                mainIcon: FontAwesomeIcons.moneyBill1Wave,
+                title: 'Monthly Revenue',
+                total: state.monthToDateRevenue,
+              ),
+              StatsCard(
+                addCurrency: false,
+                mainIcon: FontAwesomeIcons.bed,
+                title: 'Bookings',
+                total: state.monthToDateTotal,
+              ),
+              StatsCard(
+                addCurrency: false,
+                mainIcon: FontAwesomeIcons.calendarCheck,
+                title: 'Days Booked',
+                total: 24,
+              ),
+              StatsCard(
+                mainIcon: FontAwesomeIcons.chartLine,
+                title: 'Profit',
+                total: 36000,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0, top: 12),
+              child: Text(
+                'Income Trend',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            LineGraph(),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                'Booking Sources',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            CustomPieChart(),
+          ],
+        ),
+        Container(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            spacing: 10,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                spacing: 10,
                 children: [
-                  TitleBar(
-                    title: 'Good Afternoon, Jayder',
-                    subtitle: 'SEPTEMBER STATISTICS',
-                    icon: FontAwesomeIcons.userAstronaut,
-                    customHeight: size.height * 0.17,
-                    isAppBar: true,
-                    newBorderRadius: 20,
-                    gradientColors: [
-                      lighten(theme.primaryColor, 0.2),
-                      darken(theme.primaryColor, 0.2),
-                    ],
+                  Icon(
+                    Icons.calendar_today_rounded,
+                    color: theme.primaryColor,
                   ),
-                  Container(
-                    padding: EdgeInsets.all(12),
-                    height: size.height * 0.25,
-                    width: double.infinity,
-                    child: Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        StatsCard(
-                          mainIcon: FontAwesomeIcons.moneyBill1Wave,
-                          title: 'Monthly Revenue',
-                          total: viewModel.getCurrentMonthTotalRevenue(bookings),
-                        ),
-                        StatsCard(
-                          addCurrency: false,
-                          mainIcon: FontAwesomeIcons.bed,
-                          title: 'Bookings',
-                          total: viewModel.monthTotalBookings,
-                        ),
-                        StatsCard(
-                          addCurrency: false,
-                          mainIcon: FontAwesomeIcons.calendarCheck,
-                          title: 'Days Booked',
-                          total: 24,
-                        ),
-                        StatsCard(
-                          mainIcon: FontAwesomeIcons.chartLine,
-                          title: 'Profit',
-                          total: 36000,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0, top: 12),
-                        child: Text(
-                          'Income Trend',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      LineGraph(),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          'Booking Sources',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      CustomPieChart(),
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    child: Column(
-                      spacing: 10,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          spacing: 10,
-                          children: [
-                            Icon(
-                              Icons.calendar_today_rounded,
-                              color: theme.primaryColor,
-                            ),
-                            Text(
-                              'Recent Bookings',
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        RecentBookings(),
-                        RecentBookings(),
-                        RecentBookings(),
-                        RecentBookings(),
-                        RecentBookings(),
-                      ],
+                  Text(
+                    'Recent Bookings',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
-            ),
-            error: (err,_)=> Center(child: Text('Error: $err'),),
-            loading: ()=>const CircularProgressIndicator()
+              RecentBookings(),
+              RecentBookings(),
+              RecentBookings(),
+              RecentBookings(),
+              RecentBookings(),
+            ],
+          ),
         ),
+      ],
+    ),
+    ),
       ),
       floatingActionButton: SpeedDial(
         icon: Icons.add,

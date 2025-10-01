@@ -6,6 +6,7 @@ class CustomDropDown extends StatefulWidget {
   final bool isFullWidth;
   final double? width;
   final String hint;
+  final String? selectedValue;
   const CustomDropDown({
     super.key,
     required this.items,
@@ -13,6 +14,7 @@ class CustomDropDown extends StatefulWidget {
     this.isFullWidth = false,
     this.width,
     required this.hint,
+    this.selectedValue
   });
 
   @override
@@ -46,6 +48,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
         width: calculatedWidth,
         height: size.height * 0.1,
         child: DropdownButtonFormField<String>(
+          value: widget.selectedValue,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

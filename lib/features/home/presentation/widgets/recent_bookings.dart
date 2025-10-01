@@ -19,7 +19,7 @@ class _RecentBookingsState extends State<RecentBookings> {
       height: size.height * 0.11,
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadiusMain),
+        borderRadius: BorderRadius.circular(AppConstants.borderRadiusMain),
         border: Border.all(width: 0.08, color: CupertinoColors.black),
       ),
       child: Row(
@@ -41,7 +41,7 @@ class _RecentBookingsState extends State<RecentBookings> {
                       alignment: Alignment.center,
                       height: size.height * 0.032,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(borderRadiusMain),
+                        borderRadius: BorderRadius.circular(AppConstants.borderRadiusMain),
                         border: Border.all(width: 0.08, color: Colors.black),
                       ),
                       child: Text(
@@ -80,7 +80,7 @@ class _RecentBookingsState extends State<RecentBookings> {
                 alignment: Alignment.center,
                 height: size.height * 0.032,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(borderRadiusMain),
+                  borderRadius: BorderRadius.circular(AppConstants.borderRadiusMain),
                   color: Colors.green[500],
                 ),
                 child: Text(
