@@ -114,6 +114,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ],
         ),
         Container(
+          height: size.height *0.5,
           padding: EdgeInsets.all(8),
           child: Column(
             spacing: 10,
@@ -135,11 +136,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                 ],
               ),
-              RecentBookings(),
-              RecentBookings(),
-              RecentBookings(),
-              RecentBookings(),
-              RecentBookings(),
+              if(state.bookings !=null) Expanded(
+                child: ListView.builder(
+                    itemCount: state.bookings!.length > 5 ? 5 : state.bookings!.length,
+                    itemBuilder: (context, index)=> RecentBookings(bookings: state.bookings![index])
+                ),
+              )
             ],
           ),
         ),

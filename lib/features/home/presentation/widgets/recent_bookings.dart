@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
+import 'package:rental_finance_tracker/models/booking_model.dart';
+import 'package:rental_finance_tracker/utils/functions.dart';
 
 class RecentBookings extends StatefulWidget {
-  const RecentBookings({super.key});
+  final BookingModel? bookings;
+  const RecentBookings({super.key, required this.bookings});
 
   @override
   State<RecentBookings> createState() => _RecentBookingsState();
@@ -33,7 +36,7 @@ class _RecentBookingsState extends State<RecentBookings> {
                   children: [
                     Icon(CupertinoIcons.person, color: Colors.black, size: 15),
                     Text(
-                      'Joseph Kamau',
+                      (widget.bookings?.name ?? "--"),
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     Container(
@@ -45,7 +48,7 @@ class _RecentBookingsState extends State<RecentBookings> {
                         border: Border.all(width: 0.08, color: Colors.black),
                       ),
                       child: Text(
-                        'referral',
+                        (widget.bookings?.bookingSource ?? "--" ),
                         style: theme.textTheme.bodySmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -67,14 +70,14 @@ class _RecentBookingsState extends State<RecentBookings> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Text('8 Sept - 12 Sept')],
+                  children: [Text('${formatDate(widget.bookings?.from) ?? "--"} ' '-' ' ${formatDate(widget.bookings?.to) ?? "--"}')],
                 ),
               ],
             ),
           ),
           Column(
             children: [
-              Text('ksh. 20000'),
+              Text('Kes.${(widget.bookings?.amountPaid) ?? "-1"}'),
               Container(
                 padding: EdgeInsets.all(5),
                 alignment: Alignment.center,
@@ -84,7 +87,7 @@ class _RecentBookingsState extends State<RecentBookings> {
                   color: Colors.green[500],
                 ),
                 child: Text(
-                  'Confirmed',
+                  (widget.bookings?.status) ?? 'pending',
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
               ),
