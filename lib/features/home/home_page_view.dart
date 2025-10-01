@@ -64,13 +64,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                 addCurrency: false,
                 mainIcon: FontAwesomeIcons.bed,
                 title: 'Bookings',
-                total: state.monthToDateTotal ?? 0,
+                total: state.monthToDateTotal ?? 00,
               ),
               StatsCard(
                 addCurrency: false,
                 mainIcon: FontAwesomeIcons.calendarCheck,
                 title: 'Days Booked',
-                total: 24,
+                total: state.monthBookedDays,
               ),
               StatsCard(
                 mainIcon: FontAwesomeIcons.chartLine,

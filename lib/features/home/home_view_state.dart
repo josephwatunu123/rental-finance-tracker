@@ -6,11 +6,13 @@ class HomeViewModelState{
   final bool isLoading;
   final int? monthToDateTotal;
   final int? monthToDateRevenue;
+  final int? monthBookedDays;
   final String? error;
   HomeViewModelState({
     this.bookings,
     this.monthToDateTotal,
     this.monthToDateRevenue,
+    this.monthBookedDays,
     this.isLoading=false,
     this.error
 
@@ -21,6 +23,7 @@ class HomeViewModelState{
     bool? isLoading,
     int? monthToDateTotal,
     int? monthToDateRevenue,
+    int? monthBookedDays,
     String? error
 
   }) {
@@ -29,6 +32,7 @@ class HomeViewModelState{
       isLoading: isLoading ?? this.isLoading,
       monthToDateTotal: monthToDateTotal ?? this.monthToDateTotal,
       monthToDateRevenue: monthToDateRevenue ?? this.monthToDateRevenue,
+      monthBookedDays: monthBookedDays ?? this.monthBookedDays,
       error: error ?? this.error
     );
   }
