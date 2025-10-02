@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
-import 'package:rental_finance_tracker/constants/text_fields.dart';
+import 'package:rental_finance_tracker/global/widgets/text_fields.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_drop_down.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
@@ -46,13 +46,13 @@ class _NewExpenseState extends State<NewExpense> {
             CustomDropDown(
               hint: 'Expense Type',
               isFullWidth: true,
-              items: expenseTypes,
+              items: AppConstants.expenseTypes,
               onChanged: (val) {},
             ),
             CustomDropDown(
               hint: 'Payment Method',
               isFullWidth: true,
-              items: paymentMethods,
+              items: AppConstants.paymentMethods,
               onChanged: (val) {},
             ),
             CustomInputField(label: 'Amount', inputType: TextInputType.number),
