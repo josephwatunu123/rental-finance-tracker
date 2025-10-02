@@ -110,7 +110,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ),
             ),
-            CustomPieChart(),
+            CustomPieChart(
+              airbnbBookings: state.bookingsFromAirbnb,
+              referralBookings: state.bookingsFromReferral,
+              bookingsDotComBookings: state.bookingsFromBookingDotCom,
+              directClients: state.directBookings,
+            ),
           ],
         ),
         Container(

@@ -4,7 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:rental_finance_tracker/constants/chart_constants.dart';
 
 class CustomPieChart extends StatelessWidget {
-  const CustomPieChart({super.key});
+  final int? airbnbBookings;
+  final int? referralBookings;
+  final int? bookingsDotComBookings;
+  final int? directClients;
+  const CustomPieChart({
+    super.key,
+    this.airbnbBookings,
+    this.referralBookings,
+    this.bookingsDotComBookings,
+    this.directClients});
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +36,22 @@ class CustomPieChart extends StatelessWidget {
                 sections: [
                   PieChartSectionData(
                     color: pieChartColor1,
-                    value: 40,
+                    value: bookingsDotComBookings?.toDouble() ?? 1,
                     radius: 100,
                   ),
                   PieChartSectionData(
                     color: pieChartColor2,
-                    value: 20,
+                    value: airbnbBookings?.toDouble() ?? 1,
                     radius: 100,
                   ),
                   PieChartSectionData(
                     color: pieChartColor3,
-                    value: 100,
+                    value: referralBookings?.toDouble() ?? 1,
                     radius: 100,
                   ),
                   PieChartSectionData(
                     color: pieChartColor4,
-                    value: 70,
+                    value: directClients?.toDouble() ?? 1,
                     radius: 100,
                   ),
                 ],

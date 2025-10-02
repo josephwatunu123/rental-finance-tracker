@@ -7,4 +7,11 @@ abstract class BookingRepository{
   });
 
   Future<void> addBooking(BookingModel booking);
+
+  Future<double?> getTotalBookingsFromSource({
+    required String source,
+    DateTime startDate,
+    DateTime endDate,
+});
+
 }

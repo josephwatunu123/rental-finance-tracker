@@ -14,10 +14,12 @@ class HomePageViewModel extends StateNotifier<HomeViewModelState>{
 
   HomePageViewModel({required this.repository}): super(HomeViewModelState()){
     loadBookings();
+    getBookingSources();
   }
 
   final startDate = AppConstants.today;
   final endDate = AppConstants.lastDayOfCurrentMonth;
+  final List<String> bookingSources = AppConstants.bookingSources;
 
   Future<void> loadBookings() async{
     state = state.copyWith(isLoading: true,);
@@ -62,6 +64,30 @@ class HomePageViewModel extends StateNotifier<HomeViewModelState>{
 
     return totalDays;
   }
+
+  Future<void> getBookingSources() async {
+    final results = await Future.wait(
+      bookingSources.map((source) =>
+          repository.getTotalBookingsFromSource(
+              source: source,
+              startDate: startDate,
+              endDate: endDate
+          )),
+    );
+
+    final Map<String, int> counts = {
+      for (int i = 0; i < bookingSources.length; i++)
+        bookingSources[i]: results[i]?.toInt() ?? 0,
+    };
+
+    state = state.copyWith(
+      bookingsFromAirbnb: counts['airbnb'],
+      bookingsFromReferral: counts['referral'],
+      directBookings: counts['direct'],
+      bookingsFromBookingDotCom: counts['booking.com'],
+    );
+  }
+
 
 
 
