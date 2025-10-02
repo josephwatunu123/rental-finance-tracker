@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rental_finance_tracker/constants/app_constants.dart';
 import 'package:rental_finance_tracker/data/booking_repository.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
 

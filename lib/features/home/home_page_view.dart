@@ -26,7 +26,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     final state = ref.watch(homePageViewModelProvider);
-    final viewModel = ref.watch(homePageViewModelProvider.notifier);
     return Scaffold(
       body: Center(
         child: state.isLoading ? const CircularProgressIndicator()
