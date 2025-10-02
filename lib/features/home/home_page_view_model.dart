@@ -61,7 +61,6 @@ class HomePageViewModel extends StateNotifier<HomeViewModelState>{
       final days = end.difference(start).inDays + 1;
       totalDays += days;
     }
-
     return totalDays;
   }
 
@@ -74,12 +73,10 @@ class HomePageViewModel extends StateNotifier<HomeViewModelState>{
               endDate: endDate
           )),
     );
-
     final Map<String, int> counts = {
       for (int i = 0; i < bookingSources.length; i++)
         bookingSources[i]: results[i]?.toInt() ?? 0,
     };
-
     state = state.copyWith(
       bookingsFromAirbnb: counts['airbnb'],
       bookingsFromReferral: counts['referral'],
@@ -87,6 +84,8 @@ class HomePageViewModel extends StateNotifier<HomeViewModelState>{
       bookingsFromBookingDotCom: counts['booking.com'],
     );
   }
+
+
 
 
 
