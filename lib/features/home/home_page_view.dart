@@ -169,27 +169,4 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
     );
   }
-
-  Widget userGreetings({required ThemeData theme}) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 5,
-        children: [
-          Text(
-            "Good Evening, Jayder. Today's Overview",
-            style: theme.textTheme.bodySmall,
-          ),
-          Text(
-            "10th September 2025",
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
