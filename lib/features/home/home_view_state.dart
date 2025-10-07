@@ -1,6 +1,6 @@
 import 'package:rental_finance_tracker/models/booking_model.dart';
 
-class HomeViewModelState{
+class HomeViewState{
   final List<BookingModel>? bookings;
   final bool isLoading;
   final int? monthToDateTotal;
@@ -11,7 +11,7 @@ class HomeViewModelState{
   final int? directBookings;
   final int? bookingsFromBookingDotCom;
   final String? error;
-  HomeViewModelState({
+  HomeViewState({
     this.bookings,
     this.monthToDateTotal,
     this.monthToDateRevenue,
@@ -25,7 +25,7 @@ class HomeViewModelState{
 
 });
 
-  HomeViewModelState copyWith({
+  HomeViewState copyWith({
     List<BookingModel>? bookings,
     bool? isLoading,
     int? monthToDateTotal,
@@ -38,7 +38,7 @@ class HomeViewModelState{
     String? error
 
   }) {
-    return HomeViewModelState(
+    return HomeViewState(
       bookings: bookings ?? this.bookings,
       isLoading: isLoading ?? this.isLoading,
       monthToDateTotal: monthToDateTotal ?? this.monthToDateTotal,

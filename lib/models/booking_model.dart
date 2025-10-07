@@ -11,6 +11,8 @@ class BookingModel {
   final String? status;
   final String? notes;
   final String? reminder;
+  final String? paymentRef;
+  final int? daysBooked;
 
   BookingModel({
     this.id,
@@ -23,6 +25,8 @@ class BookingModel {
     this.status,
     this.notes,
     this.reminder,
+    this.paymentRef,
+    this.daysBooked
   });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
@@ -37,6 +41,8 @@ class BookingModel {
       status: json['status'] as String?,
       notes: json['notes'] as String?,
       reminder: json['reminder'] as String?,
+      paymentRef: json['paymentRef'] as String?,
+      daysBooked: json['daysBooked'] as int?
     );
   }
 
@@ -52,6 +58,12 @@ class BookingModel {
       'status': status,
       'notes': notes,
       'reminder': reminder,
+      'daysBooked': daysBooked
     };
+  }
+
+  @override
+  String toString() {
+    return 'BookingModel(name: $name, from: $from, to: $to, amountPaid: $amountPaid, paymentMethod: $paymentMethod, paymentRef: $paymentRef, bookingSource: $bookingSource, reminder: $reminder, notes: $notes, daysBooked: $daysBooked)';
   }
 }

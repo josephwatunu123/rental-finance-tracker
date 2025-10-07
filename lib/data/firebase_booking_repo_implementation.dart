@@ -40,8 +40,19 @@ class FirebaseBookingImplementation implements BookingRepository{
 
 
   @override
-  Future<void> addBooking(BookingModel booking) async{
-    await firestore.collection('bookings').add(booking.toJson());
+  Future<Map<bool, String>> addBooking(BookingModel booking) async{
+    log("Booking to be submitted::: ${booking.toString()}");
+    try{
+      await firestore.collection('bookings').add(booking.toJson());
+      return {
+        true: 'Successfully Created Booking.'
+      };
+    }catch (e, st){
+      log("error fetching bookings::: $e, $st");
+      return {
+        false: 'Error: $e'
+      };
+    }
   }
 
   @override

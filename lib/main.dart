@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/router.dart';
 import 'package:rental_finance_tracker/theme/app_theme.dart';
+import 'package:rental_finance_tracker/utils/global_keys.dart';
 
 import 'features/home/home_page_view.dart';
 import 'features/settings/settings.dart';
@@ -26,6 +27,7 @@ class MyApp extends ConsumerWidget {
       darkTheme: AppThemes.darkTheme,
       themeMode: ThemeMode.system,
       routerConfig: route,
+      scaffoldMessengerKey: rootScaffoldMessengerKey,
     );
   }
 }

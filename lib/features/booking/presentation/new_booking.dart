@@ -1,12 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
+import 'package:rental_finance_tracker/features/booking/new_bookings_state.dart';
 import 'package:rental_finance_tracker/global/widgets/text_fields.dart';
 import 'package:rental_finance_tracker/features/booking/new_booking_view_model.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_drop_down.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
+import 'package:rental_finance_tracker/utils/functions.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class NewBooking extends ConsumerStatefulWidget {
@@ -15,19 +18,22 @@ class NewBooking extends ConsumerStatefulWidget {
   @override
   ConsumerState<NewBooking> createState() => _NewBookingState();
 }
-
-class _NewBookingState extends ConsumerState<NewBooking> {
-  DateTimeRange dateTimeRange = DateTimeRange(
+DateTimeRange dateTimeRange = DateTimeRange(
     start:AppConstants.today,
     end: AppConstants.tomorrow
-  );
+);
+final startDate = dateTimeRange.start;
+final endDate = dateTimeRange.end;
+
+class _NewBookingState extends ConsumerState<NewBooking> {
+
   @override
   Widget build(BuildContext context) {
-    final start = dateTimeRange.start;
-    final end = dateTimeRange.end;
+
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final viewModel = ref.watch(newBookingViewModelProvider.notifier);
+    final state = ref.watch(newBookingViewModelProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -48,7 +54,7 @@ class _NewBookingState extends ConsumerState<NewBooking> {
             CustomInputField(
                 label: 'Name',
                 controller: viewModel.nameController,
-              errorText: viewModel.nameErrMessage,
+              errorText: state.nameErrMessage,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,14 +62,14 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               children: [
                 Flexible(
                   child: CustomButton(
-                    title: 'From: ${start.day}/${start.month}/${start.year}',
-                    onTap: pickDateRange,
+                    title: 'From: ${formatDate(state.from)}',
+                    onTap: ()=>pickDateRange(state: state),
                   ),
                 ),
                 Flexible(
                   child: CustomButton(
-                    title: 'To: ${end.day}/${end.month}/${end.year}',
-                    onTap: pickDateRange,
+                    title: 'To: ${formatDate(state.to)}',
+                    onTap: ()=>pickDateRange(state: state),
                   ),
                 ),
               ],
@@ -72,10 +78,10 @@ class _NewBookingState extends ConsumerState<NewBooking> {
                 controller: viewModel.amountController,
                 label: 'Amount',
                 inputType: TextInputType.number,
-                errorText: viewModel.amountErrMessage,
+                errorText: state.amountErrMessage,
             ),
             CustomDropDown(
-              selectedValue: viewModel.paymentMethod,
+              selectedValue: state.paymentMethod,
               hint: 'Payment Method',
               isFullWidth: true,
               items: AppConstants.paymentMethods,
@@ -83,18 +89,18 @@ class _NewBookingState extends ConsumerState<NewBooking> {
             ),
             CustomInputField(
                 label: 'Payment Reference',
-                controller: viewModel.paymentReferenceController,
-                errorText: viewModel.paymentRefErrMsg,
+                controller: viewModel.paymentRefController,
+                errorText: state.paymentRefErrMsg,
             ),
             CustomDropDown(
-              selectedValue: viewModel.bookingSource,
+              selectedValue: state.bookingSource,
               hint: 'Booking Source',
               isFullWidth: true,
               items: AppConstants.bookingSources,
               onChanged: viewModel.onBookingSrcChanged,
             ),
             CustomDropDown(
-              selectedValue: viewModel.bookingStatus,
+              selectedValue: state.bookingStatus,
               hint: 'Booking Status',
               isFullWidth: true,
               items: AppConstants.bookingStatus,
@@ -109,7 +115,7 @@ class _NewBookingState extends ConsumerState<NewBooking> {
                 controller: viewModel.reminderController,
             ),
             CustomButton(title: 'Create Booking', onTap: () {
-              viewModel.onCreateNewBooking();
+              viewModel.onCreateNewBooking(context);
             }),
           ],
         ),
@@ -117,7 +123,8 @@ class _NewBookingState extends ConsumerState<NewBooking> {
     );
   }
 
-  Future<void> pickDateRange() async {
+  Future<void> pickDateRange({required NewBookingsState state}) async {
+    final viewModel = ref.read(newBookingViewModelProvider.notifier);
     await showDialog(
       context: context,
       builder: (context) {
@@ -129,18 +136,15 @@ class _NewBookingState extends ConsumerState<NewBooking> {
             child: SfDateRangePicker(
               selectionMode: DateRangePickerSelectionMode.range,
               initialSelectedRange: PickerDateRange(
-                dateTimeRange.start,
-                dateTimeRange.end,
+                state.from ?? startDate,
+                state.to ?? endDate,
               ),
-              onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
+              onSelectionChanged: (args) {
                 if (args.value is PickerDateRange) {
                   final range = args.value as PickerDateRange;
-                  setState(() {
-                    dateTimeRange = DateTimeRange(
-                      start: range.startDate ?? dateTimeRange.start,
-                      end: range.endDate ?? dateTimeRange.end,
-                    );
-                  });
+                  final from = range.startDate ?? startDate;
+                  final to = range.endDate ?? endDate;
+                  viewModel.updateDateRange(from, to);
                 }
               },
             ),

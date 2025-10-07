@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CustomDropDown extends StatefulWidget {
+class CustomDropDown extends StatelessWidget {
   final List? items;
   final Function(String?) onChanged;
   final bool isFullWidth;
   final double? width;
   final String hint;
   final String? selectedValue;
+  final String? errorText;
   const CustomDropDown({
     super.key,
     required this.items,
@@ -14,33 +15,19 @@ class CustomDropDown extends StatefulWidget {
     this.isFullWidth = false,
     this.width,
     required this.hint,
-    this.selectedValue
+    this.selectedValue,
+    this.errorText
   });
-
-  @override
-  State<CustomDropDown> createState() => _CustomDropDownState();
-}
-
-class _CustomDropDownState extends State<CustomDropDown> {
-  String? selectedItem;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.items!.isNotEmpty) {
-      selectedItem = widget.items?.first;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final calculatedWidth =
-        widget.isFullWidth
+        isFullWidth
             ? double.infinity
-            : (widget.width != null && widget.width! > 0)
-            ? size.width * widget.width!
+            : (width != null && width! > 0)
+            ? size.width * width!
             : size.width * 0.5;
     return Padding(
       padding: const EdgeInsets.all(12.0),
@@ -48,16 +35,25 @@ class _CustomDropDownState extends State<CustomDropDown> {
         width: calculatedWidth,
         height: size.height * 0.1,
         child: DropdownButtonFormField<String>(
-          value: widget.selectedValue,
+          value: selectedValue,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(width: 2, color: theme.primaryColor),
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(width: 2, color: Colors.red),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(width: 2, color: Colors.red),
+            ),
+            errorText: errorText,
           ),
-          hint: Text(widget.hint),
+          hint: Text(hint),
           items:
-              widget.items
+              items
                   ?.map(
                     (item) => DropdownMenuItem<String>(
                       value: item,
@@ -65,12 +61,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                     ),
                   )
                   .toList(),
-          onChanged: (item) {
-            setState(() {
-              selectedItem = item;
-            });
-            widget.onChanged(item);
-          },
+          onChanged: onChanged,
         ),
       ),
     );
