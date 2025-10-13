@@ -6,7 +6,7 @@ abstract class BookingRepository{
     required DateTime endDate,
   });
 
-  Future<void> addBooking(BookingModel booking);
+  Future<Map<bool, String>> addBooking(BookingModel booking);
 
   Future<double?> getTotalBookingsFromSource({
     required String source,

@@ -8,11 +8,11 @@ import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation
 import 'package:rental_finance_tracker/features/home/home_view_state.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
 
-class HomePageViewModel extends StateNotifier<HomeViewModelState>{
+class HomePageViewModel extends StateNotifier<HomeViewState>{
   final BookingRepository repository;
 
 
-  HomePageViewModel({required this.repository}): super(HomeViewModelState()){
+  HomePageViewModel({required this.repository}): super(HomeViewState()){
     loadBookings();
     getBookingSources();
   }
@@ -92,7 +92,7 @@ class HomePageViewModel extends StateNotifier<HomeViewModelState>{
 
 }
 
-final homePageViewModelProvider = StateNotifierProvider<HomePageViewModel, HomeViewModelState>((ref){
+final homePageViewModelProvider = StateNotifierProvider<HomePageViewModel, HomeViewState>((ref){
   final repository = ref.watch(bookingRepositoryProvider);
   return HomePageViewModel(repository: repository);
 });
