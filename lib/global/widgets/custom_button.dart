@@ -6,11 +6,13 @@ class CustomButton extends StatelessWidget {
   final String title;
   final GestureTapCallback onTap;
   final Color? buttonColor;
+  final bool isFullWidth;
   const CustomButton({
     super.key,
     required this.title,
     required this.onTap,
     this.buttonColor,
+    this.isFullWidth=false,
   });
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class CustomButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: size.width * 0.5,
+          width: isFullWidth ? double.infinity :size.width * 0.5,
           height: size.width * 0.1,
           alignment: Alignment.center,
           decoration: BoxDecoration(

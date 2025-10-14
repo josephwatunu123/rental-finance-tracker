@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
 import 'package:rental_finance_tracker/features/booking/new_bookings_state.dart';
+import 'package:rental_finance_tracker/global/widgets/date_picker.dart';
 import 'package:rental_finance_tracker/global/widgets/text_fields.dart';
 import 'package:rental_finance_tracker/features/booking/new_booking_view_model.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
@@ -57,20 +58,16 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               errorText: state.nameErrMessage,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               spacing: 20,
               children: [
-                Flexible(
-                  child: CustomButton(
-                    title: 'From: ${formatDate(state.from)}',
-                    onTap: ()=>pickDateRange(state: state),
-                  ),
+                DatePickerButton(
+                  givenDate: 'From: ${formatDate(state.from)}',
+                  onTap: ()=>pickDateRange(state: state),
                 ),
-                Flexible(
-                  child: CustomButton(
-                    title: 'To: ${formatDate(state.to)}',
-                    onTap: ()=>pickDateRange(state: state),
-                  ),
+                DatePickerButton(
+                  givenDate: 'To: ${formatDate(state.to)}',
+                  onTap: ()=>pickDateRange(state: state),
                 ),
               ],
             ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
+import 'package:rental_finance_tracker/global/widgets/date_picker.dart';
 import 'package:rental_finance_tracker/global/widgets/text_fields.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_drop_down.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
 import 'package:rental_finance_tracker/theme/app_colors.dart';
+import 'package:rental_finance_tracker/utils/functions.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class NewExpense extends StatefulWidget {
@@ -16,14 +18,11 @@ class NewExpense extends StatefulWidget {
 }
 
 class _NewExpenseState extends State<NewExpense> {
-  DateTimeRange dateTimeRange = DateTimeRange(
-    start: DateTime(2025, 08, 01),
-    end: DateTime(2025, 09, 01),
-  );
+  DateTime expensePaymentDate = DateTime(2025, 08, 01);
+
+
   @override
   Widget build(BuildContext context) {
-    final start = dateTimeRange.start;
-    final end = dateTimeRange.end;
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Scaffold(
@@ -43,6 +42,7 @@ class _NewExpenseState extends State<NewExpense> {
                 darken(theme.primaryColor, 0.2),
               ],
             ),
+            const SizedBox(height: 10,),
             CustomDropDown(
               hint: 'Expense Type',
               isFullWidth: true,
@@ -55,11 +55,29 @@ class _NewExpenseState extends State<NewExpense> {
               items: AppConstants.paymentMethods,
               onChanged: (val) {},
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 10,
+                children: [
+                  Text('Select Payment Date'),
+                  DatePickerButton(
+                      isFullWidth: true,
+                      givenDate: '${formatDate(expensePaymentDate)}',
+                      onTap: ()=> pickDateRange()
+                  ),
+                ],
+              ),
+            ),
             CustomInputField(label: 'Amount', inputType: TextInputType.number),
             CustomInputField(label: 'Payment Reference'),
             CustomInputField(label: 'Additional Notes'),
             CustomInputField(label: 'Reminder'),
-            CustomButton(title: 'Create Expense', onTap: () {}),
+            CustomButton(
+                title: 'Create Expense',
+                isFullWidth: true,
+                onTap: () {}),
           ],
         ),
       ),
@@ -76,19 +94,14 @@ class _NewExpenseState extends State<NewExpense> {
             height: 300,
             width: 400,
             child: SfDateRangePicker(
-              selectionMode: DateRangePickerSelectionMode.range,
-              initialSelectedRange: PickerDateRange(
-                dateTimeRange.start,
-                dateTimeRange.end,
-              ),
+              view: DateRangePickerView.month,
+              selectionMode: DateRangePickerSelectionMode.single,
+              initialSelectedDate: expensePaymentDate,
               onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
-                if (args.value is PickerDateRange) {
-                  final range = args.value as PickerDateRange;
+                if (args.value is DateTime) {
+                  final date = args.value as DateTime;
                   setState(() {
-                    dateTimeRange = DateTimeRange(
-                      start: range.startDate ?? dateTimeRange.start,
-                      end: range.endDate ?? dateTimeRange.end,
-                    );
+                    expensePaymentDate=date;
                   });
                 }
               },

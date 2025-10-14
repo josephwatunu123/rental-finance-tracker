@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rental_finance_tracker/features/booking/presentation/new_booking.dart';
 import 'package:rental_finance_tracker/features/expenses/presentation/new_expense.dart';
+import 'package:rental_finance_tracker/features/home/presentation/bookings_view.dart';
 import 'package:rental_finance_tracker/features/home/presentation/home_page_view.dart';
 
 import 'features/settings/settings.dart';
@@ -36,6 +36,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/newExpense',
         name: 'newExpense',
         builder: (context, state) => const NewExpense(),
+      ),
+      GoRoute(
+        path: '/bookings',
+        name: 'bookings',
+        builder: (context, state) => const BookingsView(),
       ),
     ],
   );

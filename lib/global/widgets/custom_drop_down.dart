@@ -30,7 +30,7 @@ class CustomDropDown extends StatelessWidget {
             ? size.width * width!
             : size.width * 0.5;
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 0),
       child: SizedBox(
         width: calculatedWidth,
         height: size.height * 0.1,
