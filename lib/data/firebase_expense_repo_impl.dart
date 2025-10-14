@@ -1,4 +1,4 @@
-import 'package:rental_finance_tracker/data/expense_repository.dart';
+import 'package:rental_finance_tracker/domain/expense_repository.dart';
 import 'package:rental_finance_tracker/models/expense_model.dart';
 
 class FirebaseExpenseImplementation implements ExpenseRepository{

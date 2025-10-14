@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rental_finance_tracker/data/booking_repository.dart';
+import 'package:rental_finance_tracker/domain/booking_repository.dart';
 import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation.dart';
 import 'package:rental_finance_tracker/features/booking/new_bookings_state.dart';
 import 'package:rental_finance_tracker/services/snackbar_service.dart';
