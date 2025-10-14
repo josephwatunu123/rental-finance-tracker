@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,25 +49,40 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        // selectedItemColor: Theme
-        //     .of(context)
-        //     .colorScheme
-        //     .primary,
-        backgroundColor: Color(0xff2B6EF3),
-
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_filled), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
-        ],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 30,left: 10,right: 10),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+            bottomLeft: Radius.circular(24),
+            bottomRight:Radius.circular(24),
+          ),
+          child: NavigationBar(
+              height: Platform.isIOS ? MediaQuery.of(context).size.height * 0.08 : 80,
+            selectedIndex: _currentIndex,
+            onDestinationSelected: (index) {
+              setState(() => _currentIndex = index);
+            },
+            backgroundColor: Colors.grey.withAlpha(50),
+            destinations: [
+              const NavigationDestination(
+                icon: Icon(Icons.home_filled),
+                label: 'Home',
+              ),
+              const NavigationDestination(
+                icon: Icon(Icons.bedroom_parent),
+                label: 'Bookings',
+              ),
+            ],
+          ),
+        ),
+      ),
+
     );
   }
 }
