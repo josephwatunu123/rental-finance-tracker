@@ -8,7 +8,6 @@ import 'package:rental_finance_tracker/features/home/presentation/widgets/recent
 import 'package:rental_finance_tracker/features/home/presentation/widgets/stats_card.dart';
 import 'package:rental_finance_tracker/global/graphs/line_graph.dart';
 import 'package:rental_finance_tracker/global/graphs/pie_chart.dart';
-import 'package:rental_finance_tracker/global/widgets/no_items_widget.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
 import 'package:rental_finance_tracker/theme/app_colors.dart';
 
