@@ -129,6 +129,7 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState>{
       reminder: reminderController.text,
       notes: notesController.text,
       daysBooked: calculateBookedDays(state.from, state.to),
+      status: state.bookingStatus
     );
 
     var createBookingRes = await repository.addBooking(booking);

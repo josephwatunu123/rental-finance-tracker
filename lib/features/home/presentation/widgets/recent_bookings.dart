@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
+import 'package:rental_finance_tracker/global/widgets/no_items_widget.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
 import 'package:rental_finance_tracker/utils/functions.dart';
 
 class RecentBookings extends StatefulWidget {
-  final BookingModel? bookings;
-  const RecentBookings({super.key, required this.bookings});
+  final List<BookingModel>? bookings;
+  final bool isLoading;
+  const RecentBookings({super.key, required this.bookings,required this.isLoading});
 
   @override
   State<RecentBookings> createState() => _RecentBookingsState();
@@ -17,6 +19,33 @@ class _RecentBookingsState extends State<RecentBookings> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    return (widget.isLoading) ? Container(
+      height: size.height * 0.3,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(AppConstants.bookingsLoadingGif))
+      ),
+    )
+      :(widget.bookings == null) ?
+    NoItemsWidget():ListView.builder(
+        itemCount: widget.bookings?.length,
+        itemBuilder: (context, index){
+          return bookingsInfoCard(
+              theme: theme,
+              size: size,
+            booking: widget.bookings?[index]
+          );
+        }
+    );
+  }
+
+  Widget bookingsInfoCard({
+    required ThemeData theme,
+    required Size size,
+    required BookingModel? booking,
+}) {
     return Container(
       padding: EdgeInsets.all(10),
       height: size.height * 0.11,
@@ -36,7 +65,7 @@ class _RecentBookingsState extends State<RecentBookings> {
                   children: [
                     Icon(CupertinoIcons.person, color: Colors.black, size: 15),
                     Text(
-                      (widget.bookings?.name ?? "--"),
+                      (booking?.name ?? "--"),
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     Container(
@@ -48,7 +77,7 @@ class _RecentBookingsState extends State<RecentBookings> {
                         border: Border.all(width: 0.08, color: Colors.black),
                       ),
                       child: Text(
-                        (widget.bookings?.bookingSource ?? "--" ),
+                        (booking?.bookingSource ?? "--" ),
                         style: theme.textTheme.bodySmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -70,14 +99,14 @@ class _RecentBookingsState extends State<RecentBookings> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Text('${formatDate(widget.bookings?.from) ?? "--"} ' '-' ' ${formatDate(widget.bookings?.to) ?? "--"}')],
+                  children: [Text('${formatDate(booking?.from) ?? "--"} ' '-' ' ${formatDate(booking?.to) ?? "--"}')],
                 ),
               ],
             ),
           ),
           Column(
             children: [
-              Text('Kes.${(widget.bookings?.amountPaid) ?? "-1"}'),
+              Text('Kes.${(booking?.amountPaid) ?? "-1"}'),
               Container(
                 padding: EdgeInsets.all(5),
                 alignment: Alignment.center,
@@ -87,7 +116,7 @@ class _RecentBookingsState extends State<RecentBookings> {
                   color: Colors.green[500],
                 ),
                 child: Text(
-                  (widget.bookings?.status) ?? 'pending',
+                  (booking?.status) ?? '--',
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
               ),

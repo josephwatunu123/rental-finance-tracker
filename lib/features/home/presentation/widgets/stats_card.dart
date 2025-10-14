@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rental_finance_tracker/constants/app_constants.dart';
 
 class StatsCard extends StatelessWidget {
   final IconData mainIcon;
@@ -7,6 +8,7 @@ class StatsCard extends StatelessWidget {
   final int? total;
   final int? statistic;
   final bool addCurrency;
+  final bool isLoading;
   const StatsCard({
     super.key,
     required this.mainIcon,
@@ -14,6 +16,7 @@ class StatsCard extends StatelessWidget {
     required this.total,
     this.statistic,
     this.addCurrency=true,
+    this.isLoading=false,
   });
 
   @override
@@ -42,20 +45,28 @@ class StatsCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              addCurrency ? Text(
-                'Kes. ${total ?? 0}',
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
+              if (isLoading)
+                Container(
+                  height: 20,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(AppConstants.dotsLoadingGif))
+                  ),
+                )
+              else
+                Text(
+                  addCurrency ? 'Kes. ${total ?? 0}' : '${total ?? 0}',
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ) : Text(
-                '${total ?? 0}',
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+
               FaIcon(mainIcon, color: theme.primaryColor),
             ],
           ),
+
           Text(
             '+${statistic ?? 0}%',
             style: theme.textTheme.bodyMedium?.copyWith(

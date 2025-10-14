@@ -8,6 +8,7 @@ import 'package:rental_finance_tracker/features/home/presentation/widgets/recent
 import 'package:rental_finance_tracker/features/home/presentation/widgets/stats_card.dart';
 import 'package:rental_finance_tracker/global/graphs/line_graph.dart';
 import 'package:rental_finance_tracker/global/graphs/pie_chart.dart';
+import 'package:rental_finance_tracker/global/widgets/no_items_widget.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
 import 'package:rental_finance_tracker/theme/app_colors.dart';
 
@@ -28,8 +29,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final state = ref.watch(homePageViewModelProvider);
     return Scaffold(
       body: Center(
-        child: state.isLoading ? const CircularProgressIndicator()
-            : state.error !=null ? Text('${state.error}')
+        child:  state.error !=null ? Text('${state.error}')
               :  SingleChildScrollView(
       child: Column(
       spacing: 5,
@@ -55,23 +55,27 @@ class _HomePageState extends ConsumerState<HomePage> {
             runSpacing: 10,
             children: [
               StatsCard(
+                isLoading: state.isLoading,
                 mainIcon: FontAwesomeIcons.moneyBill1Wave,
                 title: 'Monthly Revenue',
                 total: state.monthToDateRevenue,
               ),
               StatsCard(
+                isLoading: state.isLoading,
                 addCurrency: false,
                 mainIcon: FontAwesomeIcons.bed,
                 title: 'Bookings',
                 total: state.monthToDateTotal ?? 00,
               ),
               StatsCard(
+                isLoading: state.isLoading,
                 addCurrency: false,
                 mainIcon: FontAwesomeIcons.calendarCheck,
                 title: 'Days Booked',
                 total: state.monthBookedDays,
               ),
               StatsCard(
+                isLoading: state.isLoading,
                 mainIcon: FontAwesomeIcons.chartLine,
                 title: 'Profit',
                 total: 36000,
@@ -140,11 +144,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                 ],
               ),
-              if(state.bookings !=null) Expanded(
-                child: ListView.builder(
-                    itemCount: state.bookings!.length > 5 ? 5 : state.bookings!.length,
-                    itemBuilder: (context, index)=> RecentBookings(bookings: state.bookings![index])
-                ),
+              Expanded(
+                child: RecentBookings(
+                    bookings: state.bookings,
+                    isLoading: state.isLoading,
+                )
               )
             ],
           ),
