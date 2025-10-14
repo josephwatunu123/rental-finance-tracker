@@ -86,6 +86,21 @@ class HomePageViewModel extends StateNotifier<HomeViewState>{
   }
 
 
+  Future<void> onRefresh() async {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      await loadBookings();
+      await getBookingSources();
+    } catch (e, st) {
+      debugPrint("Refresh error::: $e, stack:::$st");
+      state = state.copyWith(error: e.toString());
+    } finally {
+      state = state.copyWith(isLoading: false);
+    }
+  }
+
+
+
 
 
 

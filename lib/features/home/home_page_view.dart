@@ -30,132 +30,138 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       body: Center(
         child:  state.error !=null ? Text('${state.error}')
-              :  SingleChildScrollView(
-      child: Column(
-      spacing: 5,
-      children: [
-        TitleBar(
-          title: 'Good Afternoon, Jayder',
-          subtitle: 'SEPTEMBER STATISTICS',
-          icon: FontAwesomeIcons.userAstronaut,
-          customHeight: size.height * 0.17,
-          isAppBar: true,
-          newBorderRadius: 20,
-          gradientColors: [
-            lighten(theme.primaryColor, 0.2),
-            darken(theme.primaryColor, 0.2),
-          ],
-        ),
-        Container(
-          padding: EdgeInsets.all(12),
-          height: size.height * 0.25,
-          width: double.infinity,
-          child: Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [
-              StatsCard(
-                isLoading: state.isLoading,
-                mainIcon: FontAwesomeIcons.moneyBill1Wave,
-                title: 'Monthly Revenue',
-                total: state.monthToDateRevenue,
-              ),
-              StatsCard(
-                isLoading: state.isLoading,
-                addCurrency: false,
-                mainIcon: FontAwesomeIcons.bed,
-                title: 'Bookings',
-                total: state.monthToDateTotal ?? 00,
-              ),
-              StatsCard(
-                isLoading: state.isLoading,
-                addCurrency: false,
-                mainIcon: FontAwesomeIcons.calendarCheck,
-                title: 'Days Booked',
-                total: state.monthBookedDays,
-              ),
-              StatsCard(
-                isLoading: state.isLoading,
-                mainIcon: FontAwesomeIcons.chartLine,
-                title: 'Profit',
-                total: 36000,
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0, top: 12),
-              child: Text(
-                'Income Trend',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
+              :  RefreshIndicator(
+                onRefresh: () async {
+                    await ref.read(homePageViewModelProvider.notifier).onRefresh();
+                  },
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                      spacing: 5,
+                      children: [
+                        TitleBar(
+                          title: 'Good Afternoon, Jayder',
+                          subtitle: 'SEPTEMBER STATISTICS',
+                          icon: FontAwesomeIcons.userAstronaut,
+                          customHeight: size.height * 0.17,
+                          isAppBar: true,
+                          newBorderRadius: 20,
+                          gradientColors: [
+                            lighten(theme.primaryColor, 0.2),
+                            darken(theme.primaryColor, 0.2),
+                          ],
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(12),
+                          height: size.height * 0.25,
+                          width: double.infinity,
+                          child: Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: [
+                StatsCard(
+                  isLoading: state.isLoading,
+                  mainIcon: FontAwesomeIcons.moneyBill1Wave,
+                  title: 'Monthly Revenue',
+                  total: state.monthToDateRevenue,
                 ),
-              ),
-            ),
-            LineGraph(),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                'Booking Sources',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
+                StatsCard(
+                  isLoading: state.isLoading,
+                  addCurrency: false,
+                  mainIcon: FontAwesomeIcons.bed,
+                  title: 'Bookings',
+                  total: state.monthToDateTotal ?? 00,
                 ),
-              ),
-            ),
-            CustomPieChart(
-              airbnbBookings: state.bookingsFromAirbnb,
-              referralBookings: state.bookingsFromReferral,
-              bookingsDotComBookings: state.bookingsFromBookingDotCom,
-              directClients: state.directBookings,
-            ),
-          ],
-        ),
-        Container(
-          height: size.height *0.5,
-          padding: EdgeInsets.all(8),
-          child: Column(
-            spacing: 10,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                spacing: 10,
-                children: [
-                  Icon(
-                    Icons.calendar_today_rounded,
-                    color: theme.primaryColor,
+                StatsCard(
+                  isLoading: state.isLoading,
+                  addCurrency: false,
+                  mainIcon: FontAwesomeIcons.calendarCheck,
+                  title: 'Days Booked',
+                  total: state.monthBookedDays,
+                ),
+                StatsCard(
+                  isLoading: state.isLoading,
+                  mainIcon: FontAwesomeIcons.chartLine,
+                  title: 'Profit',
+                  total: 36000,
+                ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                padding: const EdgeInsets.only(left: 12.0, top: 12),
+                child: Text(
+                  'Income Trend',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
                   ),
-                  Text(
-                    'Recent Bookings',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+                ),
+                            ),
+                            LineGraph(),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  'Booking Sources',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                            ),
+                            CustomPieChart(
+                airbnbBookings: state.bookingsFromAirbnb,
+                referralBookings: state.bookingsFromReferral,
+                bookingsDotComBookings: state.bookingsFromBookingDotCom,
+                directClients: state.directBookings,
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: size.height *0.5,
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            spacing: 10,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  spacing: 10,
+                  children: [
+                    Icon(
+                      Icons.calendar_today_rounded,
+                      color: theme.primaryColor,
                     ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: RecentBookings(
-                    bookings: state.bookings,
-                    isLoading: state.isLoading,
+                    Text(
+                      'Recent Bookings',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: RecentBookings(
+                      bookings: state.bookings,
+                      isLoading: state.isLoading,
+                  )
                 )
-              )
-            ],
-          ),
-        ),
-      ],
-    ),
-    ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    ),
+              ),
       ),
       floatingActionButton: SpeedDial(
         icon: Icons.add,
