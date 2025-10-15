@@ -8,7 +8,12 @@ class NewExpensesState{
   final String? reminder;
   final DateTime? expensePaymentDate;
   final String? error;
+  final String? paymentMethErrMsg;
+  final String? expenseTitleErrMsg;
+  final String? amountErrMsg;
+  final String? paymentRefErrMsg;
   final bool isLoading;
+  final bool showFormErrors;
   NewExpensesState({
     this.expenseType,
     this.paymentMethod,
@@ -17,6 +22,11 @@ class NewExpensesState{
     this.additionalNotes,
     this.reminder,
     this.expensePaymentDate,
+    this.paymentMethErrMsg,
+    this.paymentRefErrMsg,
+    this.expenseTitleErrMsg,
+    this.amountErrMsg,
+    this.showFormErrors=false,
     this.isLoading=false,
     this.error
 
@@ -26,19 +36,29 @@ class NewExpensesState{
     String? expenseType,
     String? paymentMethod,
     int? amount,
+    String? paymentMethErrMsg,
+    String? expenseTitleErrMsg,
+    String? amountErrMsg,
+    String? paymentRefErrMsg,
     String? paymentReference,
     String? additionalNotes,
     String? reminder,
     DateTime? expensePaymentDate,
     bool? isLoading,
+    bool? showFormErrors,
     String? error
 
   }) {
     return NewExpensesState(
         expenseType: expenseType ?? this.expenseType,
         isLoading: isLoading ?? this.isLoading,
+        showFormErrors: showFormErrors ?? this.showFormErrors,
         paymentMethod: paymentMethod ?? this.paymentMethod,
         amount: amount ?? this.amount,
+        paymentMethErrMsg: paymentMethErrMsg ?? this.paymentMethErrMsg,
+        expenseTitleErrMsg: expenseTitleErrMsg ?? this.expenseTitleErrMsg,
+        amountErrMsg: amountErrMsg ?? this.amountErrMsg,
+        paymentRefErrMsg: paymentRefErrMsg ?? this.paymentRefErrMsg,
         paymentReference: paymentReference ?? this.paymentReference,
         additionalNotes: additionalNotes ?? this.additionalNotes,
         reminder: reminder ?? this.reminder,

@@ -81,7 +81,7 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState>{
 
 
 
-  void onCreateNewBooking(BuildContext context) async{
+  void onCreateNewBooking() async{
     clearErrors();
     final nameErr = textFormValidator(nameController.text);
     final amountErr = intValidator(amountController.text);

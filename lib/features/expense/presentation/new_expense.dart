@@ -43,6 +43,7 @@ class _NewExpenseState extends State<NewExpense> {
               ],
             ),
             const SizedBox(height: 10,),
+            CustomInputField(label: 'Expense Title'),
             CustomDropDown(
               hint: 'Expense Type',
               isFullWidth: true,
