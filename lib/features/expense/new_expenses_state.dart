@@ -1,6 +1,7 @@
 
 class NewExpensesState{
   final String? expenseType;
+  final String? expenseTypeErrMsg;
   final String? paymentMethod;
   final int? amount;
   final String? paymentReference;
@@ -16,6 +17,7 @@ class NewExpensesState{
   final bool showFormErrors;
   NewExpensesState({
     this.expenseType,
+    this.expenseTypeErrMsg,
     this.paymentMethod,
     this.amount,
     this.paymentReference,
@@ -34,6 +36,7 @@ class NewExpensesState{
 
   NewExpensesState copyWith({
     String? expenseType,
+    String? expenseTypeErrMsg,
     String? paymentMethod,
     int? amount,
     String? paymentMethErrMsg,
@@ -51,6 +54,7 @@ class NewExpensesState{
   }) {
     return NewExpensesState(
         expenseType: expenseType ?? this.expenseType,
+        expenseTypeErrMsg: expenseTypeErrMsg ?? this.expenseTypeErrMsg,
         isLoading: isLoading ?? this.isLoading,
         showFormErrors: showFormErrors ?? this.showFormErrors,
         paymentMethod: paymentMethod ?? this.paymentMethod,

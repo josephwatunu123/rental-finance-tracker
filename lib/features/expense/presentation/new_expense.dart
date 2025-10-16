@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
+import 'package:rental_finance_tracker/features/expense/new_expense_view_model.dart';
 import 'package:rental_finance_tracker/global/widgets/date_picker.dart';
 import 'package:rental_finance_tracker/global/widgets/text_fields.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
@@ -10,20 +12,22 @@ import 'package:rental_finance_tracker/theme/app_colors.dart';
 import 'package:rental_finance_tracker/utils/functions.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class NewExpense extends StatefulWidget {
+class NewExpense extends ConsumerStatefulWidget {
   const NewExpense({super.key});
 
   @override
-  State<NewExpense> createState() => _NewExpenseState();
+  ConsumerState<NewExpense> createState() => _NewExpenseState();
 }
 
-class _NewExpenseState extends State<NewExpense> {
-  DateTime expensePaymentDate = DateTime(2025, 08, 01);
+class _NewExpenseState extends ConsumerState<NewExpense> {
+  DateTime expensePaymentDate = AppConstants.today;
 
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final viewModel = ref.watch(newExpenseViewModelProvider.notifier);
+    final state = ref.watch(newExpenseViewModelProvider);
     final theme = Theme.of(context);
     return Scaffold(
       body: SingleChildScrollView(
@@ -43,18 +47,24 @@ class _NewExpenseState extends State<NewExpense> {
               ],
             ),
             const SizedBox(height: 10,),
-            CustomInputField(label: 'Expense Title'),
+            CustomInputField(
+                label: 'Expense Title',
+                controller: viewModel.expenseNameController,
+                errorText:state.expenseTitleErrMsg,
+            ),
             CustomDropDown(
               hint: 'Expense Type',
               isFullWidth: true,
               items: AppConstants.expenseTypes,
-              onChanged: (val) {},
+              onChanged:viewModel.onExpenseTypeChanged,
+              errorText: state.expenseTypeErrMsg,
             ),
             CustomDropDown(
               hint: 'Payment Method',
               isFullWidth: true,
               items: AppConstants.paymentMethods,
-              onChanged: (val) {},
+              onChanged:viewModel.onPaymentMethodChanged,
+              errorText: state.paymentMethErrMsg,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -71,14 +81,29 @@ class _NewExpenseState extends State<NewExpense> {
                 ],
               ),
             ),
-            CustomInputField(label: 'Amount', inputType: TextInputType.number),
-            CustomInputField(label: 'Payment Reference'),
-            CustomInputField(label: 'Additional Notes'),
-            CustomInputField(label: 'Reminder'),
+            CustomInputField(
+                label: 'Amount',
+                inputType: TextInputType.number,
+              controller: viewModel.amountController,
+              errorText: state.amountErrMsg,
+            ),
+            CustomInputField(
+                label: 'Payment Reference',
+                controller: viewModel.paymentRefController,
+              errorText: state.paymentRefErrMsg,
+            ),
+            CustomInputField(
+                label: 'Additional Notes',
+                controller: viewModel.notesController,
+            ),
+            CustomInputField(
+                label: 'Reminder',
+                controller: viewModel.reminderController,
+            ),
             CustomButton(
                 title: 'Create Expense',
                 isFullWidth: true,
-                onTap: () {}),
+                onTap:viewModel.onCreateNewExpense),
           ],
         ),
       ),
@@ -86,6 +111,7 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   Future<void> pickDateRange() async {
+    final viewModel = ref.read(newExpenseViewModelProvider.notifier);
     await showDialog(
       context: context,
       builder: (context) {
@@ -101,9 +127,7 @@ class _NewExpenseState extends State<NewExpense> {
               onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
                 if (args.value is DateTime) {
                   final date = args.value as DateTime;
-                  setState(() {
-                    expensePaymentDate=date;
-                  });
+                  viewModel.onSelectPaymentDate(date);
                 }
               },
             ),
