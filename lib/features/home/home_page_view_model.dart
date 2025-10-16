@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
-import 'package:rental_finance_tracker/data/booking_repository.dart';
+import 'package:rental_finance_tracker/domain/booking_repository.dart';
 import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation.dart';
 import 'package:rental_finance_tracker/features/home/home_view_state.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';

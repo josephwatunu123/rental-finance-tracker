@@ -38,7 +38,7 @@ class DatePickerButton extends StatelessWidget {
               color: theme.primaryColor,
               size: 25,
             ),
-            Text(givenDate ?? "select date",style: theme.textTheme.titleMedium,)
+            Text(givenDate ?? "select date",style: theme.textTheme.bodySmall,)
           ],
         ),
       ),
