@@ -59,5 +59,6 @@ class AppConstants{
 static const String noItemsImage = "assets/no_items.gif";
 static const String loadingSquareGif= "assets/loading_square.gif";
 static const String dotsLoadingGif= "assets/dots_loading.gif";
-  static const String bookingsLoadingGif= "assets/bookings_loading.gif";
+static const String bookingsLoadingGif= "assets/bookings_loading.gif";
+static const String buttonLoading= "assets/button_loading.gif";
 }

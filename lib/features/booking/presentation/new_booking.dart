@@ -111,9 +111,10 @@ class _NewBookingState extends ConsumerState<NewBooking> {
                 label: 'Reminder',
                 controller: viewModel.reminderController,
             ),
-            CustomButton(title: 'Create Booking', onTap: () {
-              viewModel.onCreateNewBooking;
-            }),
+            CustomButton(title: 'Create Booking',
+              isLoading: state.isLoading,
+              onTap: viewModel.onCreateNewBooking
+            ),
           ],
         ),
       ),

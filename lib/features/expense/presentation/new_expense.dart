@@ -101,6 +101,7 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                 controller: viewModel.reminderController,
             ),
             CustomButton(
+                isLoading: state.isLoading,
                 title: 'Create Expense',
                 isFullWidth: true,
                 onTap:viewModel.onCreateNewExpense),
