@@ -30,7 +30,7 @@ class StatsCard extends StatelessWidget {
       width: size.width * 0.45,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(width: 0.5, color: Colors.grey),
+        border: Border.all(width: 1, color: theme.primaryColor),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

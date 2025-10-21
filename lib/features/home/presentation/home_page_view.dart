@@ -123,6 +123,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                             ),
                             CustomPieChart(
+                              hasBorder: true,
                               airbnbBookings: state.bookingsFromAirbnb,
                               referralBookings: state.bookingsFromReferral,
                               bookingsDotComBookings:
