@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rental_finance_tracker/constants/chart_constants.dart';
 
 class CustomPieChart extends StatelessWidget {
   final int? airbnbBookings;
@@ -22,7 +21,7 @@ class CustomPieChart extends StatelessWidget {
       width: double.infinity,
       height: size.height * 0.4,
       alignment: Alignment.center,
-      padding: EdgeInsets.all(12),
+      padding: EdgeInsets.all(10),
       child: Column(
         spacing: 30,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -32,25 +31,25 @@ class CustomPieChart extends StatelessWidget {
             child: PieChart(
               duration: const Duration(microseconds: 300),
               PieChartData(
-                centerSpaceRadius: 20,
+                centerSpaceRadius: 10,
                 sections: [
                   PieChartSectionData(
-                    color: pieChartColor1,
+                    color: Colors.blue.shade900,
                     value: bookingsDotComBookings?.toDouble() ?? 1,
                     radius: 100,
                   ),
                   PieChartSectionData(
-                    color: pieChartColor2,
+                    color: Colors.redAccent,
                     value: airbnbBookings?.toDouble() ?? 1,
                     radius: 100,
                   ),
                   PieChartSectionData(
-                    color: pieChartColor3,
+                    color: Colors.deepPurple.shade400,
                     value: referralBookings?.toDouble() ?? 1,
                     radius: 100,
                   ),
                   PieChartSectionData(
-                    color: pieChartColor4,
+                    color: Colors.green,
                     value: directClients?.toDouble() ?? 1,
                     radius: 100,
                   ),
@@ -59,34 +58,32 @@ class CustomPieChart extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: size.height * 0.08,
+            height: size.height * 0.07,
             width: double.infinity,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               spacing: 15,
               children: <Widget>[
-                indicator(
-                  color: pieChartColor1,
-                  text: 'bookings.com',
-                  isSquare: true,
-                ),
                 SizedBox(height: 4),
                 indicator(
-                  color: pieChartColor2,
+                  color: Colors.redAccent,
                   text: 'airbnb',
-                  isSquare: true,
                 ),
                 SizedBox(height: 4),
                 indicator(
-                  color: pieChartColor3,
+                  color: Colors.deepPurple.shade400,
                   text: 'referral',
-                  isSquare: true,
                 ),
                 SizedBox(height: 4),
                 indicator(
-                  color: pieChartColor4,
+                  color: Colors.green,
                   text: 'direct',
-                  isSquare: true,
                 ),
+                indicator(
+                  color: Colors.blue.shade900,
+                  text: 'bookings.com',
+                ),
+                SizedBox(height: 4),
                 SizedBox(height: 18),
               ],
             ),
@@ -100,10 +97,19 @@ class CustomPieChart extends StatelessWidget {
 Widget indicator({
   required Color color,
   required String text,
-  required bool isSquare,
+   bool isSquare=false,
 }) {
   return Column(
     spacing: 5,
-    children: [Container(height: 20, width: 20, color: color), Text(text)],
+    children: [
+      Container(
+        height: 20,
+        width: 20, 
+
+      decoration: BoxDecoration(
+          color: color,
+        borderRadius: isSquare ? null : BorderRadius.circular(15)
+      ),
+    ), Text(text)],
   );
 }
