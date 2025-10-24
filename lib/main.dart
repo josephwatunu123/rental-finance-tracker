@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rental_finance_tracker/features/booking/presentation/bookings.dart';
 import 'package:rental_finance_tracker/features/home/presentation/home_page_view.dart';
 import 'package:rental_finance_tracker/router.dart';
 import 'package:rental_finance_tracker/theme/app_theme.dart';
@@ -44,7 +45,7 @@ class MainScaffold extends ConsumerStatefulWidget {
 class _MainScaffoldState extends ConsumerState<MainScaffold> {
   int _currentIndex = 0;
 
-  final _pages = const [HomePage(), SettingsPage()];
+  final _pages = const [HomePage(), BookingsPage()];
 
   @override
   Widget build(BuildContext context) {
