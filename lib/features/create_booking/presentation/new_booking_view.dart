@@ -5,12 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
 import 'package:rental_finance_tracker/features/create_booking/new_booking_view_model.dart';
 import 'package:rental_finance_tracker/features/create_booking/new_bookings_state.dart';
-import 'package:rental_finance_tracker/global/widgets/date_picker.dart';
 import 'package:rental_finance_tracker/global/widgets/text_fields.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_drop_down.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
-import 'package:rental_finance_tracker/utils/functions.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class NewBooking extends ConsumerStatefulWidget {

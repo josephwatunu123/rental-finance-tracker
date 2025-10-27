@@ -8,7 +8,7 @@ import 'package:rental_finance_tracker/router.dart';
 import 'package:rental_finance_tracker/theme/app_theme.dart';
 import 'package:rental_finance_tracker/utils/global_keys.dart';
 
-import 'features/all_bookings/widgets/bookings.dart';
+import 'features/all_bookings/bookings_view.dart';
 import 'features/settings/settings.dart';
 
 void main() async{

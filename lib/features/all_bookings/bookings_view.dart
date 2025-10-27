@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
-import 'package:rental_finance_tracker/features/all_bookings/bookings_list.dart';
+import 'package:rental_finance_tracker/features/all_bookings/widgets/bookings_list.dart';
 import 'package:rental_finance_tracker/features/all_bookings/bookings_view_model.dart';
 import 'package:rental_finance_tracker/global/widgets/date_picker.dart';
 import 'package:rental_finance_tracker/global/widgets/text_fields.dart';
@@ -26,16 +26,18 @@ class _BookingsPageState extends ConsumerState<BookingsPage> {
     final state = ref.watch(bookingsPageViewModelProvider);
     return Scaffold(
       body: state.error !=null ? Text('${state.error}')
-          : state.isLoading ? Container(
-        height: size.height * 0.3,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage(AppConstants.bookingsLoadingGif),
-          ),
-        ),
-      )
+          : state.isLoading ? Center(
+            child: Container(
+                    height: size.height * 0.3,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(AppConstants.bookingsLoadingGif),
+            ),
+                    ),
+                  ),
+          )
           : RefreshIndicator(
               onRefresh: () async {
 
@@ -65,7 +67,7 @@ class _BookingsPageState extends ConsumerState<BookingsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     DatePickerButton(
-                      selectedDate: (formatDate(state.endDate) ?? 'select date'),
+                      selectedDate: (formatDate(state.startDate) ?? 'select date'),
                         onDateChanged: viewModel.onStartDateChanged,
                     ),
                     DatePickerButton(
@@ -75,7 +77,7 @@ class _BookingsPageState extends ConsumerState<BookingsPage> {
                     Icon(FontAwesomeIcons.filePdf)
                   ],
                 ),
-                BookingsList(bookings: [])
+                BookingsList(bookings: state.bookings)
               ],
             ),
           ),

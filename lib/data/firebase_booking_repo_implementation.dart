@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/domain/booking_repository.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
+import 'package:rental_finance_tracker/services/snackbar_service.dart';
 
 class FirebaseBookingImplementation implements BookingRepository{
 
@@ -15,7 +16,8 @@ class FirebaseBookingImplementation implements BookingRepository{
   @override
   Future<List<BookingModel>?> getBookings({
     required DateTime startDate,
-    required DateTime endDate
+    required DateTime endDate,
+    String? searchName,
 }) async{
     try{
       final snapshot = await firestore
@@ -24,7 +26,7 @@ class FirebaseBookingImplementation implements BookingRepository{
           .where('to', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate)).get();
       log('response firebase::: '
           'Found ${snapshot.docs.length} bookings. '
-            'queryParams: {${startDate},${endDate} }'
+            'queryParams: {$startDate,$endDate }'
           'Document IDs: ${snapshot.docs.map((doc) => doc.id).toList()}. '
           'Data: ${snapshot.docs.map((doc) => doc.data()).toList()}');
       return snapshot.docs.map((booking){
@@ -32,11 +34,14 @@ class FirebaseBookingImplementation implements BookingRepository{
       }).toList();
     }catch( e, st){
       log("error fetching bookings::: $e, $st");
+      SnackBarService.show(
+          message: '$e',
+          title: 'An Error Occurred',
+          snackBarType: SnackBarType.error
+      );
       return null;
     }
   }
-
-  //TODO: Implement it using try catch
 
 
   @override
@@ -49,6 +54,11 @@ class FirebaseBookingImplementation implements BookingRepository{
       };
     }catch (e, st){
       log("error fetching bookings::: $e, $st");
+      SnackBarService.show(
+          message: '$e',
+          title: 'An Error Occurred',
+          snackBarType: SnackBarType.error
+      );
       return {
         false: 'Error: $e'
       };

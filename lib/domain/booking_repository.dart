@@ -4,6 +4,7 @@ abstract class BookingRepository{
   Future<List<BookingModel>?> getBookings({
     required DateTime startDate,
     required DateTime endDate,
+    String? searchName,
   });
 
   Future<Map<bool, String>> addBooking(BookingModel booking);
