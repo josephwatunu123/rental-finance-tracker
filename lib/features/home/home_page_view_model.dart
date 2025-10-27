@@ -17,7 +17,7 @@ class HomePageViewModel extends StateNotifier<HomeViewState>{
     getBookingSources();
   }
 
-  final startDate = AppConstants.today;
+  final startDate = AppConstants.thisMonth;
   final endDate = AppConstants.lastDayOfCurrentMonth;
   final List<String> bookingSources = AppConstants.bookingSources;
 
@@ -27,10 +27,13 @@ class HomePageViewModel extends StateNotifier<HomeViewState>{
       final bookings = await repository.getBookings(
           startDate: startDate,
           endDate: endDate);
-      state =state.copyWith(bookings: bookings);
-      state = state.copyWith(monthToDateTotal:bookings?.length);
-      state = state.copyWith(monthToDateRevenue: getCurrentMonthTotalRevenue(bookings));
-      state = state.copyWith(monthBookedDays: calculateBookedDays(bookings, startDate,endDate));
+      state= state.copyWith(
+          bookings: bookings,
+          monthToDateTotal:bookings?.length,
+          monthToDateRevenue: getCurrentMonthTotalRevenue(bookings),
+          monthBookedDays: calculateBookedDays(bookings, startDate,endDate),
+          recentBookings: bookings == null ? [] : bookings.length <=5 ? bookings : bookings.sublist(bookings.length -5)
+      );
       state = state.copyWith(isLoading: false);
     }catch (e, st){
       debugPrint("error::: $e,stack:::$st");

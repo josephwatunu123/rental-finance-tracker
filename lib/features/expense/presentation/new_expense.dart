@@ -73,11 +73,11 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                 spacing: 10,
                 children: [
                   Text('Select Payment Date'),
-                  DatePickerButton(
-                      isFullWidth: true,
-                      givenDate: '${formatDate(expensePaymentDate)}',
-                      onTap: ()=> pickDateRange()
-                  ),
+                  // DatePickerButton(
+                  //     isFullWidth: true,
+                  //     givenDate: '${formatDate(expensePaymentDate)}',
+                  //     onTap: ()=> pickDateRange()
+                  // ),
                 ],
               ),
             ),

@@ -61,14 +61,14 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               spacing: 20,
               children: [
-                DatePickerButton(
-                  givenDate: 'From: ${formatDate(state.from)}',
-                  onTap: ()=>pickDateRange(state: state),
-                ),
-                DatePickerButton(
-                  givenDate: 'To: ${formatDate(state.to)}',
-                  onTap: ()=>pickDateRange(state: state),
-                ),
+                // DatePickerButton(
+                //   givenDate: 'From: ${formatDate(state.from)}',
+                //   onTap: ()=>pickDateRange(state: state),
+                // ),
+                // DatePickerButton(
+                //   givenDate: 'To: ${formatDate(state.to)}',
+                //   onTap: ()=>pickDateRange(state: state),
+                // ),
               ],
             ),
             CustomInputField(

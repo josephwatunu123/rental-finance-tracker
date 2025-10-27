@@ -46,7 +46,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                           icon: FontAwesomeIcons.userAstronaut,
                           customHeight: size.height * 0.17,
                           isAppBar: true,
-                          newBorderRadius: 20,
                           gradientColors: [
                             lighten(theme.primaryColor, 0.2),
                             darken(theme.primaryColor, 0.2),
@@ -155,7 +154,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                               Expanded(
                                 child: RecentBookings(
-                                  bookings: state.bookings,
+                                  bookings: state.recentBookings,
                                   isLoading: state.isLoading,
                                 ),
                               ),
