@@ -23,7 +23,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.rental_finance_tracker"
-        minSdk = 23
+        minSdk = flutter.minSdkVersion
         targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName

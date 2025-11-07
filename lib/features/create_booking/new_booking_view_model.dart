@@ -67,6 +67,16 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState>{
     state = state.copyWith(from: from, to: to);
   }
 
+  onStartDateChanged(DateTime? startDate) {
+    debugPrint("reached start Date changer and got the date $startDate");
+    state = state.copyWith(from: startDate,);
+  }
+
+  onEndDateChanged(DateTime? endDate) {
+    debugPrint("reached start Date changer and got the date $endDate");
+    state = state.copyWith(to: endDate,);
+  }
+
   void clearErrors(){
     state =state.copyWith(
       nameErrMessage: null,
