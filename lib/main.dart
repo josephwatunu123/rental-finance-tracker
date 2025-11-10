@@ -8,9 +8,10 @@ import 'package:rental_finance_tracker/router.dart';
 import 'package:rental_finance_tracker/theme/app_theme.dart';
 import 'package:rental_finance_tracker/utils/global_keys.dart';
 
+import 'features/all_bookings/bookings_view.dart';
 import 'features/settings/settings.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const ProviderScope(child: MyApp()));
@@ -44,26 +45,24 @@ class MainScaffold extends ConsumerStatefulWidget {
 class _MainScaffoldState extends ConsumerState<MainScaffold> {
   int _currentIndex = 0;
 
-  final _pages = const [HomePage(), SettingsPage()];
+  final _pages = const [HomePage(), BookingsPage()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 30,left: 10,right: 10),
+        padding: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(24),
             topRight: Radius.circular(24),
             bottomLeft: Radius.circular(24),
-            bottomRight:Radius.circular(24),
+            bottomRight: Radius.circular(24),
           ),
           child: NavigationBar(
-              height: Platform.isIOS ? MediaQuery.of(context).size.height * 0.08 : 80,
+            height:
+                Platform.isIOS ? MediaQuery.of(context).size.height * 0.08 : 80,
             selectedIndex: _currentIndex,
             onDestinationSelected: (index) {
               setState(() => _currentIndex = index);
@@ -82,7 +81,6 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
           ),
         ),
       ),
-
     );
   }
 }

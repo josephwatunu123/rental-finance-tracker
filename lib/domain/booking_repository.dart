@@ -1,9 +1,10 @@
 import 'package:rental_finance_tracker/models/booking_model.dart';
 
-abstract class BookingRepository{
+abstract class BookingRepository {
   Future<List<BookingModel>?> getBookings({
     required DateTime startDate,
     required DateTime endDate,
+    String? searchName,
   });
 
   Future<Map<bool, String>> addBooking(BookingModel booking);
@@ -12,6 +13,5 @@ abstract class BookingRepository{
     required String source,
     DateTime startDate,
     DateTime endDate,
-});
-
+  });
 }

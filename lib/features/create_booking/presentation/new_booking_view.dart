@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
-import 'package:rental_finance_tracker/features/booking/new_bookings_state.dart';
+import 'package:rental_finance_tracker/features/create_booking/new_booking_view_model.dart';
+import 'package:rental_finance_tracker/features/create_booking/new_bookings_state.dart';
 import 'package:rental_finance_tracker/global/widgets/date_picker.dart';
 import 'package:rental_finance_tracker/global/widgets/text_fields.dart';
-import 'package:rental_finance_tracker/features/booking/new_booking_view_model.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_drop_down.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
@@ -19,18 +19,17 @@ class NewBooking extends ConsumerStatefulWidget {
   @override
   ConsumerState<NewBooking> createState() => _NewBookingState();
 }
+
 DateTimeRange dateTimeRange = DateTimeRange(
-    start:AppConstants.today,
-    end: AppConstants.tomorrow
+  start: AppConstants.today,
+  end: AppConstants.tomorrow,
 );
 final startDate = dateTimeRange.start;
 final endDate = dateTimeRange.end;
 
 class _NewBookingState extends ConsumerState<NewBooking> {
-
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final viewModel = ref.watch(newBookingViewModelProvider.notifier);
@@ -53,29 +52,30 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               ],
             ),
             CustomInputField(
-                label: 'Name',
-                controller: viewModel.nameController,
+              label: 'Name',
+              controller: viewModel.nameController,
               errorText: state.nameErrMessage,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              spacing: 20,
               children: [
                 DatePickerButton(
-                  givenDate: 'From: ${formatDate(state.from)}',
-                  onTap: ()=>pickDateRange(state: state),
+                  selectedDate: (formatDate(state.from) ?? 'select date'),
+                  onDateChanged: viewModel.onStartDateChanged,
+                  bookedDays: state.blockedDays,
                 ),
                 DatePickerButton(
-                  givenDate: 'To: ${formatDate(state.to)}',
-                  onTap: ()=>pickDateRange(state: state),
+                  selectedDate: (formatDate(state.to) ?? 'select date'),
+                  onDateChanged: viewModel.onEndDateChanged,
+                  bookedDays: state.blockedDays,
                 ),
               ],
             ),
             CustomInputField(
-                controller: viewModel.amountController,
-                label: 'Amount',
-                inputType: TextInputType.number,
-                errorText: state.amountErrMessage,
+              controller: viewModel.amountController,
+              label: 'Amount',
+              inputType: TextInputType.number,
+              errorText: state.amountErrMessage,
             ),
             CustomDropDown(
               selectedValue: state.paymentMethod,
@@ -85,9 +85,9 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               onChanged: viewModel.onPaymentMethodChanged,
             ),
             CustomInputField(
-                label: 'Payment Reference',
-                controller: viewModel.paymentRefController,
-                errorText: state.paymentRefErrMsg,
+              label: 'Payment Reference',
+              controller: viewModel.paymentRefController,
+              errorText: state.paymentRefErrMsg,
             ),
             CustomDropDown(
               selectedValue: state.bookingSource,
@@ -104,16 +104,17 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               onChanged: viewModel.onBookingStatusChanged,
             ),
             CustomInputField(
-                label: 'Additional Notes',
-                controller: viewModel.notesController,
+              label: 'Additional Notes',
+              controller: viewModel.notesController,
             ),
             CustomInputField(
-                label: 'Reminder',
-                controller: viewModel.reminderController,
+              label: 'Reminder',
+              controller: viewModel.reminderController,
             ),
-            CustomButton(title: 'Create Booking',
+            CustomButton(
+              title: 'Create Booking',
               isLoading: state.isLoading,
-              onTap: viewModel.onCreateNewBooking
+              onTap: viewModel.onCreateNewBooking,
             ),
           ],
         ),

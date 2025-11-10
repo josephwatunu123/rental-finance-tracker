@@ -26,7 +26,7 @@ class BookingModel {
     this.notes,
     this.reminder,
     this.paymentRef,
-    this.daysBooked
+    this.daysBooked,
   });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
@@ -36,13 +36,16 @@ class BookingModel {
       from: json['from'] != null ? (json['from'] as Timestamp).toDate() : null,
       to: json['to'] != null ? (json['to'] as Timestamp).toDate() : null,
       paymentMethod: json['paymentMethod'] as String?,
-      amountPaid: json['amountPaid'] != null ? (json['amountPaid'] as num?)?.toInt() : null,
+      amountPaid:
+          json['amountPaid'] != null
+              ? (json['amountPaid'] as num?)?.toInt()
+              : null,
       bookingSource: json['bookingSource'] as String?,
       status: json['status'] as String?,
       notes: json['notes'] as String?,
       reminder: json['reminder'] as String?,
       paymentRef: json['paymentRef'] as String?,
-      daysBooked: json['daysBooked'] as int?
+      daysBooked: json['daysBooked'] as int?,
     );
   }
 
@@ -58,7 +61,7 @@ class BookingModel {
       'status': status,
       'notes': notes,
       'reminder': reminder,
-      'daysBooked': daysBooked
+      'daysBooked': daysBooked,
     };
   }
 

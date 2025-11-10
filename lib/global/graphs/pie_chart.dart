@@ -13,8 +13,9 @@ class CustomPieChart extends StatelessWidget {
     this.airbnbBookings,
     this.referralBookings,
     this.bookingsDotComBookings,
-    this.hasBorder=false,
-    this.directClients});
+    this.hasBorder = false,
+    this.directClients,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +28,11 @@ class CustomPieChart extends StatelessWidget {
         height: size.height * 0.4,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          border: hasBorder ? Border.all(
-              width: 1,
-              color: theme.primaryColor
-          )
-              : null,
-          borderRadius: BorderRadius.circular(12)
+          border:
+              hasBorder
+                  ? Border.all(width: 1, color: theme.primaryColor)
+                  : null,
+          borderRadius: BorderRadius.circular(12),
         ),
         padding: EdgeInsets.all(10),
         child: Column(
@@ -78,24 +78,15 @@ class CustomPieChart extends StatelessWidget {
                 spacing: 15,
                 children: <Widget>[
                   SizedBox(height: 4),
-                  indicator(
-                    color: Colors.redAccent,
-                    text: 'airbnb',
-                  ),
+                  indicator(color: Colors.redAccent, text: 'airbnb'),
                   SizedBox(height: 4),
                   indicator(
                     color: Colors.deepPurple.shade400,
                     text: 'referral',
                   ),
                   SizedBox(height: 4),
-                  indicator(
-                    color: Colors.green,
-                    text: 'direct',
-                  ),
-                  indicator(
-                    color: Colors.blue.shade900,
-                    text: 'bookings.com',
-                  ),
+                  indicator(color: Colors.green, text: 'direct'),
+                  indicator(color: Colors.blue.shade900, text: 'bookings.com'),
                   SizedBox(height: 4),
                   SizedBox(height: 18),
                 ],
@@ -111,19 +102,21 @@ class CustomPieChart extends StatelessWidget {
 Widget indicator({
   required Color color,
   required String text,
-   bool isSquare=false,
+  bool isSquare = false,
 }) {
   return Column(
     spacing: 5,
     children: [
       Container(
         height: 20,
-        width: 20, 
+        width: 20,
 
-      decoration: BoxDecoration(
+        decoration: BoxDecoration(
           color: color,
-        borderRadius: isSquare ? null : BorderRadius.circular(15)
+          borderRadius: isSquare ? null : BorderRadius.circular(15),
+        ),
       ),
-    ), Text(text)],
+      Text(text),
+    ],
   );
 }

@@ -23,6 +23,7 @@ class NewBookingsState {
   final String? notes;
   final bool isSingleDayClient;
   final bool? isViewFormValid;
+  final Set<DateTime>? blockedDays;
 
   NewBookingsState({
     this.bookings,
@@ -46,7 +47,8 @@ class NewBookingsState {
     this.isViewFormValid,
     this.paymentMethErrMsg,
     this.name,
-    this.isSingleDayClient=false
+    this.isSingleDayClient = false,
+    this.blockedDays,
   });
 
   NewBookingsState copyWith({
@@ -71,7 +73,8 @@ class NewBookingsState {
     String? paymentRef,
     String? bookingStatus,
     String? paymentMethErrMsg,
-    bool? isSingleDayClient
+    bool? isSingleDayClient,
+    Set<DateTime>? blockedDays,
   }) {
     return NewBookingsState(
       bookings: bookings ?? this.bookings,
@@ -81,9 +84,12 @@ class NewBookingsState {
       nameErrMessage: nameErrMessage ?? this.nameErrMessage,
       amountErrMessage: amountErrMessage ?? this.amountErrMessage,
       paymentRefErrMsg: paymentRefErrMsg ?? this.paymentRefErrMsg,
-      selectedExpenseTypeErrorMsg: selectedExpenseTypeErrorMsg ?? this.selectedExpenseTypeErrorMsg,
-      selectedBookingStatusErrMsg: selectedBookingStatusErrMsg ?? this.selectedBookingStatusErrMsg,
-      selectedBookingSrcErrMsg: selectedBookingSrcErrMsg ?? this.selectedBookingSrcErrMsg,
+      selectedExpenseTypeErrorMsg:
+          selectedExpenseTypeErrorMsg ?? this.selectedExpenseTypeErrorMsg,
+      selectedBookingStatusErrMsg:
+          selectedBookingStatusErrMsg ?? this.selectedBookingStatusErrMsg,
+      selectedBookingSrcErrMsg:
+          selectedBookingSrcErrMsg ?? this.selectedBookingSrcErrMsg,
       showFormErrors: showFormErrors ?? this.showFormErrors,
       isViewFormValid: isViewFormValid ?? this.isViewFormValid,
       from: from ?? this.from,
@@ -95,7 +101,8 @@ class NewBookingsState {
       paymentRef: paymentRef ?? this.paymentRef,
       bookingStatus: bookingStatus ?? this.bookingStatus,
       paymentMethErrMsg: paymentMethErrMsg ?? this.paymentMethErrMsg,
-      isSingleDayClient: isSingleDayClient ?? this.isSingleDayClient
+      isSingleDayClient: isSingleDayClient ?? this.isSingleDayClient,
+      blockedDays: blockedDays ?? blockedDays,
     );
   }
 }

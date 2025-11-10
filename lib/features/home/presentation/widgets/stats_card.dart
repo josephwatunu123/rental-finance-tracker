@@ -15,8 +15,8 @@ class StatsCard extends StatelessWidget {
     required this.title,
     required this.total,
     this.statistic,
-    this.addCurrency=true,
-    this.isLoading=false,
+    this.addCurrency = true,
+    this.isLoading = false,
   });
 
   @override
@@ -51,8 +51,9 @@ class StatsCard extends StatelessWidget {
                   width: 50,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(AppConstants.dotsLoadingGif))
+                      fit: BoxFit.cover,
+                      image: AssetImage(AppConstants.dotsLoadingGif),
+                    ),
                   ),
                 )
               else

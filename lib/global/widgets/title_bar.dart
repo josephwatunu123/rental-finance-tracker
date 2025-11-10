@@ -44,7 +44,7 @@ class TitleBar extends StatelessWidget {
                   end: Alignment.bottomRight,
                 )
                 : null,
-        borderRadius: BorderRadius.all(Radius.circular(newBorderRadius ?? 12)),
+        borderRadius: BorderRadius.all(Radius.circular(newBorderRadius ?? 20)),
         border: hasBorders ? Border.all(width: borderWidth ?? 0.01) : null,
       ),
       child: Column(

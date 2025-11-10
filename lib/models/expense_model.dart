@@ -29,12 +29,11 @@ class ExpenseModel {
       expenseType: json['expenseType'] as String?,
       expenseTitle: json['expenseTitle'] as String?,
       paymentMethod: json['paymentMethod'] as String?,
-      paymentDate: json['paymentDate'] != null
-          ? (json['paymentDate'] as Timestamp).toDate()
-          : null,
-      amount: json['amount'] != null
-          ? (json['amount'] as num?)?.toInt()
-          : null,
+      paymentDate:
+          json['paymentDate'] != null
+              ? (json['paymentDate'] as Timestamp).toDate()
+              : null,
+      amount: json['amount'] != null ? (json['amount'] as num?)?.toInt() : null,
       notes: json['notes'] as String?,
       reminder: json['reminder'] as String?,
       paymentReference: json['paymentReference'] as String?,
@@ -47,7 +46,7 @@ class ExpenseModel {
       'expenseType': expenseType,
       'expenseTitle': expenseTitle,
       'paymentDate':
-      paymentDate != null ? Timestamp.fromDate(paymentDate!) : null,
+          paymentDate != null ? Timestamp.fromDate(paymentDate!) : null,
       'paymentMethod': paymentMethod,
       'amount': amount,
       'notes': notes,

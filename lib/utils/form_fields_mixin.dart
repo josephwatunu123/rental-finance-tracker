@@ -3,7 +3,7 @@ import 'package:rental_finance_tracker/services/snackbar_service.dart';
 
 import 'functions.dart';
 
-mixin FormFieldsMixin{
+mixin FormFieldsMixin {
   final nameController = TextEditingController();
   final amountController = TextEditingController();
   final paymentRefController = TextEditingController();
@@ -32,7 +32,7 @@ mixin FormFieldsMixin{
       'amountErr': intValidator(amountController.text),
       'paymentRefErr': nonNullTextValidator(paymentRefController.text),
       'paymentMethodErr':
-      paymentMethod == null ? 'Select payment method' : null,
+          paymentMethod == null ? 'Select payment method' : null,
     };
   }
 
@@ -43,5 +43,4 @@ mixin FormFieldsMixin{
       snackBarType: SnackBarType.error,
     );
   }
-
 }
