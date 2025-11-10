@@ -59,12 +59,12 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 DatePickerButton(
-                  selectedDate: (formatDate(state.from) ?? 'select date'),
+                  selectedDate: (formatDate(state.from) ?? 'check in date'),
                   onDateChanged: viewModel.onStartDateChanged,
                   bookedDays: state.blockedDays,
                 ),
                 DatePickerButton(
-                  selectedDate: (formatDate(state.to) ?? 'select date'),
+                  selectedDate: (formatDate(state.to) ?? 'check out date'),
                   onDateChanged: viewModel.onEndDateChanged,
                   bookedDays: state.blockedDays,
                 ),

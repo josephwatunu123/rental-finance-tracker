@@ -30,9 +30,10 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
   }
 
   onInit() async {
+    state = state.copyWith(isLoading: true);
     await getBookingsCurrentYear();
     _getBlockedDaysFromBookings(bookings);
-    state = state.copyWith(blockedDays: blockedDays);
+    state = state.copyWith(blockedDays: blockedDays, isLoading: false);
   }
 
   getBookingsCurrentYear() async {
