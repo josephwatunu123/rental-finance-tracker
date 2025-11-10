@@ -5,11 +5,13 @@ class DatePickerButton extends StatefulWidget {
   final bool isFullWidth;
   final Function(DateTime? pickedDate) onDateChanged;
   final String? selectedDate;
+  final Set<DateTime>? bookedDays;
   const DatePickerButton({
     super.key,
     this.isFullWidth = false,
     required this.selectedDate,
-    required this.onDateChanged
+    required this.onDateChanged,
+    this.bookedDays,
   });
 
   @override
@@ -17,14 +19,12 @@ class DatePickerButton extends StatefulWidget {
 }
 
 class _DatePickerButtonState extends State<DatePickerButton> {
-
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return InkWell(
-      onTap: () => _selectDate(context: context),
+      onTap: () => _selectDate(context: context, bookedDays: widget.bookedDays),
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.all(10),
@@ -46,23 +46,55 @@ class _DatePickerButtonState extends State<DatePickerButton> {
               color: theme.primaryColor,
               size: 25,
             ),
-            Text(widget.selectedDate ?? "select date", style: theme.textTheme.bodySmall),
+            Text(
+              widget.selectedDate ?? "select date",
+              style: theme.textTheme.bodySmall,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Future<void> _selectDate({required BuildContext context}) async {
+  Future<void> _selectDate({
+    required BuildContext context,
+    Set<DateTime>? bookedDays,
+  }) async {
+    final Set<DateTime> normalizedBookedDays =
+        bookedDays?.map((d) {
+          return DateTime(d.year, d.month, d.day);
+        }).toSet() ??
+        {};
+
+    DateTime findValidInitialDate() {
+      final today = DateTime.now();
+      DateTime candidate = DateTime(today.year, today.month, today.day);
+      for (int i = 0; i < 365; i++) {
+        if (!normalizedBookedDays.contains(candidate)) {
+          return candidate;
+        }
+        candidate = candidate.add(const Duration(days: 1));
+      }
+      return today;
+    }
+
+    final DateTime validInitialDate = findValidInitialDate();
+
+    bool isDaySelectable(DateTime day) {
+      final normalized = DateTime(day.year, day.month, day.day);
+      return !normalizedBookedDays.contains(normalized);
+    }
+
     final DateTime? pickedDate = await showDatePicker(
-      initialDate: DateTime.now(),
       context: context,
+      initialDate: validInitialDate,
       firstDate: DateTime(2025),
       lastDate: DateTime(2030),
-    );
-    await widget.onDateChanged(
-      pickedDate
+      selectableDayPredicate: isDaySelectable,
     );
 
+    if (pickedDate != null) {
+      widget.onDateChanged(pickedDate);
+    }
   }
 }

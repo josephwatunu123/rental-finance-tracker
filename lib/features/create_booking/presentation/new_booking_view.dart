@@ -63,10 +63,12 @@ class _NewBookingState extends ConsumerState<NewBooking> {
                 DatePickerButton(
                   selectedDate: (formatDate(state.from) ?? 'select date'),
                   onDateChanged: viewModel.onStartDateChanged,
+                  bookedDays: state.blockedDays,
                 ),
                 DatePickerButton(
                   selectedDate: (formatDate(state.to) ?? 'select date'),
                   onDateChanged: viewModel.onEndDateChanged,
+                  bookedDays: state.blockedDays,
                 ),
               ],
             ),

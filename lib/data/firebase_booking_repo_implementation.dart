@@ -103,37 +103,6 @@ class FirebaseBookingImplementation implements BookingRepository {
     }
   }
 
-  @override
-  Future<List<DateTime>> getBookedDaysOnSelectedMonth({
-    required DateTime selectedMonth,
-  }) async{
-    final startOfMonth = DateTime(selectedMonth.year, selectedMonth.month, 1);
-    final endOfMonth = DateTime(selectedMonth.year, selectedMonth.month + 1, 0);
-
-    final snapshot = await firestore
-        .collection('bookings')
-        .where('from', isLessThanOrEqualTo: endOfMonth)
-        .where('to', isGreaterThanOrEqualTo: startOfMonth)
-        .get();
-    log('response firebase:: '
-        'Number of booked days found ${snapshot.docs.length}'
-        'Query params: {$selectedMonth}'
-        'Data: ${snapshot.docs.map((doc) => doc.data()).toList()}'
-    );
-    final List<DateTime> bookedDays = [];
-    for(var doc in snapshot.docs){
-      final data = doc.data();
-      final from = (data['from'] as Timestamp).toDate();
-      final to = (data['to'] as Timestamp).toDate();
-      DateTime current = from;
-      while (current.isBefore(to)) {
-        bookedDays.add(DateTime(current.year, current.month, current.day));
-        current = current.add(const Duration(days: 1));
-      }
-    }
-
-    return bookedDays;
-    }
 
   }
 

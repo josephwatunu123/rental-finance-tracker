@@ -15,8 +15,4 @@ abstract class BookingRepository{
     DateTime endDate,
 });
 
-  Future<List<DateTime>> getBookedDaysOnSelectedMonth({
-    required DateTime selectedMonth,
-  });
-
 }

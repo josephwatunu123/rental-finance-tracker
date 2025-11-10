@@ -8,6 +8,7 @@ class AppConstants{
   static DateTime get tomorrow => today.add(const Duration(days: 1));
   static DateTime get yesterday => today.subtract(const Duration(days: 1));
   static final DateTime thisYear = DateTime(today.year, 1, 1);
+  static final DateTime nextYear = DateTime(today.year + 1, 1, 1);
   static final DateTime thisMonth = DateTime(today.year, today.month, 1);
   static final firstDayOfCurrentMonth = DateTime(today.year, today.month, 1);
   static final lastDayOfPreviousMonth = firstDayOfCurrentMonth.subtract(Duration(days: 1));
