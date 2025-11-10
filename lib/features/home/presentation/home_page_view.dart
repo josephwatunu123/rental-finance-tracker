@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:rental_finance_tracker/features/home/home_page_view_model.dart';
 import 'package:rental_finance_tracker/features/home/presentation/widgets/recent_bookings.dart';
 import 'package:rental_finance_tracker/features/home/presentation/widgets/stats_card.dart';
@@ -24,6 +25,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     final state = ref.watch(homePageViewModelProvider);
+    final String currentMonth = DateFormat('MMMM').format(DateTime.now());
     return Scaffold(
       body: Center(
         child:
@@ -42,7 +44,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       children: [
                         TitleBar(
                           title: 'Good Afternoon, Jayder',
-                          subtitle: 'SEPTEMBER STATISTICS',
+                          subtitle: '${currentMonth.toUpperCase()} STATISTICS',
                           icon: FontAwesomeIcons.userAstronaut,
                           customHeight: size.height * 0.17,
                           isAppBar: true,
