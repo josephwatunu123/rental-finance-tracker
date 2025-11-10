@@ -42,7 +42,7 @@ class _BookingsPageState extends ConsumerState<BookingsPage> {
                 ),
               )
               : RefreshIndicator(
-                onRefresh: () async {},
+                onRefresh: viewModel.onRefresh,
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
