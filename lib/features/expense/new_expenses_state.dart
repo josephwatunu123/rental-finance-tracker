@@ -1,5 +1,4 @@
-
-class NewExpensesState{
+class NewExpensesState {
   final String? expenseType;
   final String? expenseTypeErrMsg;
   final String? paymentMethod;
@@ -28,10 +27,9 @@ class NewExpensesState{
     this.paymentRefErrMsg,
     this.expenseTitleErrMsg,
     this.amountErrMsg,
-    this.showFormErrors=false,
-    this.isLoading=false,
-    this.error
-
+    this.showFormErrors = false,
+    this.isLoading = false,
+    this.error,
   });
 
   NewExpensesState copyWith({
@@ -49,25 +47,24 @@ class NewExpensesState{
     DateTime? expensePaymentDate,
     bool? isLoading,
     bool? showFormErrors,
-    String? error
-
+    String? error,
   }) {
     return NewExpensesState(
-        expenseType: expenseType ?? this.expenseType,
-        expenseTypeErrMsg: expenseTypeErrMsg ?? this.expenseTypeErrMsg,
-        isLoading: isLoading ?? this.isLoading,
-        showFormErrors: showFormErrors ?? this.showFormErrors,
-        paymentMethod: paymentMethod ?? this.paymentMethod,
-        amount: amount ?? this.amount,
-        paymentMethErrMsg: paymentMethErrMsg ?? this.paymentMethErrMsg,
-        expenseTitleErrMsg: expenseTitleErrMsg ?? this.expenseTitleErrMsg,
-        amountErrMsg: amountErrMsg ?? this.amountErrMsg,
-        paymentRefErrMsg: paymentRefErrMsg ?? this.paymentRefErrMsg,
-        paymentReference: paymentReference ?? this.paymentReference,
-        additionalNotes: additionalNotes ?? this.additionalNotes,
-        reminder: reminder ?? this.reminder,
-        expensePaymentDate: expensePaymentDate ?? this.expensePaymentDate,
-        error: error ?? this.error
+      expenseType: expenseType ?? this.expenseType,
+      expenseTypeErrMsg: expenseTypeErrMsg ?? this.expenseTypeErrMsg,
+      isLoading: isLoading ?? this.isLoading,
+      showFormErrors: showFormErrors ?? this.showFormErrors,
+      paymentMethod: paymentMethod ?? this.paymentMethod,
+      amount: amount ?? this.amount,
+      paymentMethErrMsg: paymentMethErrMsg ?? this.paymentMethErrMsg,
+      expenseTitleErrMsg: expenseTitleErrMsg ?? this.expenseTitleErrMsg,
+      amountErrMsg: amountErrMsg ?? this.amountErrMsg,
+      paymentRefErrMsg: paymentRefErrMsg ?? this.paymentRefErrMsg,
+      paymentReference: paymentReference ?? this.paymentReference,
+      additionalNotes: additionalNotes ?? this.additionalNotes,
+      reminder: reminder ?? this.reminder,
+      expensePaymentDate: expensePaymentDate ?? this.expensePaymentDate,
+      error: error ?? this.error,
     );
   }
 }

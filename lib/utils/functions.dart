@@ -1,5 +1,3 @@
-
-
 ///Basic function to validate a Text form:
 //we will check for nullability and invalid
 String? textFormValidator(String? value) {
@@ -38,24 +36,20 @@ String? intValidator(String? value) {
   return null;
 }
 
-
 ///Trim the date from firebase response
 String? formatDate(DateTime? date) {
-  if(date ==null) return null;
-  return "${date.day.toString().padLeft(2,'0')}-"
-      "${date.month.toString().padLeft(2,'0')}-"
-      "${date.year.toString().padLeft(2,'0')}";
+  if (date == null) return null;
+  return "${date.day.toString().padLeft(2, '0')}-"
+      "${date.month.toString().padLeft(2, '0')}-"
+      "${date.year.toString().padLeft(2, '0')}";
 }
-
 
 ///Function to calculate the number of days booked
 int? calculateBookedDays(DateTime? fromDate, DateTime? toDate) {
-  if(fromDate ==null || toDate==null){
+  if (fromDate == null || toDate == null) {
     return -1;
   }
   final start = DateTime(fromDate.year, fromDate.month, fromDate.day);
   final end = DateTime(toDate.year, toDate.month, toDate.day);
   return end.difference(start).inDays;
 }
-
-

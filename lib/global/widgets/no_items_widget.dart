@@ -13,7 +13,7 @@ class NoItemsWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image(image: AssetImage(AppConstants.noItemsImage)),
-          Text('No bookings',style: theme.textTheme.bodySmall,)
+          Text('No bookings', style: theme.textTheme.bodySmall),
         ],
       ),
     );

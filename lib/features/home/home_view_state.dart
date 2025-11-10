@@ -1,6 +1,6 @@
 import 'package:rental_finance_tracker/models/booking_model.dart';
 
-class HomeViewState{
+class HomeViewState {
   final List<BookingModel>? bookings;
   final List<BookingModel>? recentBookings;
   final bool isLoading;
@@ -22,10 +22,9 @@ class HomeViewState{
     this.bookingsFromBookingDotCom,
     this.bookingsFromReferral,
     this.directBookings,
-    this.isLoading=false,
-    this.error
-
-});
+    this.isLoading = false,
+    this.error,
+  });
 
   HomeViewState copyWith({
     List<BookingModel>? bookings,
@@ -38,8 +37,7 @@ class HomeViewState{
     int? bookingsFromReferral,
     int? directBookings,
     int? bookingsFromBookingDotCom,
-    String? error
-
+    String? error,
   }) {
     return HomeViewState(
       bookings: bookings ?? this.bookings,
@@ -49,10 +47,11 @@ class HomeViewState{
       monthToDateRevenue: monthToDateRevenue ?? this.monthToDateRevenue,
       monthBookedDays: monthBookedDays ?? this.monthBookedDays,
       bookingsFromAirbnb: bookingsFromAirbnb ?? this.bookingsFromAirbnb,
-      bookingsFromBookingDotCom: bookingsFromBookingDotCom ?? this.bookingsFromBookingDotCom,
+      bookingsFromBookingDotCom:
+          bookingsFromBookingDotCom ?? this.bookingsFromBookingDotCom,
       bookingsFromReferral: bookingsFromReferral ?? this.bookingsFromReferral,
       directBookings: directBookings ?? this.directBookings,
-      error: error ?? this.error
+      error: error ?? this.error,
     );
   }
 }

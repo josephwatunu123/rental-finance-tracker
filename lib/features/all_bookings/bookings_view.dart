@@ -20,68 +20,71 @@ class BookingsPage extends ConsumerStatefulWidget {
 class _BookingsPageState extends ConsumerState<BookingsPage> {
   @override
   Widget build(BuildContext context) {
-    final theme =Theme.of(context);
+    final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     final viewModel = ref.watch(bookingsPageViewModelProvider.notifier);
     final state = ref.watch(bookingsPageViewModelProvider);
     return Scaffold(
-      body: state.error !=null ? Text('${state.error}')
-          : state.isLoading ? Center(
-            child: Container(
-                    height: size.height * 0.3,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(AppConstants.bookingsLoadingGif),
-            ),
+      body:
+          state.error != null
+              ? Text('${state.error}')
+              : state.isLoading
+              ? Center(
+                child: Container(
+                  height: size.height * 0.3,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(AppConstants.bookingsLoadingGif),
                     ),
                   ),
-          )
-          : RefreshIndicator(
-              onRefresh: () async {
-
-              },
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              spacing: 10,
-              children: [
-                TitleBar(
-                    isAppBar: true,
-                    icon: FontAwesomeIcons.bed,
-                  subtitle: 'A list of all your bookings',
-                  customHeight: size.height * 0.17,
-                    title: 'Bookings',
-                  gradientColors: [
-                    lighten(theme.primaryColor, 0.2),
-                    darken(theme.primaryColor, 0.2),
-                  ],
                 ),
-                CustomInputField(
-                  hintText: 'Search Client Name',
-                  maxLines: 1,
-                  prefixIcon: Icon(Icons.search),
+              )
+              : RefreshIndicator(
+                onRefresh: () async {},
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    spacing: 10,
+                    children: [
+                      TitleBar(
+                        isAppBar: true,
+                        icon: FontAwesomeIcons.bed,
+                        subtitle: 'A list of all your bookings',
+                        customHeight: size.height * 0.17,
+                        title: 'Bookings',
+                        gradientColors: [
+                          lighten(theme.primaryColor, 0.2),
+                          darken(theme.primaryColor, 0.2),
+                        ],
+                      ),
+                      CustomInputField(
+                        hintText: 'Search Client Name',
+                        maxLines: 1,
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          DatePickerButton(
+                            selectedDate:
+                                (formatDate(state.startDate) ?? 'select date'),
+                            onDateChanged: viewModel.onStartDateChanged,
+                          ),
+                          DatePickerButton(
+                            selectedDate:
+                                (formatDate(state.endDate) ?? 'select date'),
+                            onDateChanged: viewModel.onEndDateChanged,
+                          ),
+                          Icon(FontAwesomeIcons.filePdf),
+                        ],
+                      ),
+                      BookingsList(bookings: state.bookings),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    DatePickerButton(
-                      selectedDate: (formatDate(state.startDate) ?? 'select date'),
-                        onDateChanged: viewModel.onStartDateChanged,
-                    ),
-                    DatePickerButton(
-                      selectedDate: (formatDate(state.endDate) ?? 'select date'),
-                      onDateChanged: viewModel.onEndDateChanged,
-                    ),
-                    Icon(FontAwesomeIcons.filePdf)
-                  ],
-                ),
-                BookingsList(bookings: state.bookings)
-              ],
-            ),
-          ),
-      ),
+              ),
     );
   }
 }

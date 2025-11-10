@@ -1,8 +1,6 @@
-
-
 import 'package:rental_finance_tracker/models/booking_model.dart';
 
-class BookingsPageState{
+class BookingsPageState {
   final String? error;
   final DateTime? startDate;
   final DateTime? endDate;
@@ -14,8 +12,8 @@ class BookingsPageState{
     this.startDate,
     this.endDate,
     this.bookings,
-    this.isLoading=false,
-});
+    this.isLoading = false,
+  });
 
   BookingsPageState copyWith({
     String? error,
@@ -23,14 +21,13 @@ class BookingsPageState{
     DateTime? endDate,
     List<BookingModel>? bookings,
     bool? isLoading,
-}) {
+  }) {
     return BookingsPageState(
       error: error ?? this.error,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       bookings: bookings ?? this.bookings,
-      isLoading: isLoading ?? this.isLoading
+      isLoading: isLoading ?? this.isLoading,
     );
   }
-
 }

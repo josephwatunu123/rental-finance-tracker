@@ -6,62 +6,55 @@ import 'package:rental_finance_tracker/domain/booking_repository.dart';
 
 import 'bookings_state.dart';
 
-class BookingsPageViewModel extends StateNotifier<BookingsPageState>{
+class BookingsPageViewModel extends StateNotifier<BookingsPageState> {
   final BookingRepository repository;
 
-  BookingsPageViewModel({required this.repository}) : super(BookingsPageState()){
+  BookingsPageViewModel({required this.repository})
+    : super(BookingsPageState()) {
     init();
   }
 
-  DateTime initialDate =AppConstants.firstDayOfCurrentMonth;
+  DateTime initialDate = AppConstants.firstDayOfCurrentMonth;
   DateTime endDate = AppConstants.today;
   String? searchName;
 
-  Future<void> init()async{
+  Future<void> init() async {
     debugPrint('init called');
-    state= state.copyWith(
+    state = state.copyWith(
       isLoading: true,
       startDate: initialDate,
       endDate: endDate,
     );
-    final bookings= await repository.getBookings(
-        startDate: initialDate ,
-        endDate: endDate,
-        searchName: searchName,
+    final bookings = await repository.getBookings(
+      startDate: initialDate,
+      endDate: endDate,
+      searchName: searchName,
     );
     debugPrint('init called value received: $bookings');
 
-    if(bookings !=null){
-      state= state.copyWith(
-        bookings: bookings,
-      );
+    if (bookings != null) {
+      state = state.copyWith(bookings: bookings);
     }
 
     debugPrint('State holding after null check ${state.bookings}');
-    state= state.copyWith(
-      isLoading: false
-    );
+    state = state.copyWith(isLoading: false);
   }
 
   onStartDateChanged(DateTime? startDate) {
     debugPrint("reached start Date changer and got the date $startDate");
-    state = state.copyWith(startDate: startDate,);
+    state = state.copyWith(startDate: startDate);
   }
 
   onEndDateChanged(DateTime? endDate) {
     debugPrint("reached start Date changer and got the date $endDate");
-    state = state.copyWith(endDate: endDate,);
+    state = state.copyWith(endDate: endDate);
   }
 
-  onSearchNameChanged(){
-
-  }
-
-
+  onSearchNameChanged() {}
 }
 
-final bookingsPageViewModelProvider = StateNotifierProvider<BookingsPageViewModel, BookingsPageState>((ref){
-  final repository = ref.watch(bookingRepositoryProvider);
-  return BookingsPageViewModel(repository: repository);
-
-});
+final bookingsPageViewModelProvider =
+    StateNotifierProvider<BookingsPageViewModel, BookingsPageState>((ref) {
+      final repository = ref.watch(bookingRepositoryProvider);
+      return BookingsPageViewModel(repository: repository);
+    });

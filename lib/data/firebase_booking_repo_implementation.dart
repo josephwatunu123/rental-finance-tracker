@@ -102,9 +102,7 @@ class FirebaseBookingImplementation implements BookingRepository {
       return null;
     }
   }
-
-
-  }
+}
 
 final bookingRepositoryProvider = Provider<BookingRepository>((ref) {
   return FirebaseBookingImplementation(FirebaseFirestore.instance);

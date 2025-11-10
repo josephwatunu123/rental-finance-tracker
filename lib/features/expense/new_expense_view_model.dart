@@ -30,17 +30,17 @@ class NewExpensesViewModel extends StateNotifier<NewExpensesState> {
   }
 
   onExpenseTypeChanged(String? val) {
-    state= state.copyWith(
+    state = state.copyWith(
       expenseType: val,
-      expenseTypeErrMsg: val!=null ? null: "Please select an expense type",
+      expenseTypeErrMsg: val != null ? null : "Please select an expense type",
     );
   }
 
-  void onSelectPaymentDate (DateTime date){
+  void onSelectPaymentDate(DateTime date) {
     state = state.copyWith(expensePaymentDate: date);
   }
 
-  void clearErrors(){
+  void clearErrors() {
     state = state.copyWith(
       expenseTitleErrMsg: null,
       amountErrMsg: null,
@@ -52,32 +52,35 @@ class NewExpensesViewModel extends StateNotifier<NewExpensesState> {
   void onCreateNewExpense() async {
     state = state.copyWith(isLoading: true);
     clearErrors();
-    final titleErr= textFormValidator(expenseNameController.text);
-    final expenseTypeErr = state.expenseType == null ? "Select an expense type" : null;
-    final  paymentMethodErr= state.paymentMethod == null ? "Select payment method" : null;
-    final amountErr= intValidator(amountController.text);
-    final paymentRefErr= nonNullTextValidator(paymentRefController.text);
+    final titleErr = textFormValidator(expenseNameController.text);
+    final expenseTypeErr =
+        state.expenseType == null ? "Select an expense type" : null;
+    final paymentMethodErr =
+        state.paymentMethod == null ? "Select payment method" : null;
+    final amountErr = intValidator(amountController.text);
+    final paymentRefErr = nonNullTextValidator(paymentRefController.text);
 
     state = state.copyWith(
       expenseTitleErrMsg: titleErr,
       expenseTypeErrMsg: expenseTypeErr,
       paymentMethErrMsg: paymentMethodErr,
       amountErrMsg: amountErr,
-      paymentRefErrMsg: paymentRefErr
+      paymentRefErrMsg: paymentRefErr,
     );
-    final isValid =[
+    final isValid = [
       titleErr,
       expenseTypeErr,
       paymentMethodErr,
       amountErr,
-      paymentRefErr
-    ].every((e)=> e == null);
+      paymentRefErr,
+    ].every((e) => e == null);
 
-    if(!isValid){
+    if (!isValid) {
       SnackBarService.show(
-          message: 'Please Fill All the Details',
-          title: 'Failed To Create Booking',
-          snackBarType: SnackBarType.error);
+        message: 'Please Fill All the Details',
+        title: 'Failed To Create Booking',
+        snackBarType: SnackBarType.error,
+      );
       return;
     }
 

@@ -8,11 +8,10 @@ import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation
 import 'package:rental_finance_tracker/features/home/home_view_state.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
 
-class HomePageViewModel extends StateNotifier<HomeViewState>{
+class HomePageViewModel extends StateNotifier<HomeViewState> {
   final BookingRepository repository;
 
-
-  HomePageViewModel({required this.repository}): super(HomeViewState()){
+  HomePageViewModel({required this.repository}) : super(HomeViewState()) {
     loadBookings();
     getBookingSources();
   }
@@ -21,23 +20,29 @@ class HomePageViewModel extends StateNotifier<HomeViewState>{
   final endDate = AppConstants.lastDayOfCurrentMonth;
   final List<String> bookingSources = AppConstants.bookingSources;
 
-  Future<void> loadBookings() async{
-    state = state.copyWith(isLoading: true,);
-    try{
+  Future<void> loadBookings() async {
+    state = state.copyWith(isLoading: true);
+    try {
       final bookings = await repository.getBookings(
-          startDate: startDate,
-          endDate: endDate);
-      state= state.copyWith(
-          bookings: bookings,
-          monthToDateTotal:bookings?.length,
-          monthToDateRevenue: getCurrentMonthTotalRevenue(bookings),
-          monthBookedDays: calculateBookedDays(bookings, startDate,endDate),
-          recentBookings: bookings == null ? [] : bookings.length <=5 ? bookings : bookings.sublist(bookings.length -5)
+        startDate: startDate,
+        endDate: endDate,
+      );
+      state = state.copyWith(
+        bookings: bookings,
+        monthToDateTotal: bookings?.length,
+        monthToDateRevenue: getCurrentMonthTotalRevenue(bookings),
+        monthBookedDays: calculateBookedDays(bookings, startDate, endDate),
+        recentBookings:
+            bookings == null
+                ? []
+                : bookings.length <= 5
+                ? bookings
+                : bookings.sublist(bookings.length - 5),
       );
       state = state.copyWith(isLoading: false);
-    }catch (e, st){
+    } catch (e, st) {
       debugPrint("error::: $e,stack:::$st");
-      state =state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
@@ -48,14 +53,18 @@ class HomePageViewModel extends StateNotifier<HomeViewState>{
     return total;
   }
 
-  int getCurrentMonthProfit(List<BookingModel>? bookings){
-    if(bookings == null || bookings.isEmpty) return -1;
+  int getCurrentMonthProfit(List<BookingModel>? bookings) {
+    if (bookings == null || bookings.isEmpty) return -1;
     final total = bookings.fold(0, (sum, b) => sum + (b.amountPaid ?? 0));
     log("current month revenue::: $total");
     return total;
   }
 
-  int calculateBookedDays(List<BookingModel>? bookings, DateTime monthStart, DateTime monthEnd) {
+  int calculateBookedDays(
+    List<BookingModel>? bookings,
+    DateTime monthStart,
+    DateTime monthEnd,
+  ) {
     if (bookings == null || bookings.isEmpty) return -1;
     int totalDays = 0;
     for (var b in bookings) {
@@ -69,12 +78,13 @@ class HomePageViewModel extends StateNotifier<HomeViewState>{
 
   Future<void> getBookingSources() async {
     final results = await Future.wait(
-      bookingSources.map((source) =>
-          repository.getTotalBookingsFromSource(
-              source: source,
-              startDate: startDate,
-              endDate: endDate
-          )),
+      bookingSources.map(
+        (source) => repository.getTotalBookingsFromSource(
+          source: source,
+          startDate: startDate,
+          endDate: endDate,
+        ),
+      ),
     );
     final Map<String, int> counts = {
       for (int i = 0; i < bookingSources.length; i++)
@@ -88,7 +98,6 @@ class HomePageViewModel extends StateNotifier<HomeViewState>{
     );
   }
 
-
   Future<void> onRefresh() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
@@ -101,16 +110,10 @@ class HomePageViewModel extends StateNotifier<HomeViewState>{
       state = state.copyWith(isLoading: false);
     }
   }
-
-
-
-
-
-
-
 }
 
-final homePageViewModelProvider = StateNotifierProvider<HomePageViewModel, HomeViewState>((ref){
-  final repository = ref.watch(bookingRepositoryProvider);
-  return HomePageViewModel(repository: repository);
-});
+final homePageViewModelProvider =
+    StateNotifierProvider<HomePageViewModel, HomeViewState>((ref) {
+      final repository = ref.watch(bookingRepositoryProvider);
+      return HomePageViewModel(repository: repository);
+    });

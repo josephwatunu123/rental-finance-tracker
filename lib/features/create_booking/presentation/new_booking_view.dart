@@ -19,18 +19,17 @@ class NewBooking extends ConsumerStatefulWidget {
   @override
   ConsumerState<NewBooking> createState() => _NewBookingState();
 }
+
 DateTimeRange dateTimeRange = DateTimeRange(
-    start:AppConstants.today,
-    end: AppConstants.tomorrow
+  start: AppConstants.today,
+  end: AppConstants.tomorrow,
 );
 final startDate = dateTimeRange.start;
 final endDate = dateTimeRange.end;
 
 class _NewBookingState extends ConsumerState<NewBooking> {
-
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final viewModel = ref.watch(newBookingViewModelProvider.notifier);
@@ -53,8 +52,8 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               ],
             ),
             CustomInputField(
-                label: 'Name',
-                controller: viewModel.nameController,
+              label: 'Name',
+              controller: viewModel.nameController,
               errorText: state.nameErrMessage,
             ),
             Row(
@@ -73,10 +72,10 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               ],
             ),
             CustomInputField(
-                controller: viewModel.amountController,
-                label: 'Amount',
-                inputType: TextInputType.number,
-                errorText: state.amountErrMessage,
+              controller: viewModel.amountController,
+              label: 'Amount',
+              inputType: TextInputType.number,
+              errorText: state.amountErrMessage,
             ),
             CustomDropDown(
               selectedValue: state.paymentMethod,
@@ -86,9 +85,9 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               onChanged: viewModel.onPaymentMethodChanged,
             ),
             CustomInputField(
-                label: 'Payment Reference',
-                controller: viewModel.paymentRefController,
-                errorText: state.paymentRefErrMsg,
+              label: 'Payment Reference',
+              controller: viewModel.paymentRefController,
+              errorText: state.paymentRefErrMsg,
             ),
             CustomDropDown(
               selectedValue: state.bookingSource,
@@ -105,16 +104,17 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               onChanged: viewModel.onBookingStatusChanged,
             ),
             CustomInputField(
-                label: 'Additional Notes',
-                controller: viewModel.notesController,
+              label: 'Additional Notes',
+              controller: viewModel.notesController,
             ),
             CustomInputField(
-                label: 'Reminder',
-                controller: viewModel.reminderController,
+              label: 'Reminder',
+              controller: viewModel.reminderController,
             ),
-            CustomButton(title: 'Create Booking',
+            CustomButton(
+              title: 'Create Booking',
               isLoading: state.isLoading,
-              onTap: viewModel.onCreateNewBooking
+              onTap: viewModel.onCreateNewBooking,
             ),
           ],
         ),

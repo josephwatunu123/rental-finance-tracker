@@ -22,7 +22,6 @@ class NewExpense extends ConsumerStatefulWidget {
 class _NewExpenseState extends ConsumerState<NewExpense> {
   DateTime expensePaymentDate = AppConstants.today;
 
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -46,24 +45,24 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                 darken(theme.primaryColor, 0.2),
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 10),
             CustomInputField(
-                label: 'Expense Title',
-                controller: viewModel.expenseNameController,
-                errorText:state.expenseTitleErrMsg,
+              label: 'Expense Title',
+              controller: viewModel.expenseNameController,
+              errorText: state.expenseTitleErrMsg,
             ),
             CustomDropDown(
               hint: 'Expense Type',
               isFullWidth: true,
               items: AppConstants.expenseTypes,
-              onChanged:viewModel.onExpenseTypeChanged,
+              onChanged: viewModel.onExpenseTypeChanged,
               errorText: state.expenseTypeErrMsg,
             ),
             CustomDropDown(
               hint: 'Payment Method',
               isFullWidth: true,
               items: AppConstants.paymentMethods,
-              onChanged:viewModel.onPaymentMethodChanged,
+              onChanged: viewModel.onPaymentMethodChanged,
               errorText: state.paymentMethErrMsg,
             ),
             Padding(
@@ -82,29 +81,30 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
               ),
             ),
             CustomInputField(
-                label: 'Amount',
-                inputType: TextInputType.number,
+              label: 'Amount',
+              inputType: TextInputType.number,
               controller: viewModel.amountController,
               errorText: state.amountErrMsg,
             ),
             CustomInputField(
-                label: 'Payment Reference',
-                controller: viewModel.paymentRefController,
+              label: 'Payment Reference',
+              controller: viewModel.paymentRefController,
               errorText: state.paymentRefErrMsg,
             ),
             CustomInputField(
-                label: 'Additional Notes',
-                controller: viewModel.notesController,
+              label: 'Additional Notes',
+              controller: viewModel.notesController,
             ),
             CustomInputField(
-                label: 'Reminder',
-                controller: viewModel.reminderController,
+              label: 'Reminder',
+              controller: viewModel.reminderController,
             ),
             CustomButton(
-                isLoading: state.isLoading,
-                title: 'Create Expense',
-                isFullWidth: true,
-                onTap:viewModel.onCreateNewExpense),
+              isLoading: state.isLoading,
+              title: 'Create Expense',
+              isFullWidth: true,
+              onTap: viewModel.onCreateNewExpense,
+            ),
           ],
         ),
       ),

@@ -16,7 +16,7 @@ class CustomDropDown extends StatelessWidget {
     this.width,
     required this.hint,
     this.selectedValue,
-    this.errorText
+    this.errorText,
   });
 
   @override
@@ -30,7 +30,7 @@ class CustomDropDown extends StatelessWidget {
             ? size.width * width!
             : size.width * 0.5;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 0),
       child: SizedBox(
         width: calculatedWidth,
         height: size.height * 0.1,

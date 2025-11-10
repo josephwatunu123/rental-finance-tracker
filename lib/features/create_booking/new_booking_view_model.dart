@@ -29,23 +29,23 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
     onInit();
   }
 
-  onInit() async{
+  onInit() async {
     await getBookingsCurrentYear();
     _getBlockedDaysFromBookings(bookings);
-    state= state.copyWith(
-        blockedDays: blockedDays
+    state = state.copyWith(blockedDays: blockedDays);
+  }
+
+  getBookingsCurrentYear() async {
+    DateTime startDate = AppConstants.thisYear;
+    DateTime endDate = AppConstants.nextYear;
+    final fetchedBookings = await repository.getBookings(
+      startDate: startDate,
+      endDate: endDate,
     );
+    if (fetchedBookings != null) {
+      bookings = fetchedBookings;
+    }
   }
-
-  getBookingsCurrentYear() async{
-     DateTime startDate= AppConstants.thisYear;
-     DateTime endDate= AppConstants.nextYear;
-     final fetchedBookings = await repository.getBookings(startDate: startDate, endDate: endDate);
-     if(fetchedBookings !=null){
-       bookings=fetchedBookings;
-     }
-  }
-
 
   Future<void> addNewBooking(BookingModel booking) async {
     try {
@@ -111,7 +111,6 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
   }
 
   Set<DateTime> _getBlockedDaysFromBookings(List<BookingModel> bookings) {
-
     for (final booking in bookings) {
       final from = booking.from;
       final to = booking.to;
@@ -127,7 +126,6 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
     log('Days blocked: $blockedDays');
     return blockedDays;
   }
-
 
   void onCreateNewBooking() async {
     clearErrors();
