@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/domain/expense_repository.dart';
 import 'package:rental_finance_tracker/models/expense_model.dart';
+import 'package:rental_finance_tracker/services/snackbar_service.dart';
 
 class FirebaseExpenseImplementation implements ExpenseRepository {
   final FirebaseFirestore firestore;
@@ -11,7 +12,7 @@ class FirebaseExpenseImplementation implements ExpenseRepository {
   FirebaseExpenseImplementation(this.firestore);
   @override
   Future<Map<bool, String>> addExpense(ExpenseModel expense) async {
-    log("Booking to be submitted::: ${expense.toString()}");
+    log("Expense to be submitted::: ${expense.toString()}");
     try {
       await firestore.collection('expenses').add(expense.toJson());
       return {true: 'Successfully Created Expense.'};
@@ -22,9 +23,41 @@ class FirebaseExpenseImplementation implements ExpenseRepository {
   }
 
   @override
-  Future<List<ExpenseModel>> getBookings() {
-    // TODO: implement getBookings
-    throw UnimplementedError();
+  Future<List<ExpenseModel>?> getExpenses({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    try {
+      final snapshot =
+          await firestore
+              .collection('expenses')
+              .where(
+                'paymentDate',
+                isGreaterThanOrEqualTo: Timestamp.fromDate(startDate),
+              )
+              .where(
+                'paymentDate',
+                isLessThanOrEqualTo: Timestamp.fromDate(endDate),
+              )
+              .get();
+      log(
+        'FirebaseExpenseRepository.getExpenses ::: '
+        'Found ${snapshot.docs.length} expenses '
+        'between $startDate and $endDate. '
+        'IDs: ${snapshot.docs.map((d) => d.id).toList()}',
+      );
+      return snapshot.docs.map((expense) {
+        return ExpenseModel.fromJson(expense.data());
+      }).toList();
+    } catch (e, st) {
+      log("error fetching expenses::: $e, $st");
+      SnackBarService.show(
+        message: '$e',
+        title: 'An Error Occurred',
+        snackBarType: SnackBarType.error,
+      );
+      return null;
+    }
   }
 }
 

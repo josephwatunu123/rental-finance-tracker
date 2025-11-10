@@ -11,7 +11,6 @@ class FirebaseBookingImplementation implements BookingRepository {
 
   FirebaseBookingImplementation(this.firestore);
 
-  //TODO: Consider implementing snack bars to show us what is the error
   @override
   Future<List<BookingModel>?> getBookings({
     required DateTime startDate,

@@ -3,17 +3,31 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
+import 'package:rental_finance_tracker/data/firebase_expense_repo_impl.dart';
 import 'package:rental_finance_tracker/domain/booking_repository.dart';
 import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation.dart';
+import 'package:rental_finance_tracker/domain/expense_repository.dart';
 import 'package:rental_finance_tracker/features/home/home_view_state.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
+import 'package:rental_finance_tracker/models/expense_model.dart';
 
 class HomePageViewModel extends StateNotifier<HomeViewState> {
-  final BookingRepository repository;
+  final BookingRepository bookingRepository;
+  final ExpenseRepository expenseRepository;
 
-  HomePageViewModel({required this.repository}) : super(HomeViewState()) {
-    loadBookings();
-    getBookingSources();
+  HomePageViewModel({
+    required this.bookingRepository,
+    required this.expenseRepository,
+  }) : super(HomeViewState()) {
+    onInit();
+  }
+
+  onInit() async {
+    state = state.copyWith(isLoading: true);
+    await loadBookings();
+    await getBookingSources();
+    await loadExpenses();
+    state = state.copyWith(isLoading: false);
   }
 
   final startDate = AppConstants.thisMonth;
@@ -23,13 +37,13 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
   Future<void> loadBookings() async {
     state = state.copyWith(isLoading: true);
     try {
-      final bookings = await repository.getBookings(
+      final bookings = await bookingRepository.getBookings(
         startDate: startDate,
         endDate: endDate,
       );
       state = state.copyWith(
         bookings: bookings,
-        monthToDateTotal: bookings?.length,
+        monthToDateTotalBookings: bookings?.length,
         monthToDateRevenue: getCurrentMonthTotalRevenue(bookings),
         monthBookedDays: calculateBookedDays(bookings, startDate, endDate),
         recentBookings:
@@ -46,10 +60,30 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
     }
   }
 
+  Future<void> loadExpenses() async {
+    state.copyWith(isLoading: true);
+    final expenses = await expenseRepository.getExpenses(
+      startDate: startDate,
+      endDate: endDate,
+    );
+    state = state.copyWith(
+      expenses: expenses,
+      monthToDateTotalExpensesAmt: getCurrentMonthTotalExpenses(expenses),
+      isLoading: false,
+    );
+  }
+
   int getCurrentMonthTotalRevenue(List<BookingModel>? bookings) {
-    if (bookings == null || bookings.isEmpty) return -1;
+    if (bookings == null) return -1;
     final total = bookings.fold(0, (sum, b) => sum + (b.amountPaid ?? 0));
     log("current month revenue::: $total");
+    return total;
+  }
+
+  int getCurrentMonthTotalExpenses(List<ExpenseModel>? expenses) {
+    if (expenses == null) return -1;
+    final total = expenses.fold(0, (sum, b) => sum + (b.amount ?? 0));
+    log("current month total expenses::: $total");
     return total;
   }
 
@@ -79,7 +113,7 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
   Future<void> getBookingSources() async {
     final results = await Future.wait(
       bookingSources.map(
-        (source) => repository.getTotalBookingsFromSource(
+        (source) => bookingRepository.getTotalBookingsFromSource(
           source: source,
           startDate: startDate,
           endDate: endDate,
@@ -99,21 +133,16 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
   }
 
   Future<void> onRefresh() async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      await loadBookings();
-      await getBookingSources();
-    } catch (e, st) {
-      debugPrint("Refresh error::: $e, stack:::$st");
-      state = state.copyWith(error: e.toString());
-    } finally {
-      state = state.copyWith(isLoading: false);
-    }
+    await onInit();
   }
 }
 
 final homePageViewModelProvider =
     StateNotifierProvider<HomePageViewModel, HomeViewState>((ref) {
-      final repository = ref.watch(bookingRepositoryProvider);
-      return HomePageViewModel(repository: repository);
+      final bookingRepo = ref.watch(bookingRepositoryProvider);
+      final expenseRepo = ref.watch(expenseRepositoryProvider);
+      return HomePageViewModel(
+        bookingRepository: bookingRepo,
+        expenseRepository: expenseRepo,
+      );
     });

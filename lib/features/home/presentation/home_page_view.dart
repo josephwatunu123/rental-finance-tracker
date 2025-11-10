@@ -72,7 +72,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 addCurrency: false,
                                 mainIcon: FontAwesomeIcons.bed,
                                 title: 'Bookings',
-                                total: state.monthToDateTotal ?? 00,
+                                total: state.monthToDateTotalBookings ?? -1,
                               ),
                               StatsCard(
                                 isLoading: state.isLoading,
@@ -85,7 +85,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 isLoading: state.isLoading,
                                 mainIcon: FontAwesomeIcons.chartLine,
                                 title: 'Profit',
-                                total: 36000,
+                                total:
+                                    (state.monthToDateRevenue ?? 0) -
+                                    (state.monthToDateTotalExpensesAmt ?? 0),
                               ),
                             ],
                           ),
