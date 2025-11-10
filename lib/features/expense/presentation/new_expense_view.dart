@@ -10,7 +10,6 @@ import 'package:rental_finance_tracker/global/widgets/custom_drop_down.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
 import 'package:rental_finance_tracker/theme/app_colors.dart';
 import 'package:rental_finance_tracker/utils/functions.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class NewExpense extends ConsumerStatefulWidget {
   const NewExpense({super.key});
@@ -72,11 +71,12 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
                 spacing: 10,
                 children: [
                   Text('Select Payment Date'),
-                  // DatePickerButton(
-                  //     isFullWidth: true,
-                  //     givenDate: '${formatDate(expensePaymentDate)}',
-                  //     onTap: ()=> pickDateRange()
-                  // ),
+                  DatePickerButton(
+                    isFullWidth: true,
+                    onDateChanged: viewModel.onSelectPaymentDate,
+                    selectedDate:
+                        formatDate(state.expensePaymentDate) ?? 'select date',
+                  ),
                 ],
               ),
             ),
@@ -108,39 +108,6 @@ class _NewExpenseState extends ConsumerState<NewExpense> {
           ],
         ),
       ),
-    );
-  }
-
-  Future<void> pickDateRange() async {
-    final viewModel = ref.read(newExpenseViewModelProvider.notifier);
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Select Date Range"),
-          content: SizedBox(
-            height: 300,
-            width: 400,
-            child: SfDateRangePicker(
-              view: DateRangePickerView.month,
-              selectionMode: DateRangePickerSelectionMode.single,
-              initialSelectedDate: expensePaymentDate,
-              onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
-                if (args.value is DateTime) {
-                  final date = args.value as DateTime;
-                  viewModel.onSelectPaymentDate(date);
-                }
-              },
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Done"),
-            ),
-          ],
-        );
-      },
     );
   }
 }

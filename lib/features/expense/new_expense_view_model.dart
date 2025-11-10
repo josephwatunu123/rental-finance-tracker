@@ -36,7 +36,7 @@ class NewExpensesViewModel extends StateNotifier<NewExpensesState> {
     );
   }
 
-  void onSelectPaymentDate(DateTime date) {
+  void onSelectPaymentDate(DateTime? date) {
     state = state.copyWith(expensePaymentDate: date);
   }
 

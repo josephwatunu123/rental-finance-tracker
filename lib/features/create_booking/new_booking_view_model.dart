@@ -89,12 +89,10 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
   }
 
   onStartDateChanged(DateTime? startDate) {
-    debugPrint("reached start Date changer and got the date $startDate");
     state = state.copyWith(from: startDate);
   }
 
   onEndDateChanged(DateTime? endDate) {
-    debugPrint("reached start Date changer and got the date $endDate");
     state = state.copyWith(to: endDate);
   }
 
