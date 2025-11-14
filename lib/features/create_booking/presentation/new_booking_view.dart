@@ -9,6 +9,7 @@ import 'package:rental_finance_tracker/global/widgets/text_fields.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_button.dart';
 import 'package:rental_finance_tracker/global/widgets/custom_drop_down.dart';
 import 'package:rental_finance_tracker/global/widgets/title_bar.dart';
+import 'package:rental_finance_tracker/theme/app_colors.dart';
 import 'package:rental_finance_tracker/utils/functions.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -46,8 +47,8 @@ class _NewBookingState extends ConsumerState<NewBooking> {
               isAppBar: true,
               newBorderRadius: 20,
               gradientColors: [
-                theme.primaryColor.withAlpha(300),
-                theme.primaryColor.withAlpha(800),
+                lighten(theme.primaryColor, 0.2),
+                darken(theme.primaryColor, 0.2),
               ],
             ),
             CustomInputField(

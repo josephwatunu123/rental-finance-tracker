@@ -109,6 +109,19 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
     );
   }
 
+  clearForm(){
+    clearErrors();
+    state = NewBookingsState();
+    amountController.clear();
+    nameController.clear();
+    notesController.clear();
+    reminderController.clear();
+    fromDate.clear();
+    toDate.clear();
+    paymentRefController.clear();
+    onInit();
+  }
+
   Set<DateTime> _getBlockedDaysFromBookings(List<BookingModel> bookings) {
     for (final booking in bookings) {
       final from = booking.from;
@@ -187,6 +200,7 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
         title: createBookingRes.values.first,
         snackBarType: SnackBarType.success,
       );
+      clearForm();
       state = state.copyWith(isLoading: false);
     } else {
       SnackBarService.show(
@@ -200,7 +214,7 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
 }
 
 final newBookingViewModelProvider =
-    StateNotifierProvider<NewBookingViewModel, NewBookingsState>((ref) {
+    StateNotifierProvider.autoDispose<NewBookingViewModel, NewBookingsState>((ref) {
       final repo = ref.watch(bookingRepositoryProvider);
       return NewBookingViewModel(repository: repo);
     });

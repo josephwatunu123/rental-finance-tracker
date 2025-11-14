@@ -48,6 +48,16 @@ class NewExpensesViewModel extends StateNotifier<NewExpensesState> {
       paymentMethErrMsg: null,
     );
   }
+  clearForm(){
+    clearErrors();
+    state=NewExpensesState();
+    expenseNameController.clear();
+    amountController.clear();
+    paymentRefController.clear();
+    paymentDate.clear();
+    notesController.clear();
+    reminderController.clear();
+  }
 
   void onCreateNewExpense() async {
     state = state.copyWith(isLoading: true);
@@ -81,6 +91,7 @@ class NewExpensesViewModel extends StateNotifier<NewExpensesState> {
         title: 'Failed To Create Booking',
         snackBarType: SnackBarType.error,
       );
+      state = state.copyWith(isLoading: false);
       return;
     }
 
@@ -104,13 +115,13 @@ class NewExpensesViewModel extends StateNotifier<NewExpensesState> {
       title: message,
       snackBarType: success ? SnackBarType.success : SnackBarType.error,
     );
-
+    clearForm();
     state = state.copyWith(isLoading: false);
   }
 }
 
 final newExpenseViewModelProvider =
-    StateNotifierProvider<NewExpensesViewModel, NewExpensesState>((ref) {
+    StateNotifierProvider.autoDispose<NewExpensesViewModel, NewExpensesState>((ref) {
       final repo = ref.watch(expenseRepositoryProvider);
       return NewExpensesViewModel(repository: repo);
     });
