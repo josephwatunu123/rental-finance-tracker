@@ -27,6 +27,7 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
     await loadBookings();
     await getBookingSources();
     await loadExpenses();
+    calculateProfit();
     state = state.copyWith(isLoading: false);
   }
 
@@ -108,6 +109,11 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
       totalDays += days;
     }
     return totalDays;
+  }
+
+   calculateProfit(){
+    int profit= (state.monthToDateRevenue??0)-(state.monthToDateTotalExpensesAmt?? 0);
+    state= state.copyWith(profit: profit);
   }
 
   Future<void> getBookingSources() async {

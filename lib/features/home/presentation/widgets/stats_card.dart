@@ -9,6 +9,7 @@ class StatsCard extends StatelessWidget {
   final int? statistic;
   final bool addCurrency;
   final bool isLoading;
+  final Color? textColor;
   const StatsCard({
     super.key,
     required this.mainIcon,
@@ -17,6 +18,7 @@ class StatsCard extends StatelessWidget {
     this.statistic,
     this.addCurrency = true,
     this.isLoading = false,
+    this.textColor,
   });
 
   @override
@@ -61,6 +63,7 @@ class StatsCard extends StatelessWidget {
                   addCurrency ? 'Kes. ${total ?? 0}' : '${total ?? 0}',
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold,
+                    color: textColor
                   ),
                 ),
 

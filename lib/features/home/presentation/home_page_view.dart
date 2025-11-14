@@ -85,9 +85,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 isLoading: state.isLoading,
                                 mainIcon: FontAwesomeIcons.chartLine,
                                 title: 'Profit',
-                                total:
-                                    (state.monthToDateRevenue ?? 0) -
-                                    (state.monthToDateTotalExpensesAmt ?? 0),
+                                textColor: (state.profit !=null && state.profit! <=0) ? Colors.red : Colors.green,
+                                total:state.profit,
                               ),
                             ],
                           ),
