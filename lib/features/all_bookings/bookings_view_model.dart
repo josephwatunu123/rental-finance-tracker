@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
 import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation.dart';
 import 'package:rental_finance_tracker/domain/booking_repository.dart';
+import 'package:rental_finance_tracker/features/create_booking/presentation/new_booking_view.dart';
 
 import 'bookings_state.dart';
 
@@ -29,7 +30,7 @@ class BookingsPageViewModel extends StateNotifier<BookingsPageState> {
 
   getBookings(DateTime startDate, DateTime endDate) async {
     state = state.copyWith(isLoading: true);
-    var fetchedBookings = await repository.getBookings(
+    var fetchedBookings = await repository.getBookingsList(
       startDate: startDate,
       endDate: endDate,
       searchName: searchName,
@@ -42,13 +43,13 @@ class BookingsPageViewModel extends StateNotifier<BookingsPageState> {
   onStartDateChanged(DateTime? selectedStartDate) {
     if (selectedStartDate == null) return;
     state = state.copyWith(startDate: selectedStartDate);
-    getBookings(selectedStartDate, initialEndDate);
+    getBookings(selectedStartDate, endDate);
   }
 
   onEndDateChanged(DateTime? selectedEndDate) {
     if (selectedEndDate == null) return;
-    state = state.copyWith(startDate: selectedEndDate);
-    getBookings(selectedEndDate, initialEndDate);
+    state = state.copyWith(endDate: selectedEndDate);
+    getBookings(startDate, selectedEndDate);
   }
 
   onSearchNameChanged() {}

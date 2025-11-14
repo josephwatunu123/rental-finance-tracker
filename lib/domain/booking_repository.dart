@@ -14,4 +14,10 @@ abstract class BookingRepository {
     DateTime startDate,
     DateTime endDate,
   });
+
+  Future<List<BookingModel>?> getBookingsList({
+    required DateTime startDate,
+    required DateTime endDate,
+    String? searchName,
+  });
 }

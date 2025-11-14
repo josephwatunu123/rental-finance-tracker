@@ -101,6 +101,43 @@ class FirebaseBookingImplementation implements BookingRepository {
       return null;
     }
   }
+
+  @override
+  Future<List<BookingModel>?> getBookingsList({
+    required DateTime startDate,
+    required DateTime endDate,
+    String? searchName,
+  }) async {
+    try {
+      final snapshot =
+      await firestore
+          .collection('bookings')
+          .where('from', isLessThanOrEqualTo: Timestamp.fromDate(endDate))
+          .where(
+        'from',
+        isGreaterThanOrEqualTo: Timestamp.fromDate(startDate),
+      )
+          .get();
+      log(
+        'response firebase::: '
+            'Found ${snapshot.docs.length} bookings. '
+            'queryParams: {$startDate,$endDate }'
+            'Document IDs: ${snapshot.docs.map((doc) => doc.id).toList()}. '
+            'Data: ${snapshot.docs.map((doc) => doc.data()).toList()}',
+      );
+      return snapshot.docs.map((booking) {
+        return BookingModel.fromJson(booking.data());
+      }).toList();
+    } catch (e, st) {
+      log("error fetching bookings::: $e, $st");
+      SnackBarService.show(
+        message: '$e',
+        title: 'An Error Occurred',
+        snackBarType: SnackBarType.error,
+      );
+      return null;
+    }
+  }
 }
 
 final bookingRepositoryProvider = Provider<BookingRepository>((ref) {

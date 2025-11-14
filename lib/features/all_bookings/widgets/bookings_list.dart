@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
+import 'package:rental_finance_tracker/utils/functions.dart';
 
 class BookingsList extends StatefulWidget {
   final List<BookingModel>? bookings;
@@ -40,6 +41,8 @@ class _BookingsListState extends State<BookingsList> {
                 apartmentName: 'City Oasis',
                 amount: widget.bookings?[index].amountPaid,
                 bookingSource: widget.bookings?[index].bookingSource,
+                from: widget.bookings?[index].from,
+                to: widget.bookings?[index].to,
               );
             }),
           ),
@@ -50,6 +53,8 @@ class _BookingsListState extends State<BookingsList> {
     required double height,
     required double width,
     required String? name,
+    required DateTime? from,
+    required DateTime? to,
     required String? apartmentName,
     required int? amount,
     required String? bookingSource,
@@ -71,8 +76,8 @@ class _BookingsListState extends State<BookingsList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(name ?? 'Unknown'),
-                Text(bookingSource ?? '--'),
-                Text('12-03-2025- 20-03-2025'),
+                Text(apartmentName ?? '--'),
+                Text('${formatDate(from)} - ${formatDate(to)} '),
               ],
             ),
           ),
