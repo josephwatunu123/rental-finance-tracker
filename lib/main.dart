@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rental_finance_tracker/features/home/presentation/home_page_view.dart';
 import 'package:rental_finance_tracker/router.dart';
 import 'package:rental_finance_tracker/theme/app_theme.dart';
@@ -49,37 +50,28 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _pages),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 30, left: 10, right: 10),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
-            bottomLeft: Radius.circular(24),
-            bottomRight: Radius.circular(24),
+      bottomNavigationBar: NavigationBar(
+        height: 70,
+        indicatorShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        indicatorColor: theme.primaryColor,
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (index) {
+          setState(() => _currentIndex = index);
+        },
+        backgroundColor: Colors.transparent,
+        destinations: [
+           const NavigationDestination(
+            icon: Icon(FontAwesomeIcons.houseChimney),
+            label: '',
           ),
-          child: NavigationBar(
-            height:
-                Platform.isIOS ? MediaQuery.of(context).size.height * 0.08 : 80,
-            selectedIndex: _currentIndex,
-            onDestinationSelected: (index) {
-              setState(() => _currentIndex = index);
-            },
-            backgroundColor: Colors.grey.withAlpha(50),
-            destinations: [
-              const NavigationDestination(
-                icon: Icon(Icons.home_filled),
-                label: 'Home',
-              ),
-              const NavigationDestination(
-                icon: Icon(Icons.bedroom_parent),
-                label: 'Bookings',
-              ),
-            ],
+          const NavigationDestination(
+            icon: Icon(FontAwesomeIcons.bed),
+            label: '',
           ),
-        ),
+        ],
       ),
     );
   }
