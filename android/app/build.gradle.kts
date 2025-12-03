@@ -46,10 +46,10 @@ android {
             applicationId = "com.rental_finance_tracker.staging"
         }
 
-        create("production") {
+        create("prod") {
             dimension = "app"
             resValue("string", "app_name", "Profit Stay")
-            applicationId = "com.example.rental_finance_tracker"
+            applicationId = "com.example.rental_finance_tracker.prod"
         }
     }
 

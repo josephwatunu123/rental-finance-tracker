@@ -47,4 +47,4 @@ app.*.map.json
 
 ios/Runner/GoogleService-Info.plist
 /android/app/src/staging
-/android/app/src/production
+/android/app/src/prod
