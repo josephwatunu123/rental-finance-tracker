@@ -36,6 +36,23 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    flavorDimensions += "app"
+
+    productFlavors {
+        create("staging") {
+            dimension = "app"
+            resValue("string", "app_name", "Staging Profit Stay")
+            applicationId = "com.rental_finance_tracker.staging"
+        }
+
+        create("prod") {
+            dimension = "app"
+            resValue("string", "app_name", "Profit Stay")
+            applicationId = "com.example.rental_finance_tracker.prod"
+        }
+    }
+
 }
 
 flutter {
