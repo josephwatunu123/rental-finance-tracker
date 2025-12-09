@@ -1,16 +1,15 @@
-import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rental_finance_tracker/constants/enums.dart';
+import 'package:rental_finance_tracker/features/all_bookings/bookings_view.dart';
 import 'package:rental_finance_tracker/features/home/presentation/home_page_view.dart';
+import 'package:rental_finance_tracker/global/internet_connectivity/connectivity_status_notifier.dart';
 import 'package:rental_finance_tracker/router.dart';
+import 'package:rental_finance_tracker/services/snackbar_service.dart';
 import 'package:rental_finance_tracker/theme/app_theme.dart';
 import 'package:rental_finance_tracker/utils/global_keys.dart';
-
-import 'features/all_bookings/bookings_view.dart';
-import 'features/settings/settings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +23,17 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final route = ref.watch(routerProvider);
+    ref.listen(connectivityStatusProvider, (previous, next) {
+      if (next == ConnectivityStatus.isDisconnected) {
+        SnackBarService.show(
+          icon: FontAwesomeIcons.wifi,
+          message: 'Check your internet connection status',
+          title: 'No internet Connection',
+          snackBarType: SnackBarType.error,
+          duration: const Duration(seconds: 5),
+        );
+      }
+    });
 
     return MaterialApp.router(
       title: 'Profit Stay',
@@ -55,7 +65,9 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
       body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: NavigationBar(
         height: 70,
-        indicatorShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        indicatorShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         indicatorColor: theme.primaryColor,
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
@@ -63,7 +75,7 @@ class _MainScaffoldState extends ConsumerState<MainScaffold> {
         },
         backgroundColor: Colors.transparent,
         destinations: [
-           const NavigationDestination(
+          const NavigationDestination(
             icon: Icon(FontAwesomeIcons.houseChimney),
             label: '',
           ),
