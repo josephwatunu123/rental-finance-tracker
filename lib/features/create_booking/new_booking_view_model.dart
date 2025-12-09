@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
-import 'package:rental_finance_tracker/domain/booking_repository.dart';
 import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation.dart';
+import 'package:rental_finance_tracker/domain/booking_repository.dart';
+import 'package:rental_finance_tracker/models/booking_model.dart';
 import 'package:rental_finance_tracker/services/snackbar_service.dart';
 import 'package:rental_finance_tracker/utils/functions.dart';
-import 'package:rental_finance_tracker/models/booking_model.dart';
 
 import 'new_bookings_state.dart';
 
@@ -109,7 +109,7 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
     );
   }
 
-  clearForm(){
+  clearForm() {
     clearErrors();
     state = NewBookingsState();
     amountController.clear();
@@ -142,7 +142,7 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
   void onCreateNewBooking() async {
     clearErrors();
     final nameErr = textFormValidator(nameController.text);
-    final amountErr = intValidator(amountController.text);
+    final amountErr = doubleValidator(amountController.text);
     final paymentRefErr = nonNullTextValidator(paymentRefController.text);
     final paymentMethodErr =
         state.paymentMethod == null ? "Select payment method" : null;
@@ -214,7 +214,9 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
 }
 
 final newBookingViewModelProvider =
-    StateNotifierProvider.autoDispose<NewBookingViewModel, NewBookingsState>((ref) {
+    StateNotifierProvider.autoDispose<NewBookingViewModel, NewBookingsState>((
+      ref,
+    ) {
       final repo = ref.watch(bookingRepositoryProvider);
       return NewBookingViewModel(repository: repo);
     });

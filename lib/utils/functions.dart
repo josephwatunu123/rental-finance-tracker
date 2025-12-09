@@ -36,6 +36,17 @@ String? intValidator(String? value) {
   return null;
 }
 
+String? doubleValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return "Please enter a value";
+  }
+  final double doubleVal = double.parse(value);
+  if (doubleVal <= 0) {
+    return "Value must be greater than zero";
+  }
+  return null;
+}
+
 ///Trim the date from firebase response
 String? formatDate(DateTime? date) {
   if (date == null) return null;
