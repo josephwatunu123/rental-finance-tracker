@@ -5,17 +5,17 @@ class HomeViewState {
   final List<BookingModel>? bookings;
   final List<BookingModel>? recentBookings;
   final List<ExpenseModel>? expenses;
-  final int? monthToDateTotalExpensesAmt;
+  final double? monthToDateTotalExpensesAmt;
   final bool isLoading;
   final int? monthToDateTotalBookings;
-  final int? monthToDateRevenue;
+  final double? monthToDateRevenue;
   final int? monthBookedDays;
   final int? bookingsFromAirbnb;
   final int? bookingsFromReferral;
   final int? directBookings;
   final int? bookingsFromBookingDotCom;
   final String? error;
-  final int? profit;
+  final double? profit;
   HomeViewState({
     this.bookings,
     this.recentBookings,
@@ -39,15 +39,15 @@ class HomeViewState {
     List<ExpenseModel>? expenses,
     bool? isLoading,
     int? monthToDateTotalBookings,
-    int? monthToDateTotalExpensesAmt,
-    int? monthToDateRevenue,
+    double? monthToDateTotalExpensesAmt,
+    double? monthToDateRevenue,
     int? monthBookedDays,
     int? bookingsFromAirbnb,
     int? bookingsFromReferral,
     int? directBookings,
     int? bookingsFromBookingDotCom,
     String? error,
-    int? profit,
+    double? profit,
   }) {
     return HomeViewState(
       bookings: bookings ?? this.bookings,
@@ -66,7 +66,7 @@ class HomeViewState {
       bookingsFromReferral: bookingsFromReferral ?? this.bookingsFromReferral,
       directBookings: directBookings ?? this.directBookings,
       error: error ?? this.error,
-      profit: profit ?? this.profit
+      profit: profit ?? this.profit,
     );
   }
 }

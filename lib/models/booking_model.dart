@@ -6,7 +6,7 @@ class BookingModel {
   final DateTime? from;
   final DateTime? to;
   final String? paymentMethod;
-  final int? amountPaid;
+  final double? amountPaid;
   final String? bookingSource;
   final String? status;
   final String? notes;
@@ -38,7 +38,7 @@ class BookingModel {
       paymentMethod: json['paymentMethod'] as String?,
       amountPaid:
           json['amountPaid'] != null
-              ? (json['amountPaid'] as num?)?.toInt()
+              ? (json['amountPaid'] as num?)?.toDouble()
               : null,
       bookingSource: json['bookingSource'] as String?,
       status: json['status'] as String?,

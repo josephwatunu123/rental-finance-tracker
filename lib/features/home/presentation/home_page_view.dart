@@ -65,28 +65,31 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 isLoading: state.isLoading,
                                 mainIcon: FontAwesomeIcons.moneyBill1Wave,
                                 title: 'Monthly Revenue',
-                                total: state.monthToDateRevenue,
+                                total: state.monthToDateRevenue?.toInt(),
                               ),
                               StatsCard(
                                 isLoading: state.isLoading,
                                 addCurrency: false,
                                 mainIcon: FontAwesomeIcons.bed,
                                 title: 'Bookings',
-                                total: state.monthToDateTotalBookings ?? -1,
+                                total: state.monthToDateTotalBookings,
                               ),
                               StatsCard(
                                 isLoading: state.isLoading,
                                 addCurrency: false,
                                 mainIcon: FontAwesomeIcons.calendarCheck,
                                 title: 'Days Booked',
-                                total: state.monthBookedDays,
+                                total: state.monthBookedDays?.truncate(),
                               ),
                               StatsCard(
                                 isLoading: state.isLoading,
                                 mainIcon: FontAwesomeIcons.chartLine,
                                 title: 'Profit',
-                                textColor: (state.profit !=null && state.profit! <=0) ? Colors.red : Colors.green,
-                                total:state.profit,
+                                textColor:
+                                    (state.profit != null && state.profit! <= 0)
+                                        ? Colors.red
+                                        : Colors.green,
+                                total: state.profit?.toInt(),
                               ),
                             ],
                           ),

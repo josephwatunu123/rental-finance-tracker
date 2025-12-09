@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/constants/app_constants.dart';
+import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation.dart';
 import 'package:rental_finance_tracker/data/firebase_expense_repo_impl.dart';
 import 'package:rental_finance_tracker/domain/booking_repository.dart';
-import 'package:rental_finance_tracker/data/firebase_booking_repo_implementation.dart';
 import 'package:rental_finance_tracker/domain/expense_repository.dart';
 import 'package:rental_finance_tracker/features/home/home_view_state.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
@@ -74,23 +74,29 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
     );
   }
 
-  int getCurrentMonthTotalRevenue(List<BookingModel>? bookings) {
+  double getCurrentMonthTotalRevenue(List<BookingModel>? bookings) {
     if (bookings == null) return -1;
-    final total = bookings.fold(0, (sum, b) => sum + (b.amountPaid ?? 0));
+    final double total = bookings.fold(
+      0,
+      (sum, b) => sum + (b.amountPaid ?? 0),
+    );
     log("current month revenue::: $total");
     return total;
   }
 
-  int getCurrentMonthTotalExpenses(List<ExpenseModel>? expenses) {
+  double getCurrentMonthTotalExpenses(List<ExpenseModel>? expenses) {
     if (expenses == null) return -1;
-    final total = expenses.fold(0, (sum, b) => sum + (b.amount ?? 0));
+    final double total = expenses.fold(0, (sum, b) => sum + (b.amount ?? 0));
     log("current month total expenses::: $total");
     return total;
   }
 
-  int getCurrentMonthProfit(List<BookingModel>? bookings) {
+  double getCurrentMonthProfit(List<BookingModel>? bookings) {
     if (bookings == null || bookings.isEmpty) return -1;
-    final total = bookings.fold(0, (sum, b) => sum + (b.amountPaid ?? 0));
+    final double total = bookings.fold(
+      0,
+      (sum, b) => sum + (b.amountPaid ?? 0.0),
+    );
     log("current month revenue::: $total");
     return total;
   }
@@ -111,9 +117,11 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
     return totalDays;
   }
 
-   calculateProfit(){
-    int profit= (state.monthToDateRevenue??0)-(state.monthToDateTotalExpensesAmt?? 0);
-    state= state.copyWith(profit: profit);
+  calculateProfit() {
+    double profit =
+        (state.monthToDateRevenue ?? 0) -
+        (state.monthToDateTotalExpensesAmt ?? 0);
+    state = state.copyWith(profit: profit);
   }
 
   Future<void> getBookingSources() async {

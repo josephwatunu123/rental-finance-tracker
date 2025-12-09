@@ -56,7 +56,7 @@ class _BookingsListState extends State<BookingsList> {
     required DateTime? from,
     required DateTime? to,
     required String? apartmentName,
-    required int? amount,
+    required double? amount,
     required String? bookingSource,
   }) {
     return Container(

@@ -63,7 +63,7 @@ class StatsCard extends StatelessWidget {
                   addCurrency ? 'Kes. ${total ?? 0}' : '${total ?? 0}',
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: textColor
+                    color: textColor,
                   ),
                 ),
 

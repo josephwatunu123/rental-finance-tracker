@@ -183,7 +183,7 @@ class NewBookingViewModel extends StateNotifier<NewBookingsState> {
       name: nameController.text,
       from: state.from,
       to: state.to,
-      amountPaid: int.tryParse(amountController.text),
+      amountPaid: double.parse(amountController.text),
       paymentMethod: state.paymentMethod,
       paymentRef: paymentRefController.text,
       bookingSource: state.bookingSource,
