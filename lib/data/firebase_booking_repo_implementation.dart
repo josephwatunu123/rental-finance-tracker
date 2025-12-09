@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_finance_tracker/domain/booking_repository.dart';
 import 'package:rental_finance_tracker/models/booking_model.dart';
@@ -18,15 +19,12 @@ class FirebaseBookingImplementation implements BookingRepository {
     String? searchName,
   }) async {
     try {
-      final snapshot =
-          await firestore
-              .collection('bookings')
-              .where('from', isLessThanOrEqualTo: Timestamp.fromDate(endDate))
-              .where(
-                'to',
-                isGreaterThanOrEqualTo: Timestamp.fromDate(startDate),
-              )
-              .get();
+      final snapshot = await firestore
+          .collection('bookings')
+          .where('from', isLessThanOrEqualTo: Timestamp.fromDate(endDate))
+          .where('to', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate))
+          .get()
+          .timeout(const Duration(seconds: 15));
       log(
         'response firebase::: '
         'Found ${snapshot.docs.length} bookings. '
@@ -40,7 +38,7 @@ class FirebaseBookingImplementation implements BookingRepository {
     } catch (e, st) {
       log("error fetching bookings::: $e, $st");
       SnackBarService.show(
-        message: '$e',
+        message: '${kDebugMode ? e : 'Please try again'}',
         title: 'An Error Occurred',
         snackBarType: SnackBarType.error,
       );
@@ -52,12 +50,15 @@ class FirebaseBookingImplementation implements BookingRepository {
   Future<Map<bool, String>> addBooking(BookingModel booking) async {
     log("Booking to be submitted::: ${booking.toString()}");
     try {
-      await firestore.collection('bookings').add(booking.toJson());
+      await firestore
+          .collection('bookings')
+          .add(booking.toJson())
+          .timeout(const Duration(seconds: 15));
       return {true: 'Successfully Created Booking.'};
     } catch (e, st) {
       log("error fetching bookings::: $e, $st");
       SnackBarService.show(
-        message: '$e',
+        message: '${kDebugMode ? e : 'Please try again'}',
         title: 'An Error Occurred',
         snackBarType: SnackBarType.error,
       );
@@ -87,7 +88,7 @@ class FirebaseBookingImplementation implements BookingRepository {
           isGreaterThanOrEqualTo: Timestamp.fromDate(startDate),
         );
       }
-      final snapshot = await query.get();
+      final snapshot = await query.get().timeout(const Duration(seconds: 15));
       log(
         'response firebase::: '
         'Found ${snapshot.docs.length} number of bookings from $source.\n '
@@ -109,21 +110,18 @@ class FirebaseBookingImplementation implements BookingRepository {
     String? searchName,
   }) async {
     try {
-      final snapshot =
-      await firestore
+      final snapshot = await firestore
           .collection('bookings')
           .where('from', isLessThanOrEqualTo: Timestamp.fromDate(endDate))
-          .where(
-        'from',
-        isGreaterThanOrEqualTo: Timestamp.fromDate(startDate),
-      )
-          .get();
+          .where('from', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate))
+          .get()
+          .timeout(const Duration(seconds: 15));
       log(
         'response firebase::: '
-            'Found ${snapshot.docs.length} bookings. '
-            'queryParams: {$startDate,$endDate }'
-            'Document IDs: ${snapshot.docs.map((doc) => doc.id).toList()}. '
-            'Data: ${snapshot.docs.map((doc) => doc.data()).toList()}',
+        'Found ${snapshot.docs.length} bookings. '
+        'queryParams: {$startDate,$endDate }'
+        'Document IDs: ${snapshot.docs.map((doc) => doc.id).toList()}. '
+        'Data: ${snapshot.docs.map((doc) => doc.data()).toList()}',
       );
       return snapshot.docs.map((booking) {
         return BookingModel.fromJson(booking.data());
@@ -131,7 +129,7 @@ class FirebaseBookingImplementation implements BookingRepository {
     } catch (e, st) {
       log("error fetching bookings::: $e, $st");
       SnackBarService.show(
-        message: '$e',
+        message: '${kDebugMode ? e : 'Please try again'}',
         title: 'An Error Occurred',
         snackBarType: SnackBarType.error,
       );

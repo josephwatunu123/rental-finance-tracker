@@ -1,5 +1,5 @@
 class AppConstants {
-  //Date and Time
+  ///Date and Time----------------------------
   static DateTime get today {
     final now = DateTime.now();
     return DateTime(now.year, now.month, now.day);
@@ -28,12 +28,12 @@ class AppConstants {
     return beginningNextMonth.subtract(const Duration(milliseconds: 1));
   }
 
-  //Visual constants
+  ///Visual constants------------------------------
   static const double borderRadiusMain = 12;
   static const double borderRadiusSmall = 8;
   static const double borderRadiusLarge = 16;
 
-  //Lists
+  ///Lists----------------------------------------
   static const List<String> bookingSources = [
     'referral',
     'airbnb',
@@ -57,7 +57,7 @@ class AppConstants {
     'damage',
   ];
 
-  //Assets
+  ///Assets-------------------------------
   static const String noItemsImage = "assets/no_items.gif";
   static const String loadingSquareGif = "assets/loading_square.gif";
   static const String dotsLoadingGif = "assets/dots_loading.gif";
