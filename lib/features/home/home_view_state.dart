@@ -16,6 +16,8 @@ class HomeViewState {
   final int? bookingsFromBookingDotCom;
   final String? error;
   final double? profit;
+  final DateTime? startDate;
+  final DateTime? endDate;
   HomeViewState({
     this.bookings,
     this.recentBookings,
@@ -31,6 +33,8 @@ class HomeViewState {
     this.isLoading = false,
     this.error,
     this.profit,
+    this.startDate,
+    this.endDate,
   });
 
   HomeViewState copyWith({
@@ -48,6 +52,8 @@ class HomeViewState {
     int? bookingsFromBookingDotCom,
     String? error,
     double? profit,
+    DateTime? startDate,
+    DateTime? endDate,
   }) {
     return HomeViewState(
       bookings: bookings ?? this.bookings,
@@ -67,6 +73,8 @@ class HomeViewState {
       directBookings: directBookings ?? this.directBookings,
       error: error ?? this.error,
       profit: profit ?? this.profit,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
     );
   }
 }

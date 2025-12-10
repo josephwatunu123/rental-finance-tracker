@@ -22,8 +22,12 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
     onInit();
   }
 
-  onInit() async {
-    state = state.copyWith(isLoading: true);
+  onInit({DateTime? start, DateTime? end}) async {
+    state = state.copyWith(
+      isLoading: true,
+      startDate: start ?? AppConstants.thisMonth,
+      endDate: end ?? AppConstants.lastDayOfCurrentMonth,
+    );
     await loadBookings();
     await getBookingSources();
     await loadExpenses();
@@ -31,22 +35,24 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
     state = state.copyWith(isLoading: false);
   }
 
-  final startDate = AppConstants.thisMonth;
-  final endDate = AppConstants.lastDayOfCurrentMonth;
   final List<String> bookingSources = AppConstants.bookingSources;
 
   Future<void> loadBookings() async {
     state = state.copyWith(isLoading: true);
     try {
       final bookings = await bookingRepository.getBookings(
-        startDate: startDate,
-        endDate: endDate,
+        startDate: state.startDate!,
+        endDate: state.endDate!,
       );
       state = state.copyWith(
         bookings: bookings,
         monthToDateTotalBookings: bookings?.length,
         monthToDateRevenue: getCurrentMonthTotalRevenue(bookings),
-        monthBookedDays: calculateBookedDays(bookings, startDate, endDate),
+        monthBookedDays: calculateBookedDays(
+          bookings,
+          state.startDate!,
+          state.endDate!,
+        ),
         recentBookings:
             bookings == null
                 ? []
@@ -62,16 +68,26 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
   }
 
   Future<void> loadExpenses() async {
-    state.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: true);
     final expenses = await expenseRepository.getExpenses(
-      startDate: startDate,
-      endDate: endDate,
+      startDate: state.startDate!,
+      endDate: state.endDate!,
     );
     state = state.copyWith(
       expenses: expenses,
       monthToDateTotalExpensesAmt: getCurrentMonthTotalExpenses(expenses),
       isLoading: false,
     );
+  }
+
+  onChangeMonthFilter(DateTime? selectedDate) async {
+    if (selectedDate == null) return;
+    DateTime lastDayOfSelectedMonth = DateTime(
+      selectedDate.year,
+      selectedDate.month + 1,
+      0,
+    );
+    await onInit(start: selectedDate, end: lastDayOfSelectedMonth);
   }
 
   double getCurrentMonthTotalRevenue(List<BookingModel>? bookings) {
@@ -129,8 +145,8 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
       bookingSources.map(
         (source) => bookingRepository.getTotalBookingsFromSource(
           source: source,
-          startDate: startDate,
-          endDate: endDate,
+          startDate: state.startDate!,
+          endDate: state.endDate!,
         ),
       ),
     );

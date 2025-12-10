@@ -25,6 +25,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
     final state = ref.watch(homePageViewModelProvider);
+    final viewModel = ref.watch(homePageViewModelProvider.notifier);
     final String currentMonth = DateFormat('MMMM').format(DateTime.now());
     return Scaffold(
       body: Center(
@@ -44,7 +45,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                       children: [
                         TitleBar(
                           title: 'Good Afternoon, Jayder',
-                          subtitle: '${currentMonth.toUpperCase()} STATISTICS',
+                          selectedMonth: state.startDate,
+                          dropdownFilter: viewModel.onChangeMonthFilter,
                           icon: FontAwesomeIcons.userAstronaut,
                           customHeight: size.height * 0.17,
                           isAppBar: true,
