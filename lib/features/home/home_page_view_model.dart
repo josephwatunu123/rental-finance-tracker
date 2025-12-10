@@ -122,7 +122,7 @@ class HomePageViewModel extends StateNotifier<HomeViewState> {
     DateTime monthStart,
     DateTime monthEnd,
   ) {
-    if (bookings == null || bookings.isEmpty) return -1;
+    if (bookings == null) return -1;
     int totalDays = 0;
     for (var b in bookings) {
       final start = b.from!.isBefore(monthStart) ? monthStart : b.from!;
