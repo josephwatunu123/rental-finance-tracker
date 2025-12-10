@@ -12,13 +12,6 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const List<String> settings = [
-      'Profile',
-      'About us',
-      'Support',
-      'Logout',
-      'Delete Account',
-    ];
     final size = MediaQuery.of(context).size;
     double settingsCardHeight = size.height * 0.1;
     return Scaffold(
