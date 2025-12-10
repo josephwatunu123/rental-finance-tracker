@@ -5,6 +5,7 @@ class AppConstants {
     return DateTime(now.year, now.month, now.day);
   }
 
+  static final months = List.generate(12, (i) => DateTime(2025, i + 1, 1));
   static DateTime get tomorrow => today.add(const Duration(days: 1));
   static DateTime get yesterday => today.subtract(const Duration(days: 1));
   static final DateTime thisYear = DateTime(today.year, 1, 1);

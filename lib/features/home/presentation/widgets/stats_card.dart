@@ -71,13 +71,14 @@ class StatsCard extends StatelessWidget {
             ],
           ),
 
-          Text(
-            '+${statistic ?? 0}%',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.green,
+          if (statistic != null)
+            Text(
+              '+${statistic ?? 0}%',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
             ),
-          ),
         ],
       ),
     );
