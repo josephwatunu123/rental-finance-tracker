@@ -35,7 +35,7 @@ class CustomDropDown extends StatelessWidget {
         width: calculatedWidth,
         height: size.height * 0.1,
         child: DropdownButtonFormField<String>(
-          value: selectedValue,
+          initialValue: selectedValue,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
