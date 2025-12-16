@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:rental_finance_tracker/global/widgets/no_items_widget.dart';
 
 class CustomPieChart extends StatelessWidget {
   final int? airbnbBookings;
@@ -20,6 +21,11 @@ class CustomPieChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final bool isEmpty =
+        (airbnbBookings == 0 &&
+            referralBookings == 0 &&
+            bookingsDotComBookings == 0 &&
+            directClients == 0);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
       child: Container(
@@ -39,58 +45,65 @@ class CustomPieChart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: PieChart(
-                duration: const Duration(microseconds: 300),
-                PieChartData(
-                  centerSpaceRadius: 10,
-                  sections: [
-                    PieChartSectionData(
-                      color: Colors.blue.shade900,
-                      value: bookingsDotComBookings?.toDouble() ?? 1,
-                      radius: 100,
+            isEmpty
+                ? NoItemsWidget(itemName: 'Bookings')
+                : Expanded(
+                  child: PieChart(
+                    duration: const Duration(microseconds: 300),
+                    PieChartData(
+                      centerSpaceRadius: 10,
+                      sections: [
+                        PieChartSectionData(
+                          color: Colors.blue.shade900,
+                          value: bookingsDotComBookings?.toDouble() ?? -1,
+                          radius: 100,
+                        ),
+                        PieChartSectionData(
+                          color: Colors.redAccent,
+                          value: airbnbBookings?.toDouble() ?? -1,
+                          radius: 100,
+                        ),
+                        PieChartSectionData(
+                          color: Colors.deepPurple.shade400,
+                          value: referralBookings?.toDouble() ?? -1,
+                          radius: 100,
+                        ),
+                        PieChartSectionData(
+                          color: Colors.green,
+                          value: directClients?.toDouble() ?? -1,
+                          radius: 100,
+                        ),
+                      ],
                     ),
-                    PieChartSectionData(
-                      color: Colors.redAccent,
-                      value: airbnbBookings?.toDouble() ?? 1,
-                      radius: 100,
-                    ),
-                    PieChartSectionData(
-                      color: Colors.deepPurple.shade400,
-                      value: referralBookings?.toDouble() ?? 1,
-                      radius: 100,
-                    ),
-                    PieChartSectionData(
-                      color: Colors.green,
-                      value: directClients?.toDouble() ?? 1,
-                      radius: 100,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: size.height * 0.07,
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 15,
-                children: <Widget>[
-                  SizedBox(height: 4),
-                  indicator(color: Colors.redAccent, text: 'airbnb'),
-                  SizedBox(height: 4),
-                  indicator(
-                    color: Colors.deepPurple.shade400,
-                    text: 'referral',
                   ),
-                  SizedBox(height: 4),
-                  indicator(color: Colors.green, text: 'direct'),
-                  indicator(color: Colors.blue.shade900, text: 'bookings.com'),
-                  SizedBox(height: 4),
-                  SizedBox(height: 18),
-                ],
-              ),
-            ),
+                ),
+            isEmpty
+                ? SizedBox()
+                : SizedBox(
+                  height: size.height * 0.07,
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 15,
+                    children: <Widget>[
+                      SizedBox(height: 4),
+                      indicator(color: Colors.redAccent, text: 'airbnb'),
+                      SizedBox(height: 4),
+                      indicator(
+                        color: Colors.deepPurple.shade400,
+                        text: 'referral',
+                      ),
+                      SizedBox(height: 4),
+                      indicator(color: Colors.green, text: 'direct'),
+                      indicator(
+                        color: Colors.blue.shade900,
+                        text: 'bookings.com',
+                      ),
+                      SizedBox(height: 4),
+                      SizedBox(height: 18),
+                    ],
+                  ),
+                ),
           ],
         ),
       ),

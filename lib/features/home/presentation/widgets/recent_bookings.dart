@@ -35,7 +35,7 @@ class _RecentBookingsState extends State<RecentBookings> {
           ),
         )
         : (widget.bookings == null || widget.bookings!.isEmpty)
-        ? NoItemsWidget()
+        ? NoItemsWidget(itemName: 'Bookings')
         : Column(
           children: List.generate(
             widget.bookings?.length ?? 0,
